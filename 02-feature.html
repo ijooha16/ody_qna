@@ -189,6 +189,7 @@
   .slide.is-active .gs .pk.once,.slide.is-active .gs .pk.once .pky{animation-iteration-count:1}
   .gs .scr{fill:none;stroke:#fff;stroke-width:3.5;filter:drop-shadow(0 0 12px rgba(255,255,255,.55))}
   @keyframes dim{to{opacity:.28}}
+  .slide.is-active .cand-dim{animation:dim .6s ease var(--d,0s) forwards}
   #sl-real.is-active .gs .dim{animation:dim .5s ease 2s forwards}
   /* S6 픽토그램 */
   .st4 .pic{width:300px;height:135px;display:block;margin:0 auto 22px}
@@ -200,32 +201,6 @@
 
 <div class="stage">
 <div class="deck">
-
-<!-- ========== 1 · 표지: 주변 탐색 ========== -->
-<section class="slide">
-  <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
-    <h2 class="title" data-a="fu" style="--d:.1s">내 곡 주변에서 소리가 비슷한 <span class="acc">10곡</span></h2>
-  </div>
-  <div class="row r-7-3">
-    <div class="sky stagebox" data-seed="31" data-a="sc" style="--d:.25s">
-      <svg class="sky-in" viewBox="0 0 900 560">
-        <ellipse cx="450" cy="285" rx="215" ry="150" fill="none" stroke="#7FD6C4" stroke-width="2.5" stroke-dasharray="10 9" opacity=".8" style="--len:1200;--d:.7s" data-draw/>
-        <g id="s2-rays" stroke="#2AA38B" stroke-width="1.8" opacity=".85"></g>
-        <g id="s2-nodes"></g>
-        <circle cx="450" cy="285" r="34" fill="#98A4FF" opacity=".28"/>
-        <circle cx="450" cy="285" r="19" fill="#fff" data-a="pop" style="--d:.45s"/>
-        <text x="450" y="330" fill="#ECEEF8" font-size="21" font-weight="700" text-anchor="middle">내 곡</text>
-      </svg>
-    </div>
-    <div class="card stagebox" data-a="fr" style="--d:.45s">
-      <div class="sk-t">주변 10곡</div>
-      <div id="s2-sk"></div>
-    </div>
-  </div>
-  <div class="concl" data-a="fu" style="--d:.95s">청취 기록이 아니라 &ldquo;소리 좌표&rdquo;가 가까운 곡</div>
-  <div class="pnum">1</div>
-</section>
 
 <section class="slide">
   <div class="head">
@@ -247,7 +222,7 @@
       <div class="big-cap">한 번 조회에</div>
     </div>
   </div>
-  <div class="pnum">2</div>
+  <div class="pnum">1</div>
 </section>
 
 <section class="slide">
@@ -288,7 +263,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:1.6s">수백 개만 보고 끝 · 정답 10곡 중 놓치는 비율 <b>0.05%</b></div>
-  <div class="pnum">3</div>
+  <div class="pnum">2</div>
 </section>
 
 <section class="slide" id="sl-list">
@@ -306,7 +281,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:1.1s">같은 곡 다른 버전 · 한 가수 몰림 · 효과음</div>
-  <div class="pnum">4</div>
+  <div class="pnum">3</div>
 </section>
 
 <section class="slide" id="sl-filter">
@@ -326,7 +301,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:.5s">자기 자신 · 같은 녹음(1.66) · 길이 30초~20분 · 같은 가수 3곡까지</div>
-  <div class="pnum">5</div>
+  <div class="pnum">4</div>
 </section>
 
 <section class="slide">
@@ -341,7 +316,7 @@
     <div class="card" data-a="fu" style="--d:.56s"><svg class="pic" viewBox="0 0 200 90"><rect x="20" y="38" width="160" height="14" rx="7" fill="#D9DBE4"/><rect x="52" y="38" width="96" height="14" rx="7" fill="#5B67E8"/><path d="M52 26v38M148 26v38" stroke="#DD7A3B" stroke-width="2.5"/><rect x="20" y="66" width="18" height="6" rx="3" fill="#8F94AA"/><rect x="160" y="66" width="20" height="6" rx="3" fill="#8F94AA"/></svg><div class="n">30초~20분</div><div class="l">길이 범위</div><div class="hr"></div><div class="d">짧은 곡 · 긴 곡<br>과다 등장 방지</div></div>
   </div>
   <div class="concl" data-a="fu" style="--d:.8s">2만 곡 × 이웃 50개씩 뽑아 분포로 결정 · 규칙 파일에 근거 기록</div>
-  <div class="pnum">6</div>
+  <div class="pnum">5</div>
 </section>
 
 <section class="slide">
@@ -359,7 +334,7 @@
     <div class="cap" data-a="fi" style="--d:.9s">바로 옆</div>
   </div>
   <div class="concl" style="visibility:hidden" aria-hidden="true">화면은 16개 축 중 2개만 · 주변 10곡은 16개 전부로 거리 계산</div>
-  <div class="pnum">7</div>
+  <div class="pnum">6</div>
 </section>
 
 <section class="slide" id="sl-far">
@@ -378,7 +353,7 @@
     <div class="cap out">바로 옆</div>
   </div>
   <div class="concl" data-a="fu" style="--d:3.4s">화면은 16개 축 중 2개만 · 주변 10곡은 16개 전부로 거리 계산</div>
-  <div class="pnum">8</div>
+  <div class="pnum">7</div>
 </section>
 
 <section class="slide">
@@ -404,7 +379,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:.9s">숫자로 한 번, 귀로 한 번 확인</div>
-  <div class="pnum">9</div>
+  <div class="pnum">8</div>
 </section>
 
 <section class="slide">
@@ -431,7 +406,7 @@
       <text x="1000" y="196" font-size="24" font-weight="700" fill="#F09D6B" text-anchor="middle" data-a="fu" style="--d:1.7s">빈 곳 = 한 번에 큰 점프</text>
     </svg>
   </div>
-  <div class="pnum">10</div>
+  <div class="pnum">9</div>
 </section>
 
 <section class="slide">
@@ -460,7 +435,7 @@
       </div>
     </div>
   </div>
-  <div class="pnum">11</div>
+  <div class="pnum">10</div>
 </section>
 
 <section class="slide">
@@ -489,15 +464,15 @@
     <span class="chip ind" style="font-size:26px;padding:16px 30px">정거장 수 = ⌊ 거리 ÷ 2.5 ⌋ − 1 &nbsp;(0~18개)</span>
     <span class="chip gry" style="font-size:26px;padding:16px 30px">2.5 = 곡에서 곡으로 자연스러운 한 걸음</span>
   </div>
-  <div class="pnum">12</div>
+  <div class="pnum">11</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <div class="eyebrow">Q&amp;A · 여정</div>
     <h2 class="title" data-a="fu" style="--d:.1s">해결 2: 정거장마다 가까운 후보 <span class="acc">60곡</span></h2>
   </div>
-  <div class="sky stagebox short" data-seed="127" data-nofill data-a="sc" style="--d:.25s;margin-top:20px">
+  <div class="sky stagebox short" data-seed="127" data-nofill style="margin-top:20px">
     <svg class="sky-in" viewBox="0 0 1660 470">
       <path d="M205 250 L1420 222" stroke="#fff" stroke-width="2.6" stroke-dasharray="13 11"/>
       <g id="s18-cand"></g>
@@ -513,28 +488,24 @@
       <text x="1420" y="232" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">B</text>
     </svg>
   </div>
-  <div class="concl" data-a="fu" style="--d:.9s">주변 탐색과 같은 목차(pgvector)로 정거장 좌표 근처를 조회</div>
-  <div class="pnum">13</div>
+  <div class="concl" data-a="fu" style="--d:2.2s">주변 탐색과 같은 목차(pgvector)로 정거장 좌표 근처를 조회</div>
+  <div class="pnum">12</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <div class="eyebrow">Q&amp;A · 여정</div>
     <h2 class="title" data-a="fu" style="--d:.1s">해결 3: 후보 중 가장 <span class="acc-t">자연스러운 한 줄</span></h2>
   </div>
-  <div class="sky stagebox short" data-seed="127" data-nofill data-a="sc" style="--d:.25s;margin-top:20px">
+  <div class="sky stagebox short" data-seed="127" data-nofill style="margin-top:20px">
     <svg class="sky-in" viewBox="0 0 1660 470">
-      <path d="M205 250 L1420 222" stroke="#fff" stroke-width="2.2" stroke-dasharray="13 11" opacity=".7"/>
+      <path d="M205 250 L1420 222" stroke="#fff" stroke-width="2.6" stroke-dasharray="13 11"/>
       <g id="s19-cand"></g>
-      <path d="M205 250 L510 205 L812 278 L1114 198 L1420 222" stroke="#2AD3AE" stroke-width="4" fill="none" style="--len:1300;--d:.6s" data-draw/>
-      <g fill="none" stroke="#7FD6C4" stroke-width="2.4" opacity=".8">
-        <circle cx="510" cy="243" r="17"/><circle cx="812" cy="236" r="17"/><circle cx="1114" cy="229" r="17"/>
+      <g fill="none" stroke="#7FD6C4" stroke-width="3">
+        <circle cx="510" cy="243" r="19"/><circle cx="812" cy="236" r="19"/><circle cx="1114" cy="229" r="19"/>
       </g>
-      <g fill="#2AD3AE">
-        <circle cx="510" cy="205" r="16" data-a="pop" style="--d:1.15s"/>
-        <circle cx="812" cy="278" r="16" data-a="pop" style="--d:1.27s"/>
-        <circle cx="1114" cy="198" r="16" data-a="pop" style="--d:1.39s"/>
-      </g>
+      <path id="s19-line" stroke="#2AD3AE" stroke-width="4.5" stroke-linecap="round" fill="none" filter="drop-shadow(0 0 8px rgba(42,211,174,.6))"/>
+      <g id="s19-pick" fill="#2AD3AE"></g>
       <text x="510" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle">정거장 1</text>
       <text x="812" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle">정거장 2</text>
       <text x="1114" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle">정거장 3</text>
@@ -544,13 +515,13 @@
       <text x="1420" y="232" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">B</text>
     </svg>
   </div>
-  <div data-a="fu" style="display:flex;gap:18px;margin-top:30px;flex-wrap:wrap; --d:1.55s">
+  <div data-a="fu" style="display:flex;gap:18px;margin-top:30px;flex-wrap:wrap; --d:2.6s">
     <span class="chip org">앞으로만</span>
     <span class="chip org">한 걸음 ≥ 1.66</span>
     <span class="chip org">같은 가수 ≤ 3곡</span>
     <span class="chip ind">비용 = Σ 걸음² + 2 × Σ 직선 이탈²</span>
   </div>
-  <div class="pnum">14</div>
+  <div class="pnum">13</div>
 </section>
 
 <section class="slide">
@@ -571,7 +542,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:.8s">동적 계획법(Viterbi) · 점 5개 = 실제로는 정거장마다 60곡</div>
-  <div class="pnum">15</div>
+  <div class="pnum">14</div>
 </section>
 
 <section class="slide">
@@ -604,7 +575,7 @@
     <div class="va" data-a="fu" style="--d:.76s">—</div>
     <div class="vb" data-a="fu" style="--d:.80s">직선 계열 우세</div>
   </div>
-  <div class="pnum">16</div>
+  <div class="pnum">15</div>
 </section>
 
 <section class="slide">
@@ -631,7 +602,7 @@
     <div class="card" data-a="fu" style="text-align:center;padding:40px 28px; --d:1.6s"><div class="big acc">항상 같음</div><div class="big-cap">같은 A · B를 고르면 매번 같은 여정</div></div>
     <div class="card" data-a="fu" style="text-align:center;padding:40px 28px; --d:1.7s"><div class="big acc">끊기지 않음</div><div class="big-cap">아주 멀어도 곡만 늘어남 · 거리 10.7 넘으면 &ldquo;먼 여정&rdquo; 표시</div></div>
   </div>
-  <div class="pnum">17</div>
+  <div class="pnum">16</div>
 </section>
 
 <section class="slide">
@@ -650,7 +621,7 @@
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:2.7s">곡이 더해질 때마다 축을 새로 계산 → <span class="acc-o">비효율적 · 비용 큼</span></div>
-  <div class="pnum">18</div>
+  <div class="pnum">17</div>
 </section>
 
 <section class="slide">
@@ -669,7 +640,7 @@
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:2.7s">한 점만 늘어남 · 여정 · 플레이리스트 모두 같은 방식</div>
-  <div class="pnum">19</div>
+  <div class="pnum">18</div>
 </section>
 
 <section class="slide">
@@ -698,7 +669,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:1.35s">브라우저가 보낸 좌표는 믿지 않음 → <b>위치를 속일 수 없음</b></div>
-  <div class="pnum">20</div>
+  <div class="pnum">19</div>
 </section>
 
 <section class="slide" id="sl-grid">
@@ -710,7 +681,7 @@
   <div class="sky" data-seed="171" data-density=".35" data-nofill data-a="sc" style="--d:.25s;height:600px;margin-top:20px">
     <svg class="sky-in gs" viewBox="0 0 1660 600" id="s21-gs"></svg>
   </div>
-  <div class="pnum">21</div>
+  <div class="pnum">20</div>
 </section>
 
 <section class="slide" id="sl-move">
@@ -722,7 +693,7 @@
   <div class="sky" data-seed="171" data-density=".35" data-nofill style="--d:.25s;height:600px;margin-top:20px">
     <svg class="sky-in gs" viewBox="0 0 1660 600" id="s22-gs"></svg>
   </div>
-  <div class="pnum">22</div>
+  <div class="pnum">21</div>
 </section>
 
 <section class="slide" id="sl-real">
@@ -734,7 +705,7 @@
   <div class="sky" data-seed="171" data-density=".35" data-nofill style="height:600px;margin-top:20px">
     <svg class="sky-in gs" viewBox="0 0 1660 600" id="s23-gs"></svg>
   </div>
-  <div class="pnum">23</div>
+  <div class="pnum">22</div>
 </section>
 
 <section class="slide">
@@ -760,7 +731,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:.8s">옛 칸 · 새 칸을 보고 있던 화면에만 전달</div>
-  <div class="pnum">24</div>
+  <div class="pnum">23</div>
 </section>
 
 <section class="slide">
@@ -804,7 +775,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:.8s">화면 안 사람들 정보를 한 번에 가져옴</div>
-  <div class="pnum">25</div>
+  <div class="pnum">24</div>
 </section>
 
 <section class="slide">
@@ -828,7 +799,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:.8s">사람이 늘어도 보내는 메시지 양이 폭증하지 않음</div>
-  <div class="pnum">26</div>
+  <div class="pnum">25</div>
 </section>
 
 <section class="slide">
@@ -840,7 +811,7 @@
     <svg class="sky-in" viewBox="0 0 1660 560"><g id="s35-people"></g></svg>
   </div>
   <div class="concl" data-a="fu" style="--d:1.3s">서버가 가까운 순 12명을 잘라 줌 · 만남 횟수를 함께 표시</div>
-  <div class="pnum">27</div>
+  <div class="pnum">26</div>
 </section>
 
 <section class="slide">
@@ -879,7 +850,7 @@
     <span class="chip org">정원 20명</span>
     <span style="font-size:24px;font-weight:600;color:var(--ink2);margin-left:10px">← 탈 때 한 번에 검사</span>
   </div>
-  <div class="pnum">28</div>
+  <div class="pnum">27</div>
 </section>
 
 <section class="slide">
@@ -930,7 +901,7 @@
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:1s">인솔자 한 번 → 동승자 전원 · 오른쪽 패널(주변 사람 · 랭킹)은 공유 안 함</div>
-  <div class="pnum">29</div>
+  <div class="pnum">28</div>
 </section>
 
 <section class="slide">
@@ -959,7 +930,7 @@
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:1.3s">인솔자가 곡을 바꿔도 지도 알림은 사람 수와 상관없이 <b>1건</b></div>
-  <div class="pnum">30</div>
+  <div class="pnum">29</div>
 </section>
 
 <section class="slide">
@@ -986,7 +957,7 @@
     <div style="font-size:47px;font-weight:800;color:var(--indigo)">시작 지점 = 지금 − 저장 시각 + 저장 위치</div>
   </div>
   <div class="concl" data-a="fu" style="--d:1.15s">인솔자는 재생 · 정지 · 구간 이동 때마다 위치를 저장 (따라오는 사람이 없어도)</div>
-  <div class="pnum">31</div>
+  <div class="pnum">30</div>
 </section>
 
 <section class="slide">
@@ -1037,7 +1008,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:.8s">내린 사람은 그 자리 곡 위로 돌아옴 · 하차는 언제나 가능</div>
-  <div class="pnum">32</div>
+  <div class="pnum">31</div>
 </section>
 
 <section class="slide">
@@ -1075,7 +1046,7 @@
       </div>
     </div>
   </div>
-  <div class="pnum">33</div>
+  <div class="pnum">32</div>
 </section>
 
 <section class="slide">
@@ -1103,7 +1074,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:1s">크다 작다가 아니라 같은지만 비교 · 다시 붙을 때마다 새 번호로 덮어씀</div>
-  <div class="pnum">34</div>
+  <div class="pnum">33</div>
 </section>
 
 <section class="slide">
@@ -1132,7 +1103,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:.8s">따라가는 동안 · 선단 안에서는 만남으로 세지 않음</div>
-  <div class="pnum">35</div>
+  <div class="pnum">34</div>
 </section>
 
 <section class="slide">
@@ -1150,7 +1121,7 @@
   <div class="card" data-a="fu" style="margin-top:64px;padding:34px 44px;font-size:27px;font-weight:700; --d:.85s">
     상태는 Redis(메모리) · 여러 값을 한 번에 바꾸는 스크립트 13개로 반쪽 갱신 방지 · 만남 · 재생 기록만 DB
   </div>
-  <div class="pnum">36</div>
+  <div class="pnum">35</div>
 </section>
 
 <section class="slide">
@@ -1188,7 +1159,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:.8s">실시간 동시 접속 부하는 아직 미측정 · 부하 테스트는 HTTP만 진행</div>
-  <div class="pnum">37</div>
+  <div class="pnum">36</div>
 </section>
 
 </div>

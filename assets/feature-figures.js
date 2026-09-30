@@ -9,42 +9,6 @@
     return e;
   };
 
-  /* ---------- 스켈레톤 목록 ---------- */
-  function skeleton(el, n, seed) {
-    if (!el) return;
-    const r = R(seed);
-    let h = '';
-    for (let i = 0; i < n; i++) {
-      h += '<div class="sk-row" data-a="fu" style="--d:' + (0.6 + i * 0.05).toFixed(2) + 's">' +
-           '<i></i><span style="width:' + (62 + Math.round(r() * 30)) + '%"></span></div>';
-    }
-    el.innerHTML = h;
-  }
-  skeleton($('s2-sk'), 10, 5);
-
-  /* ---------- S2 : 내 곡 + 이웃 10곡 ---------- */
-  (function () {
-    const rays = $('s2-rays'), nodes = $('s2-nodes');
-    if (!rays) return;
-    const cx = 450, cy = 285;
-    const pts = [[-150,-58],[-96,-108],[-18,-122],[70,-104],[142,-56],[158,22],[104,86],[16,116],[-74,104],[-146,44]];
-    pts.forEach(function (p, i) {
-      const x = cx + p[0], y = cy + p[1];
-      const ln = svg('line', {x1:cx, y1:cy, x2:x, y2:y});
-      ln.setAttribute('data-draw', '');
-      ln.style.setProperty('--len', '220');
-      ln.style.setProperty('--d', (0.75 + i * 0.07).toFixed(2) + 's');
-      rays.appendChild(ln);
-      const halo = svg('circle', {cx:x, cy:y, r:20, fill:'#2AA38B', opacity:'.28'});
-      const c = svg('circle', {cx:x, cy:y, r:11, fill:'#2AD3AE'});
-      [halo, c].forEach(function (n) {
-        n.setAttribute('data-a', 'pop');
-        n.style.setProperty('--d', (0.95 + i * 0.07).toFixed(2) + 's');
-        nodes.appendChild(n);
-      });
-    });
-  })();
-
   /* ---------- S3 : 469만 번 전수 비교 ---------- */
   (function () {
     const g = $('s3-rays');
@@ -226,23 +190,83 @@
   knnWeb($('s15-web'), 811);
   knnWeb($('s16-web'), 811);
 
-  /* ---------- S18 / S19 : 정거장 후보 60곡 ---------- */
-  function candidates(g, seed, stations, fade) {
-    if (!g) return;
-    const r = R(seed);
-    stations.forEach(function (s, si) {
-      for (let i = 0; i < 26; i++) {
-        const a = r() * Math.PI * 2, d = r() * 92;
-        const x = s[0] + Math.cos(a) * d, y = s[1] + Math.sin(a) * d * 0.95;
-        const c = svg('circle', {cx:x.toFixed(1), cy:y.toFixed(1), r:(4 + r() * 4).toFixed(1), fill:'#D7DAEA', opacity:(fade ? .35 : (.45 + r() * .4)).toFixed(2)});
-        c.setAttribute('data-a', 'fi');
-        c.style.setProperty('--d', (0.45 + si * 0.18).toFixed(2) + 's');
-        g.appendChild(c);
+  /* ---------- 여정 해결 2 · 3 : 정거장 후보 60곡 → 자연스러운 한 줄 ----------
+     두 장이 같은 seed 로 같은 자리에 점을 찍어, 장을 넘겨도 화면이 이어진다. */
+  const STATIONS = [[510,243],[812,236],[1114,229]];
+  const JA = [205,250], JB = [1420,222];
+  function candidatePoints(seed) {
+    const r = R(seed), out = [];
+    STATIONS.forEach(function (s, si) {
+      for (let i = 0; i < 20; i++) {
+        const a = r() * Math.PI * 2, d = 18 + r() * 78;
+        out.push({si: si, i: i, x: s[0] + Math.cos(a) * d, y: s[1] + Math.sin(a) * d * 0.95,
+                  rad: 4 + r() * 4, op: .5 + r() * .4});
       }
     });
+    return out;
   }
-  candidates($('s18-cand'), 907, [[510,243],[812,236],[1114,229]], false);
-  candidates($('s19-cand'), 907, [[510,243],[812,236],[1114,229]], true);
+  const CANDS = candidatePoints(907);
+
+  // 해결 2: 정거장마다 20곡씩, 다다다 박힘
+  (function () {
+    const g = $('s18-cand');
+    if (!g) return;
+    CANDS.forEach(function (p, k) {
+      const c = svg('circle', {cx:p.x.toFixed(1), cy:p.y.toFixed(1), r:p.rad.toFixed(1), fill:'#D7DAEA', 'fill-opacity':p.op.toFixed(2)});
+      c.setAttribute('data-a', 'pop');
+      c.style.setProperty('--d', (0.5 + p.si * 0.45 + p.i * 0.028).toFixed(3) + 's');
+      c.style.transformOrigin = p.x.toFixed(1) + 'px ' + p.y.toFixed(1) + 'px';
+      g.appendChild(c);
+    });
+  })();
+
+  // 해결 3: 같은 60곡에서 정거장마다 한 곡 골라 부드러운 곡선으로 잇기
+  (function () {
+    const g = $('s19-cand'), line = $('s19-line'), pick = $('s19-pick');
+    if (!g || !line) return;
+    const WANT = [-38, 40, -30];               // 직선에서 살짝 벗어난 자연스러운 흐름
+    const chosen = STATIONS.map(function (s, si) {
+      let best = null, bd = 1e9;
+      CANDS.forEach(function (p) {
+        if (p.si !== si) return;
+        const d = Math.pow(p.y - (s[1] + WANT[si]), 2) + Math.pow(p.x - s[0], 2) * 0.6;
+        if (d < bd) { bd = d; best = p; }
+      });
+      return best;
+    });
+    CANDS.forEach(function (p) {
+      const c = svg('circle', {cx:p.x.toFixed(1), cy:p.y.toFixed(1), r:p.rad.toFixed(1), fill:'#D7DAEA', 'fill-opacity':p.op.toFixed(2)});
+      if (chosen.indexOf(p) < 0) { c.setAttribute('class', 'cand-dim'); c.style.setProperty('--d', '.25s'); }
+      g.appendChild(c);
+    });
+    // Catmull-Rom → 베지어
+    const P = [JA].concat(chosen.map(function (p) { return [p.x, p.y]; }), [JB]);
+    let d = 'M' + P[0][0] + ' ' + P[0][1];
+    for (let i = 0; i < P.length - 1; i++) {
+      const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
+      d += ' C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(1) + ' ' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(1) +
+           ' ' + (p2[0] - (p3[0] - p1[0]) / 6).toFixed(1) + ' ' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(1) +
+           ' ' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1);
+    }
+    line.setAttribute('d', d);
+    const T0 = 0.8, DUR = 1.8, span = JB[0] - JA[0];
+    line.setAttribute('data-draw', '');
+    line.style.setProperty('--len', '1400');
+    line.style.setProperty('--d', T0 + 's');
+    line.style.animationDuration = DUR + 's';
+    line.style.animationTimingFunction = 'cubic-bezier(.45,.05,.55,.95)';
+    chosen.forEach(function (p) {
+      const t = T0 + DUR * (p.x - JA[0]) / span;
+      const halo = svg('circle', {cx:p.x.toFixed(1), cy:p.y.toFixed(1), r:26, fill:'#2AD3AE', opacity:'.25'});
+      const c = svg('circle', {cx:p.x.toFixed(1), cy:p.y.toFixed(1), r:14});
+      [halo, c].forEach(function (n) {
+        n.setAttribute('data-a', 'pop');
+        n.style.setProperty('--d', t.toFixed(2) + 's');
+        n.style.transformOrigin = p.x.toFixed(1) + 'px ' + p.y.toFixed(1) + 'px';
+        pick.appendChild(n);
+      });
+    });
+  })();
 
   /* ---------- S20 : 전수 탐색 vs DP ---------- */
   (function () {
