@@ -1,0 +1,1207 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ODY Q&amp;A · 02 기능</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  /* ---------- 공용 2분할 ---------- */
+  .row{display:grid;gap:30px}
+  .r-7-3{grid-template-columns:1.62fr 1fr}
+  .r-1-1{grid-template-columns:1fr 1fr}
+  .stagebox{height:560px}
+  .stagebox.short{height:470px}
+  .stagebox.tall{height:640px}
+
+  /* 스켈레톤 리스트 */
+  .sk-t{font-size:28px;font-weight:800;color:var(--indigo);margin-bottom:24px}
+  .sk-row{display:flex;align-items:center;gap:16px;margin-bottom:17px}
+  .sk-row i{width:13px;height:13px;border-radius:50%;background:var(--teal);flex:none}
+  .sk-row span{height:15px;background:#E7E9F0;border-radius:8px;display:block}
+
+  /* 카드 격자 (16곡) */
+  .g16{display:grid;grid-template-columns:repeat(8,1fr);gap:15px}
+  .tile{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:14px 10px 16px;text-align:center;position:relative;min-height:158px;display:flex;flex-direction:column;align-items:center}
+  .tile .idx{position:absolute;top:11px;left:13px;font-size:19px;font-weight:700;color:var(--ink3)}
+  .tile .mk{position:absolute;top:9px;right:12px;font-size:24px;font-weight:800}
+  .tile .badge{position:absolute;top:9px;right:10px;width:27px;height:27px;border-radius:50%;background:var(--indigo);color:#fff;font-size:18px;font-weight:800;display:grid;place-items:center}
+  .tile .ball{width:46px;height:46px;border-radius:50%;margin:30px 0 14px;position:relative}
+  .tile .ball.dup::after{content:'';position:absolute;top:-4px;left:14px;width:42px;height:42px;border-radius:50%;background:#D3D6E2;z-index:-1}
+  .tile .nm{font-size:20px;font-weight:700;line-height:1.3}
+  .tile .rs{font-size:17px;font-weight:600;color:var(--orange);margin-top:6px}
+  .tile.out{border-color:#F2C9AB}
+  .tile.keepc{border-color:var(--indigo);background:#F4F5FF}
+  .tile.dim{background:#EFF0F5;border-color:transparent;opacity:.75}
+
+  /* 통계 카드 */
+  .st4{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+  .st4 .card{text-align:center;padding:38px 26px}
+  .st4 .n{font-size:65px;font-weight:800;color:var(--indigo);letter-spacing:-.03em}
+  .st4 .l{font-size:26px;font-weight:700;margin-top:14px}
+  .st4 .hr{height:1px;background:var(--border);margin:24px 0}
+  .st4 .d{font-size:22px;font-weight:600;color:var(--ink2);line-height:1.5}
+
+  /* 막대 */
+  .bars{display:grid;grid-template-columns:260px 1fr;row-gap:30px;align-items:center}
+  .bars .bl{font-size:27px;font-weight:700}
+  .bars .bb{display:flex;align-items:center;gap:18px}
+  .bars .bb i{height:38px;border-radius:7px;display:block}
+  .bars .bb b{font-size:30px;font-weight:800}
+
+  /* 흐름 박스 */
+  .vflow{display:flex;flex-direction:column;gap:0;align-items:stretch}
+  .vflow .vb{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:26px 20px;text-align:center;font-size:28px;font-weight:700}
+  .vflow .vb.ind{background:var(--indigo);border-color:var(--indigo);color:#fff;font-weight:800}
+  .vflow .va{height:40px;display:grid;place-items:center}
+  .vflow .va::after{content:'↓';color:#9A9FB5;font-size:29px}
+
+  /* 사람 아이콘 */
+  .ppl{display:inline-block;position:relative;width:var(--w,44px);height:calc(var(--w,44px)*1.16)}
+  .ppl::before{content:'';position:absolute;top:0;left:22%;width:56%;height:44%;border-radius:50%;background:var(--c,#98A4FF)}
+  .ppl::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:50%;border-radius:46% 46% 22% 22%;background:var(--c,#98A4FF)}
+
+  /* 격자 지도 */
+  .gmap{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+  .gmap .c{aspect-ratio:1;border-radius:10px;background:#C8CBD8;position:relative}
+  .gmap .c.on{background:var(--indigo);box-shadow:inset 0 0 0 2px var(--peri-l)}
+  .gmap .c.keep{background:var(--indigo)}
+  .gmap .c.drop{background:#D9DBE4;box-shadow:inset 0 0 0 2px #9A9FB5}
+  .gmap .c em{position:absolute;inset:26%;border-radius:50%;background:var(--dot,#7FD6C4)}
+  .gaxis{display:grid;grid-template-columns:repeat(12,1fr);gap:7px;font-size:19px;font-weight:600;color:var(--ink3);text-align:center;margin-bottom:8px}
+  .grow{display:grid;grid-template-rows:repeat(7,1fr);gap:7px;font-size:19px;font-weight:600;color:var(--ink3);align-items:center;text-align:right;padding-right:10px}
+
+  .legend{display:flex;gap:34px;align-items:center;font-size:22px;font-weight:600}
+  .legend i{width:26px;height:26px;border-radius:6px;display:inline-block;margin-right:10px;vertical-align:-6px}
+
+  /* 테이블 비교 */
+  .cmp-tbl{display:grid;grid-template-columns:200px 1fr 1fr;row-gap:16px;column-gap:26px;align-items:center}
+  .cmp-tbl .hd{font-size:28px;font-weight:800;text-align:center;padding-bottom:6px}
+  .cmp-tbl .lb{font-size:26px;font-weight:600;color:var(--ink2)}
+  .cmp-tbl .va{background:#FDEBDD;color:#B5612B;border-radius:14px;padding:17px;text-align:center;font-size:25px;font-weight:700}
+  .cmp-tbl .vb{background:#E9ECFF;color:var(--indigo);border-radius:14px;padding:17px;text-align:center;font-size:25px;font-weight:700}
+
+  /* 오버레이 강조 */
+  .veil{position:absolute;inset:0;background:rgba(20,22,42,.62);display:grid;place-items:center;z-index:5}
+  .veil .vt{font-size:69px;font-weight:800;color:#fff;letter-spacing:-.03em;text-align:center}
+  .veil .vs{font-size:29px;font-weight:600;color:var(--dink2);margin-top:22px;text-align:center}
+
+  /* 키/값 행 */
+  .kv{display:grid;grid-template-columns:150px 1fr;row-gap:26px;align-items:center}
+  .kv .k{font-size:24px;font-weight:600;color:var(--ink2)}
+  .kv .v{font-size:27px;font-weight:800}
+
+  /* 타임라인 */
+  .tl{position:relative;height:36px;background:#E7E9F0;border-radius:18px;overflow:hidden}
+  .tl i{position:absolute;left:0;top:0;bottom:0;border-radius:18px;display:block}
+
+  /* ---------- S4 · S5 : 흘러가는 목록 상자 ---------- */
+  .scw{display:grid;grid-template-columns:600px 1fr;gap:80px;align-items:center}
+  .scw.three{grid-template-columns:600px 1fr 600px;gap:0}
+  .scroller{height:540px;background:var(--white);border:1px solid var(--border);border-radius:24px;overflow:hidden;position:relative;padding:0 26px;
+    -webkit-mask-image:linear-gradient(#000 0,transparent 0),linear-gradient(transparent 0,#000 12%,#000 88%,transparent 100%);-webkit-mask-composite:source-over;
+    mask-image:linear-gradient(transparent 0,#000 12%,#000 88%,transparent 100%)}
+  .sc-in{display:flex;flex-direction:column;gap:8px;animation:scup 11s linear infinite}
+  #sl-filter .sc-in{animation-duration:16s}
+  @keyframes scup{to{transform:translateY(-50%)}}
+  .pr{display:flex;align-items:center;gap:16px;height:40px;padding:0 10px;border-radius:9px;flex:none}
+  .pr .rk{width:32px;font-size:16px;font-weight:700;color:var(--ink3);text-align:right;flex:none}
+  .dt{position:relative;display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--c,#C8CBD8);flex:none}
+  .dt.dup::before{content:'';position:absolute;top:-4px;left:7px;width:20px;height:20px;border-radius:50%;background:var(--c);opacity:.45}
+  .dt.sfx{background:none;border-radius:0}
+  .dt.sfx::before{content:'';position:absolute;left:0;top:7px;width:20px;height:6px;background:repeating-linear-gradient(90deg,#8F94AA 0 2px,transparent 2px 4px)}
+  .dt.sfx::after{content:'';position:absolute;left:2px;top:3px;width:16px;height:14px;border-left:2px solid #8F94AA;border-right:2px solid #8F94AA;border-radius:2px}
+  .pr .bars{flex:1;display:flex;flex-direction:column;gap:6px}
+  .pr .bars i{display:block;height:10px;border-radius:5px;background:#D9DBE4}
+  .pr .bars i.a{height:7px;opacity:.7}
+  .pr.odd{background:#FEF3EA}
+  .pr.odd .bars i{background:#F2C9AB}
+  .pr .tg{font-size:15px;font-weight:700;color:#DD7A3B;background:#FDEBDD;border-radius:999px;padding:3px 10px;white-space:nowrap;flex:none}
+  .pr .tg:empty{display:none}
+  /* S4 : 규칙별로 왼쪽 행 + 오른쪽 범례가 동시에 회색 처리 */
+  @keyframes gr{to{filter:grayscale(1);opacity:.35}}
+  #sl-list.is-active .pr.dup{animation:gr .35s var(--ease) 1.5s forwards}
+  #sl-list.is-active .pr.x{animation:gr .35s var(--ease) 2.1s forwards}
+  #sl-list.is-active .pr.sfx{animation:gr .35s var(--ease) 2.7s forwards}
+  #sl-list.is-active .lgd:nth-child(2){animation:fu .7s var(--ease) .7s forwards,gr .35s var(--ease) 1.5s forwards}
+  #sl-list.is-active .lgd:nth-child(3){animation:fu .7s var(--ease) .8s forwards,gr .35s var(--ease) 2.1s forwards}
+  #sl-list.is-active .lgd:nth-child(4){animation:fu .7s var(--ease) .9s forwards,gr .35s var(--ease) 2.7s forwards}
+  /* S5 : 이미 걸러진 행은 회색, 남은 행이 연보라로 채워짐 */
+  #sl-filter .pr.odd{filter:grayscale(1);opacity:.35}
+  .pr.pick{background:#E9ECFF;transition:background .25s}
+  .pr.pick .bars i{background:var(--peri-l)}
+
+  .scside{display:flex;flex-direction:column;gap:14px}
+  .scside .big-cap{margin-bottom:26px}
+  .lgd{display:flex;align-items:center;gap:22px;font-size:27px;font-weight:700;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:22px 28px}
+  .lgd .lgi{display:flex;gap:8px;align-items:center;min-width:120px}
+
+  .gate{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:0 40px}
+  .gate-ar{width:100%;height:3px;background:var(--indigo);position:relative}
+  .gate-ar::after{content:'';position:absolute;right:-2px;top:-7px;border-left:16px solid var(--indigo);border-top:8px solid transparent;border-bottom:8px solid transparent}
+  .gate-lb{font-size:24px;font-weight:800;color:var(--indigo);background:#E9ECFF;border-radius:999px;padding:12px 26px}
+  .sqwrap{display:flex;flex-direction:column;align-items:center;gap:30px}
+  .sq10{display:grid;grid-template-columns:repeat(5,96px);gap:16px}
+  .sq{width:96px;height:96px;border-radius:20px;border:2px dashed #C8CBD8;background:transparent;position:relative;transition:border-color .3s,background .3s,transform .3s}
+  @keyframes sqpop{0%{transform:scale(.7)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+  .sq.on{border-style:solid;border-color:transparent;background:var(--indigo);animation:sqpop .45s var(--ease)}
+  .sq-n{font-size:30px;font-weight:700;color:var(--ink2)}
+  .sq-n b{font-size:64px;font-weight:800;color:var(--indigo);letter-spacing:-.03em;margin-right:8px}
+
+  /* ---------- S7 · S8 : 별 두 개 3D 장면 ---------- */
+  @property --ry{syntax:'<angle>';inherits:true;initial-value:0deg}
+  @property --rx{syntax:'<angle>';inherits:true;initial-value:0deg}
+  @property --tx{syntax:'<length>';inherits:true;initial-value:0px}
+  @property --bs{syntax:'<number>';inherits:true;initial-value:1.2}
+  .scene{perspective:2200px}
+  .orb{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;transform:translateX(var(--tx)) rotateX(var(--rx)) rotateY(var(--ry))}
+  .orb>*{position:absolute;left:0;top:0;transform:translate3d(var(--x,0px),var(--y,0px),var(--z,0px)) rotateY(calc(-1*var(--ry))) rotateX(calc(-1*var(--rx))) scale(var(--s,1))}
+  .bgd{width:var(--r);height:var(--r);margin:calc(var(--r)/-2);border-radius:50%;background:#C3CAFF}
+  .st{width:0;height:0}
+  .st::before{content:'';position:absolute;inset:-62px;border-radius:50%;background:var(--c);opacity:.25}
+  .st::after{content:'';position:absolute;inset:-34px;border-radius:50%;background:var(--c)}
+  .st b{position:absolute;top:-112px;left:-12px;font-size:36px;font-weight:800;color:var(--c)}
+  .st.a{--c:#2AA38B;--x:-58px}
+  .st.b{--c:#F09D6B;--x:58px;--z:-560px;--s:var(--bs)}
+  .orb>.lnk{width:571px;height:0;border-top:3px dashed rgba(255,255,255,.75);transform-origin:0 0;transform:translate3d(-58px,0,0) rotateY(78.3deg)}
+  .axl{position:absolute;left:32px;top:28px;font-size:25px;font-weight:700;color:#A2A7C6}
+  .cap{position:absolute;left:50%;top:calc(50% + 96px);transform:translateX(-50%);font-size:28px;font-weight:700;color:#ECEEF8;white-space:nowrap}
+  @keyframes cam{to{--tx:200px;--rx:-14deg;--ry:58deg;--bs:.72}}
+  @keyframes fo{to{opacity:0}}
+  #sl-far.is-active .orb{animation:cam 2.4s var(--ease) 1s forwards}
+  #sl-far.is-active .out{animation:fo .4s ease 1s forwards}
+
+  /* ---------- S21 · S22 : 격자 + 화면 프레임 + 전달 ---------- */
+  .gs .cell{fill:rgba(255,255,255,.055);stroke:rgba(255,255,255,.09);stroke-width:1.5}
+  .gs .cell.in{fill:#5B67E8;stroke:none}
+  .gs .frame{fill:none;stroke:#C3CAFF;stroke-width:3;filter:drop-shadow(0 0 14px rgba(152,164,255,.65))}
+  @keyframes cin{to{fill:#5B67E8;stroke:none}}
+  @keyframes cout{to{fill:rgba(255,255,255,.055)}}
+  @keyframes fup{to{transform:translateY(-212px)}}
+  #sl-move.is-active .gs .fresh{animation:cin .5s var(--ease) 1s forwards}
+  #sl-move.is-active .gs .drop{fill:#5B67E8;animation:cout .5s var(--ease) 1s forwards}
+  #sl-move.is-active .gs .frame{animation:fup .7s var(--ease) 1s forwards}
+  #sl-move.is-active .gs .gr{animation:fo .6s ease 1.3s forwards}
+  @keyframes pkx{0%{transform:translate(0,0);opacity:0}10%{opacity:1}88%{opacity:1}100%{transform:translate(var(--tx),var(--ty));opacity:0}}
+  @keyframes pky{0%,100%{transform:translateY(0)}50%{transform:translateY(-110px)}}
+  .slide.is-active .gs .pk{animation:pkx 1.5s ease-in-out var(--d,0s) infinite}
+  .slide.is-active .gs .pk .pky{animation:pky 1.5s ease-in-out var(--d,0s) infinite}
+  .slide.is-active .gs .pk.once,.slide.is-active .gs .pk.once .pky{animation-iteration-count:1}
+  .gs .scr{fill:none;stroke:#fff;stroke-width:3.5;filter:drop-shadow(0 0 12px rgba(255,255,255,.55))}
+  @keyframes dim{to{opacity:.28}}
+  #sl-real.is-active .gs .dim{animation:dim .5s ease 2s forwards}
+  /* S6 픽토그램 */
+  .st4 .pic{width:300px;height:135px;display:block;margin:0 auto 22px}
+</style>
+</head>
+<body>
+<button class="backbtn" title="질문 목록으로 (Esc)" aria-label="질문 목록"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4l-8 8 8 8"/></svg></button>
+<div class="prog"></div>
+
+<div class="stage">
+<div class="deck">
+
+<!-- ========== 1 · 표지: 주변 탐색 ========== -->
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">내 곡 주변에서 소리가 비슷한 <span class="acc">10곡</span></h2>
+  </div>
+  <div class="row r-7-3">
+    <div class="sky stagebox" data-seed="31" data-a="sc" style="--d:.25s">
+      <svg class="sky-in" viewBox="0 0 900 560">
+        <ellipse cx="450" cy="285" rx="215" ry="150" fill="none" stroke="#7FD6C4" stroke-width="2.5" stroke-dasharray="10 9" opacity=".8" style="--len:1200;--d:.7s" data-draw/>
+        <g id="s2-rays" stroke="#2AA38B" stroke-width="1.8" opacity=".85"></g>
+        <g id="s2-nodes"></g>
+        <circle cx="450" cy="285" r="34" fill="#98A4FF" opacity=".28"/>
+        <circle cx="450" cy="285" r="19" fill="#fff" data-a="pop" style="--d:.45s"/>
+        <text x="450" y="330" fill="#ECEEF8" font-size="21" font-weight="700" text-anchor="middle">내 곡</text>
+      </svg>
+    </div>
+    <div class="card stagebox" data-a="fr" style="--d:.45s">
+      <div class="sk-t">주변 10곡</div>
+      <div id="s2-sk"></div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.95s">청취 기록이 아니라 &ldquo;소리 좌표&rdquo;가 가까운 곡</div>
+  <div class="pnum">1</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <h2 class="title" data-a="fu" style="--d:.1s"><span class="acc">469만 곡</span>과 전부 거리를 재면 느리다</h2>
+  </div>
+  <div class="row r-7-3">
+    <div class="sky stagebox" data-seed="47" data-a="sc" style="--d:.25s">
+      <svg class="sky-in" viewBox="0 0 900 560">
+        <g id="s3-rays" stroke="#F09D6B" stroke-width="1.4" opacity=".75"></g>
+        <circle cx="450" cy="285" r="30" fill="#fff" opacity=".22"/>
+        <circle cx="450" cy="285" r="16" fill="#fff"/>
+      </svg>
+    </div>
+    <div class="card stagebox" data-a="fr" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center; --d:.5s">
+      <div style="font-size:27px;font-weight:700;color:var(--ink2)">처음부터 끝까지 비교</div>
+      <div class="big acc-o" style="margin-top:34px">469만 번</div>
+      <div class="big acc-o" style="margin-top:34px">95ms</div>
+      <div class="big-cap">한 번 조회에</div>
+    </div>
+  </div>
+  <div class="pnum">2</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">목차를 따라 <span class="acc">근처로만</span> 내려간다</h2>
+    <p class="subtitle" data-a="fu" style="--d:.18s">HNSW — 위층은 듬성듬성한 고속도로, 아래층은 촘촘한 골목</p>
+  </div>
+  <div class="row r-7-3" style="margin-top:20px">
+    <div data-a="sc" style="position:relative;height:470px; --d:.3s">
+      <svg viewBox="0 0 880 470" style="width:100%;height:100%;overflow:visible">
+        <g opacity=".55">
+          <path d="M60 110 L700 60 L820 110 L180 160 Z" fill="#E4E6F2"/>
+          <path d="M60 250 L700 200 L820 250 L180 300 Z" fill="#E4E6F2"/>
+          <path d="M60 390 L700 340 L820 390 L180 440 Z" fill="#E1E3F6"/>
+        </g>
+        <g id="s4-dots"></g>
+        <path d="M118 118 L245 105 L375 93 L375 230 L430 247 L455 330 L455 375" stroke="#5B67E8" stroke-width="3.5" fill="none" style="--len:620;--d:.75s" data-draw/>
+        <circle cx="118" cy="118" r="10" fill="#5B67E8" data-a="pop" style="--d:.7s"/>
+        <circle cx="245" cy="105" r="8" fill="#5B67E8" data-a="pop" style="--d:.85s"/>
+        <circle cx="375" cy="93"  r="10" fill="#5B67E8" data-a="pop" style="--d:1s"/>
+        <circle cx="375" cy="230" r="9"  fill="#5B67E8" data-a="pop" style="--d:1.15s"/>
+        <circle cx="430" cy="247" r="8"  fill="#5B67E8" data-a="pop" style="--d:1.25s"/>
+        <circle cx="455" cy="378" r="14" fill="#2AA38B" data-a="pop" style="--d:1.4s"/>
+        <text x="732" y="118" font-size="24" font-weight="700" fill="#5F6480">위층</text>
+        <text x="732" y="258" font-size="24" font-weight="700" fill="#5F6480">중간층</text>
+        <text x="732" y="398" font-size="24" font-weight="700" fill="#5F6480">아래층</text>
+        <text x="455" y="430" font-size="22" font-weight="700" fill="#2AA38B" text-anchor="middle" data-a="fu" style="--d:1.55s">내 곡 근처 도착</text>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:26px;justify-content:center">
+      <div class="card" data-a="fr" style="text-align:center;padding:44px 20px; --d:.5s">
+        <div class="big acc-o">95ms</div><div class="big-cap">처음부터 끝까지</div>
+      </div>
+      <div class="card accent" data-a="fr" style="text-align:center;padding:44px 20px; --d:.62s">
+        <div class="big acc">2.24ms</div><div class="big-cap">목차로 근처만</div>
+      </div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:1.6s">수백 개만 보고 끝 · 정답 10곡 중 놓치는 비율 <b>0.05%</b></div>
+  <div class="pnum">3</div>
+</section>
+
+<section class="slide" id="sl-list">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">가까운 순 그대로 쓰면 <span class="acc-o">이상한 곡</span>이 섞인다</h2>
+  </div>
+  <div class="scw">
+    <div class="scroller" data-a="sc" style="--d:.25s"><div class="sc-in" id="sc-a"></div></div>
+    <div class="scside">
+      <div data-a="fu" style="--d:.4s"><div class="big acc">200곡</div><div class="big-cap">가까운 순 그대로 받은 목록</div></div>
+      <div class="lgd" data-a="fu" style="--d:.7s"><span class="lgi"><i class="dt dup" style="--c:#2C3057"></i></span><span>같은 곡 · 다른 버전</span></div>
+      <div class="lgd" data-a="fu" style="--d:.8s"><span class="lgi"><i class="dt" style="--c:#5B67E8"></i><i class="dt" style="--c:#5B67E8"></i><i class="dt" style="--c:#5B67E8"></i><i class="dt" style="--c:#5B67E8"></i></span><span>한 가수 몰림</span></div>
+      <div class="lgd" data-a="fu" style="--d:.9s"><span class="lgi"><i class="dt sfx"></i></span><span>효과음</span></div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:1.1s">같은 곡 다른 버전 · 한 가수 몰림 · 효과음</div>
+  <div class="pnum">4</div>
+</section>
+
+<section class="slide" id="sl-filter">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">규칙으로 걸러 <span class="acc">10곡</span>이 차면 멈춘다</h2>
+  </div>
+  <div class="scw three">
+    <div class="scroller" id="sc-box" data-a="fi" style="--d:.2s"><div class="sc-in" id="sc-b"></div></div>
+    <div class="gate" data-a="fi" style="--d:.5s">
+      <div class="gate-ar"></div>
+      <div class="gate-lb">규칙 4개</div>
+    </div>
+    <div class="sqwrap" data-a="fu" style="--d:.6s">
+      <div class="sq10" id="sq10"></div>
+      <div class="sq-n"><b id="sq-cnt">0</b>/ 10곡</div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.5s">자기 자신 · 같은 녹음(1.66) · 길이 30초~20분 · 같은 가수 3곡까지</div>
+  <div class="pnum">5</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">규칙 숫자는 <span class="acc">통계</span>로 정했다</h2>
+  </div>
+  <div class="st4 fill" style="margin-top:20px">
+    <div class="card" data-a="fu" style="--d:.26s"><svg class="pic" viewBox="0 0 200 90"><circle cx="86" cy="45" r="24" fill="#5B67E8" opacity=".85"/><circle cx="114" cy="45" r="24" fill="#5B67E8" opacity=".55"/><path d="M86 12v-6M114 12v-6M86 9h28" stroke="#DD7A3B" stroke-width="2.5" fill="none"/></svg><div class="n">1.66</div><div class="l">같은 녹음 접기</div><div class="hr"></div><div class="d">다른 곡끼리 최소 거리<br>하위 1% 지점</div></div>
+    <div class="card" data-a="fu" style="--d:.36s"><svg class="pic" viewBox="0 0 200 90"><circle cx="40" cy="45" r="17" fill="#5B67E8"/><circle cx="80" cy="45" r="17" fill="#5B67E8"/><circle cx="120" cy="45" r="17" fill="#5B67E8"/><circle cx="160" cy="45" r="17" fill="#D9DBE4"/><path d="M150 35l20 20M170 35l-20 20" stroke="#DD7A3B" stroke-width="3"/></svg><div class="n">3 곡</div><div class="l">같은 가수 상한</div><div class="hr"></div><div class="d">10곡 안 같은 가수<br>90% 지점</div></div>
+    <div class="card" data-a="fu" style="--d:.46s"><svg class="pic" viewBox="0 0 200 90"><g fill="#98A4FF"><circle cx="62" cy="30" r="6"/><circle cx="48" cy="52" r="6"/><circle cx="70" cy="66" r="6"/><circle cx="92" cy="26" r="6"/><circle cx="100" cy="60" r="6"/><circle cx="84" cy="50" r="6"/><circle cx="56" cy="40" r="6"/><circle cx="104" cy="42" r="6"/><circle cx="76" cy="20" r="6"/></g><circle cx="76" cy="45" r="9" fill="#5B67E8"/><path d="M85 45h72" stroke="#DD7A3B" stroke-width="2.5" stroke-dasharray="6 5"/><circle cx="166" cy="45" r="7" fill="#DD7A3B"/></svg><div class="n">4.9</div><div class="l">&ldquo;유사도 낮음&rdquo; 표시</div><div class="hr"></div><div class="d">10번째 이웃 거리<br>90% 지점</div></div>
+    <div class="card" data-a="fu" style="--d:.56s"><svg class="pic" viewBox="0 0 200 90"><rect x="20" y="38" width="160" height="14" rx="7" fill="#D9DBE4"/><rect x="52" y="38" width="96" height="14" rx="7" fill="#5B67E8"/><path d="M52 26v38M148 26v38" stroke="#DD7A3B" stroke-width="2.5"/><rect x="20" y="66" width="18" height="6" rx="3" fill="#8F94AA"/><rect x="160" y="66" width="20" height="6" rx="3" fill="#8F94AA"/></svg><div class="n">30초~20분</div><div class="l">길이 범위</div><div class="hr"></div><div class="d">짧은 곡 · 긴 곡<br>과다 등장 방지</div></div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.8s">2만 곡 × 이웃 50개씩 뽑아 분포로 결정 · 규칙 파일에 근거 기록</div>
+  <div class="pnum">6</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">화면에서 바로 옆인데 주변 목록에 <span class="acc-o">없다?</span></h2>
+  </div>
+  <div class="sky stagebox" data-seed="53" data-density=".5" data-a="sc" style="--d:.25s;margin-top:20px">
+    <div class="sky-in scene"><div class="orb" data-bgd="53">
+      <div class="st a"><b>A</b></div>
+      <div class="st b"><b>B</b></div>
+      <div class="lnk"></div>
+    </div></div>
+    <div class="axl">1겹 · 축 1, 2 로 본 화면</div>
+    <div class="cap" data-a="fi" style="--d:.9s">바로 옆</div>
+  </div>
+  <div class="concl" style="visibility:hidden" aria-hidden="true">화면은 16개 축 중 2개만 · 주변 10곡은 16개 전부로 거리 계산</div>
+  <div class="pnum">7</div>
+</section>
+
+<section class="slide" id="sl-far">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">다른 축으로 보면 둘은 <span class="acc">멀다</span></h2>
+  </div>
+  <div class="sky stagebox" data-seed="53" data-density=".5" style="margin-top:20px">
+    <div class="sky-in scene"><div class="orb" data-bgd="53">
+      <div class="st a"><b>A</b></div>
+      <div class="st b"><b>B</b></div>
+      <div class="lnk"></div>
+    </div></div>
+    <div class="axl out">1겹 · 축 1, 2 로 본 화면</div>
+    <div class="axl" data-a="fi" style="--d:1.6s">2겹 · 축 3, 4 로 본 화면</div>
+    <div class="cap out">바로 옆</div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:3.4s">화면은 16개 축 중 2개만 · 주변 10곡은 16개 전부로 거리 계산</div>
+  <div class="pnum">8</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">비슷한 곡이 정말 <span class="acc">가까이</span> 있다</h2>
+  </div>
+  <div class="row r-7-3 fill" style="margin-top:20px;align-items:center">
+    <div>
+      <div data-a="fu" style="font-size:26px;font-weight:700;color:var(--ink2);margin-bottom:34px; --d:.24s">16차원 거리 (중앙값)</div>
+      <div class="bars">
+        <div class="bl" data-a="fl" style="--d:.3s">같은 녹음 다른 버전</div>
+        <div class="bb" data-a="fr" style="--d:.34s"><i style="width:44px;background:var(--indigo)"></i><b class="acc">1.7</b></div>
+        <div class="bl" data-a="fl" style="--d:.44s">같은 플레이리스트 곡</div>
+        <div class="bb" data-a="fr" style="--d:.48s"><i style="width:290px;background:var(--peri)"></i><b class="acc">10.7</b></div>
+        <div class="bl" data-a="fl" style="--d:.58s">무작위 두 곡</div>
+        <div class="bb" data-a="fr" style="--d:.62s"><i style="width:426px;background:#BEC2D2"></i><b style="color:var(--ink2)">15.7</b></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:26px">
+      <div class="card" data-a="fr" style="text-align:center;padding:40px 20px; --d:.5s"><div class="big acc">21.6×</div><div class="big-cap">10곡 안에 정답이 들 확률 ÷ 우연</div></div>
+      <div class="card" data-a="fr" style="text-align:center;padding:40px 20px; --d:.62s"><div class="big acc">200 곡</div><div class="big-cap">사람이 이웃 10곡을 직접 청취</div></div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.9s">숫자로 한 번, 귀로 한 번 확인</div>
+  <div class="pnum">9</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">처음 계획: 가까운 곡끼리 이어 <span class="acc">최단 경로</span></h2>
+    <p class="subtitle" data-a="fu" style="--d:.18s">곡마다 가까운 30곡을 선으로 잇고(kNN 그래프) 다익스트라</p>
+  </div>
+  <div class="sky stagebox" data-seed="113" data-a="sc" style="--d:.3s;margin-top:20px" id="s15-sky">
+    <svg class="sky-in" viewBox="0 0 1660 520">
+      <g id="s15-web" stroke="#4A4E78" stroke-width="1.2" opacity=".55"></g>
+      <path d="M205 270 L330 195 L375 300 L430 185 L470 310 L530 200 L600 250 L1420 250"
+            stroke="#F09D6B" stroke-width="4" fill="none" style="--len:1700;--d:.7s" data-draw/>
+      <g fill="#F09D6B">
+        <circle cx="330" cy="195" r="14" data-a="pop" style="--d:1.1s"/><circle cx="375" cy="300" r="14" data-a="pop" style="--d:1.18s"/>
+        <circle cx="430" cy="185" r="14" data-a="pop" style="--d:1.26s"/><circle cx="470" cy="310" r="14" data-a="pop" style="--d:1.34s"/>
+        <circle cx="530" cy="200" r="14" data-a="pop" style="--d:1.42s"/><circle cx="600" cy="250" r="14" data-a="pop" style="--d:1.5s"/>
+      </g>
+      <circle cx="205" cy="270" r="44" fill="#98A4FF" opacity=".2"/><circle cx="205" cy="270" r="29" fill="#F4F5F9"/>
+      <text x="205" y="280" font-size="31" font-weight="800" fill="#22243A" text-anchor="middle">A</text>
+      <circle cx="1420" cy="250" r="44" fill="#98A4FF" opacity=".2"/><circle cx="1420" cy="250" r="29" fill="#F4F5F9"/>
+      <text x="1420" y="260" font-size="31" font-weight="800" fill="#22243A" text-anchor="middle">B</text>
+      <text x="215" y="422" font-size="24" font-weight="700" fill="#F09D6B" data-a="fu" style="--d:1.6s">붐비는 곳 = 지그재그</text>
+      <text x="1000" y="196" font-size="24" font-weight="700" fill="#F09D6B" text-anchor="middle" data-a="fu" style="--d:1.7s">빈 곳 = 한 번에 큰 점프</text>
+    </svg>
+  </div>
+  <div class="pnum">10</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow">Q&amp;A · 여정</div>
+    <h2 class="title">처음 계획: 가까운 곡끼리 이어 <span class="acc">최단 경로</span></h2>
+    <p class="subtitle" style="visibility:hidden">곡마다 가까운 30곡을 선으로 잇고(kNN 그래프) 다익스트라</p>
+  </div>
+  <div class="sky stagebox" data-seed="113" style="margin-top:20px">
+    <svg class="sky-in" viewBox="0 0 1660 520" opacity=".55">
+      <g id="s16-web" stroke="#4A4E78" stroke-width="1.2" opacity=".55"></g>
+      <path d="M205 270 L330 195 L375 300 L430 185 L470 310 L530 200 L600 250 L1420 250" stroke="#F09D6B" stroke-width="4" fill="none"/>
+      <g fill="#F09D6B">
+        <circle cx="330" cy="195" r="14"/><circle cx="375" cy="300" r="14"/><circle cx="430" cy="185" r="14"/>
+        <circle cx="470" cy="310" r="14"/><circle cx="530" cy="200" r="14"/><circle cx="600" cy="250" r="14"/>
+      </g>
+      <circle cx="205" cy="270" r="44" fill="#98A4FF" opacity=".2"/><circle cx="205" cy="270" r="29" fill="#F4F5F9"/>
+      <text x="205" y="280" font-size="31" font-weight="800" fill="#22243A" text-anchor="middle">A</text>
+      <circle cx="1420" cy="250" r="44" fill="#98A4FF" opacity=".2"/><circle cx="1420" cy="250" r="29" fill="#F4F5F9"/>
+      <text x="1420" y="260" font-size="31" font-weight="800" fill="#22243A" text-anchor="middle">B</text>
+      <text x="215" y="422" font-size="24" font-weight="700" fill="#F09D6B">붐비는 곳 = 지그재그</text>
+    </svg>
+    <div style="position:absolute;inset:0;display:grid;place-items:center;background:rgba(20,22,42,.74)">
+      <div style="text-align:center;padding:0 60px">
+        <div data-a="fu" style="font-size:66px;font-weight:800;color:#fff;letter-spacing:-.03em;white-space:nowrap; --d:.3s">간선 <span style="color:var(--orange)">2억 개</span> · <span style="color:var(--orange)">15GB</span> 초과 → <span style="color:var(--orange)">비효율적</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="pnum">11</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">해결 1: A–B <span class="acc">직선</span>을 긋고 정거장을 찍는다</h2>
+  </div>
+  <div class="sky stagebox short" data-seed="127" data-nofill data-a="sc" style="--d:.25s;margin-top:20px">
+    <svg class="sky-in" viewBox="0 0 1660 470">
+      <path d="M205 250 L1420 222" stroke="#fff" stroke-width="2.6" stroke-dasharray="13 11" style="--len:1250;--d:.55s" data-draw/>
+      <g fill="none" stroke="#7FD6C4" stroke-width="3">
+        <circle cx="510" cy="243" r="19" data-a="pop" style="--d:1.2s"/>
+        <circle cx="812" cy="236" r="19" data-a="pop" style="--d:1.32s"/>
+        <circle cx="1114" cy="229" r="19" data-a="pop" style="--d:1.44s"/>
+      </g>
+      <text x="510" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle" data-a="fu" style="--d:1.35s">정거장 1</text>
+      <text x="812" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle" data-a="fu" style="--d:1.47s">정거장 2</text>
+      <text x="1114" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle" data-a="fu" style="--d:1.59s">정거장 3</text>
+      <circle cx="205" cy="250" r="42" fill="#98A4FF" opacity=".2"/><circle cx="205" cy="250" r="28" fill="#F4F5F9"/>
+      <text x="205" y="260" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">A</text>
+      <circle cx="1420" cy="222" r="42" fill="#98A4FF" opacity=".2"/><circle cx="1420" cy="222" r="28" fill="#F4F5F9"/>
+      <text x="1420" y="232" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">B</text>
+    </svg>
+  </div>
+  <div data-a="fu" style="display:flex;gap:24px;margin-top:30px; --d:1.7s">
+    <span class="chip ind" style="font-size:26px;padding:16px 30px">정거장 수 = ⌊ 거리 ÷ 2.5 ⌋ − 1 &nbsp;(0~18개)</span>
+    <span class="chip gry" style="font-size:26px;padding:16px 30px">2.5 = 곡에서 곡으로 자연스러운 한 걸음</span>
+  </div>
+  <div class="pnum">12</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">해결 2: 정거장마다 가까운 후보 <span class="acc">60곡</span></h2>
+  </div>
+  <div class="sky stagebox short" data-seed="127" data-nofill data-a="sc" style="--d:.25s;margin-top:20px">
+    <svg class="sky-in" viewBox="0 0 1660 470">
+      <path d="M205 250 L1420 222" stroke="#fff" stroke-width="2.6" stroke-dasharray="13 11"/>
+      <g id="s18-cand"></g>
+      <g fill="none" stroke="#7FD6C4" stroke-width="3">
+        <circle cx="510" cy="243" r="19"/><circle cx="812" cy="236" r="19"/><circle cx="1114" cy="229" r="19"/>
+      </g>
+      <text x="510" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle">정거장 1</text>
+      <text x="812" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle">정거장 2</text>
+      <text x="1114" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle">정거장 3</text>
+      <circle cx="205" cy="250" r="42" fill="#98A4FF" opacity=".2"/><circle cx="205" cy="250" r="28" fill="#F4F5F9"/>
+      <text x="205" y="260" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">A</text>
+      <circle cx="1420" cy="222" r="42" fill="#98A4FF" opacity=".2"/><circle cx="1420" cy="222" r="28" fill="#F4F5F9"/>
+      <text x="1420" y="232" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">B</text>
+    </svg>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.9s">주변 탐색과 같은 목차(pgvector)로 정거장 좌표 근처를 조회</div>
+  <div class="pnum">13</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">해결 3: 후보 중 가장 <span class="acc-t">자연스러운 한 줄</span></h2>
+  </div>
+  <div class="sky stagebox short" data-seed="127" data-nofill data-a="sc" style="--d:.25s;margin-top:20px">
+    <svg class="sky-in" viewBox="0 0 1660 470">
+      <path d="M205 250 L1420 222" stroke="#fff" stroke-width="2.2" stroke-dasharray="13 11" opacity=".7"/>
+      <g id="s19-cand"></g>
+      <path d="M205 250 L510 205 L812 278 L1114 198 L1420 222" stroke="#2AD3AE" stroke-width="4" fill="none" style="--len:1300;--d:.6s" data-draw/>
+      <g fill="none" stroke="#7FD6C4" stroke-width="2.4" opacity=".8">
+        <circle cx="510" cy="243" r="17"/><circle cx="812" cy="236" r="17"/><circle cx="1114" cy="229" r="17"/>
+      </g>
+      <g fill="#2AD3AE">
+        <circle cx="510" cy="205" r="16" data-a="pop" style="--d:1.15s"/>
+        <circle cx="812" cy="278" r="16" data-a="pop" style="--d:1.27s"/>
+        <circle cx="1114" cy="198" r="16" data-a="pop" style="--d:1.39s"/>
+      </g>
+      <text x="510" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle">정거장 1</text>
+      <text x="812" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle">정거장 2</text>
+      <text x="1114" y="330" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle">정거장 3</text>
+      <circle cx="205" cy="250" r="42" fill="#98A4FF" opacity=".2"/><circle cx="205" cy="250" r="28" fill="#F4F5F9"/>
+      <text x="205" y="260" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">A</text>
+      <circle cx="1420" cy="222" r="42" fill="#98A4FF" opacity=".2"/><circle cx="1420" cy="222" r="28" fill="#F4F5F9"/>
+      <text x="1420" y="232" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">B</text>
+    </svg>
+  </div>
+  <div data-a="fu" style="display:flex;gap:18px;margin-top:30px;flex-wrap:wrap; --d:1.55s">
+    <span class="chip org">앞으로만</span>
+    <span class="chip org">한 걸음 ≥ 1.66</span>
+    <span class="chip org">같은 가수 ≤ 3곡</span>
+    <span class="chip ind">비용 = Σ 걸음² + 2 × Σ 직선 이탈²</span>
+  </div>
+  <div class="pnum">14</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">모든 조합을 <span class="acc">다 보지 않는다</span></h2>
+  </div>
+  <div class="row r-1-1" style="margin-top:26px">
+    <div class="card" data-a="fl" style="--d:.28s;padding:32px 36px 40px">
+      <div style="font-size:29px;font-weight:800;color:var(--orange);margin-bottom:10px">모든 조합을 다 계산</div>
+      <svg viewBox="0 0 640 300" style="width:100%;height:300px"><g id="s20-full"></g></svg>
+      <div style="font-size:47px;font-weight:800;color:var(--orange);text-align:center;margin-top:14px">60 × 60 × 60 = 21.6만</div>
+    </div>
+    <div class="card" data-a="fr" style="--d:.42s;padding:32px 36px 40px">
+      <div style="font-size:29px;font-weight:800;color:var(--indigo);margin-bottom:10px">앞 정거장까지의 최선만 기억</div>
+      <svg viewBox="0 0 640 300" style="width:100%;height:300px"><g id="s20-dp"></g></svg>
+      <div style="font-size:47px;font-weight:800;color:var(--indigo);text-align:center;margin-top:14px">약 1만 번</div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.8s">동적 계획법(Viterbi) · 점 5개 = 실제로는 정거장마다 60곡</div>
+  <div class="pnum">15</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">결과: 최단 경로 <span style="color:var(--ink2)">vs</span> <span class="acc">직선 축</span></h2>
+  </div>
+  <div class="cmp-tbl" style="margin-top:52px">
+    <div></div>
+    <div class="hd" data-a="fu" style="color:var(--orange); --d:.24s">최단 경로 (원안)</div>
+    <div class="hd" data-a="fu" style="color:var(--indigo); --d:.3s">직선 축 + 동적 계획법 (채택)</div>
+
+    <div class="lb" data-a="fl" style="--d:.34s">모양</div>
+    <div class="va" data-a="fu" style="--d:.36s">지그재그 · 한 번에 큰 점프</div>
+    <div class="vb" data-a="fu" style="--d:.40s">간격 일정 · 변화가 고름</div>
+
+    <div class="lb" data-a="fl" style="--d:.44s">먼 두 곡</div>
+    <div class="va" data-a="fu" style="--d:.46s">그래프가 끊기면 경로 없음</div>
+    <div class="vb" data-a="fu" style="--d:.50s">항상 이어짐</div>
+
+    <div class="lb" data-a="fl" style="--d:.54s">미리 준비</div>
+    <div class="va" data-a="fu" style="--d:.56s">간선 2억 개 · 15GB 초과</div>
+    <div class="vb" data-a="fu" style="--d:.60s">없음 (그때그때 조회)</div>
+
+    <div class="lb" data-a="fl" style="--d:.64s">신곡</div>
+    <div class="va" data-a="fu" style="--d:.66s">그래프 다시 만들기</div>
+    <div class="vb" data-a="fu" style="--d:.70s">자동 포함</div>
+
+    <div class="lb" data-a="fl" style="--d:.74s">사람 청취 비교</div>
+    <div class="va" data-a="fu" style="--d:.76s">—</div>
+    <div class="vb" data-a="fu" style="--d:.80s">직선 계열 우세</div>
+  </div>
+  <div class="pnum">16</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">여정 하나는 <span class="acc">이런 모습</span>이다</h2>
+  </div>
+  <div class="sky" data-seed="161" data-nofill data-a="sc" style="--d:.25s;height:300px;margin-top:14px">
+    <svg class="sky-in" viewBox="0 0 1660 300">
+      <path d="M140 150 L1522 150" stroke="#2AD3AE" stroke-width="3" stroke-dasharray="12 10" style="--len:1400;--d:.5s" data-draw/>
+      <circle cx="337" cy="150" r="17" fill="#2AD3AE" data-a="pop" style="--d:0.85s"/><circle cx="534" cy="150" r="17" fill="#2AD3AE" data-a="pop" style="--d:0.95s"/><circle cx="731" cy="150" r="17" fill="#2AD3AE" data-a="pop" style="--d:1.05s"/><circle cx="928" cy="150" r="17" fill="#2AD3AE" data-a="pop" style="--d:1.15s"/><circle cx="1125" cy="150" r="17" fill="#2AD3AE" data-a="pop" style="--d:1.25s"/><circle cx="1322" cy="150" r="17" fill="#2AD3AE" data-a="pop" style="--d:1.35s"/>
+      <text x="337" y="212" font-size="23" font-weight="700" fill="#A2A7C6" text-anchor="middle" data-a="fu" style="--d:0.90s">1</text><text x="534" y="212" font-size="23" font-weight="700" fill="#A2A7C6" text-anchor="middle" data-a="fu" style="--d:1.00s">2</text><text x="731" y="212" font-size="23" font-weight="700" fill="#A2A7C6" text-anchor="middle" data-a="fu" style="--d:1.10s">3</text><text x="928" y="212" font-size="23" font-weight="700" fill="#A2A7C6" text-anchor="middle" data-a="fu" style="--d:1.20s">4</text><text x="1125" y="212" font-size="23" font-weight="700" fill="#A2A7C6" text-anchor="middle" data-a="fu" style="--d:1.30s">5</text><text x="1322" y="212" font-size="23" font-weight="700" fill="#A2A7C6" text-anchor="middle" data-a="fu" style="--d:1.40s">6</text>
+      <circle cx="140" cy="150" r="42" fill="#98A4FF" opacity=".2"/><circle cx="140" cy="150" r="28" fill="#F4F5F9"/>
+      <text x="140" y="160" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">A</text>
+      <text x="140" y="228" font-size="23" font-weight="700" fill="#A2A7C6" text-anchor="middle">출발 곡</text>
+      <circle cx="1522" cy="150" r="42" fill="#98A4FF" opacity=".2"/><circle cx="1522" cy="150" r="28" fill="#F4F5F9"/>
+      <text x="1522" y="160" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">B</text>
+      <text x="1522" y="228" font-size="23" font-weight="700" fill="#A2A7C6" text-anchor="middle">도착 곡</text>
+      <text x="830" y="86" font-size="26" font-weight="700" fill="#ECEEF8" text-anchor="middle" data-a="fu" style="--d:1.4s">A와 B 사이를 비슷한 간격의 곡 6개로 채운 플레이리스트</text>
+    </svg>
+  </div>
+  <div class="cards c3" style="margin-top:30px;height:380px">
+    <div class="card" data-a="fu" style="text-align:center;padding:40px 28px; --d:1.5s"><div class="big acc">보통 6곡</div><div class="big-cap">두 곡이 멀수록 늘어남 · 최대 20곡</div></div>
+    <div class="card" data-a="fu" style="text-align:center;padding:40px 28px; --d:1.6s"><div class="big acc">항상 같음</div><div class="big-cap">같은 A · B를 고르면 매번 같은 여정</div></div>
+    <div class="card" data-a="fu" style="text-align:center;padding:40px 28px; --d:1.7s"><div class="big acc">끊기지 않음</div><div class="big-cap">아주 멀어도 곡만 늘어남 · 거리 10.7 넘으면 &ldquo;먼 여정&rdquo; 표시</div></div>
+  </div>
+  <div class="pnum">17</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">처음엔 곡 하나만 더해도 <span class="acc-o">별자리가 뒤집혔다</span></h2>
+    <p class="subtitle" data-a="fu" style="--d:.18s">묶음마다 새로 축을 계산하던 방식</p>
+  </div>
+  <div class="sky stagebox short" data-seed="149" data-a="sc" style="--d:.28s;margin-top:20px">
+    <svg class="sky-in" viewBox="0 0 1660 470">
+      <g id="s23-a"></g>
+      <path d="M700 232 L890 232" stroke="#fff" stroke-width="3" marker-end="url(#ar23)"/>
+      <text x="795" y="208" font-size="26" font-weight="700" fill="#ECEEF8" text-anchor="middle">+1곡</text>
+      <g id="s23-b"></g>
+      <defs><marker id="ar23" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#fff"/></marker></defs>
+    </svg>
+  </div>
+  <div class="concl" data-a="fu" style="--d:2.7s">곡이 더해질 때마다 축을 새로 계산 → <span class="acc-o">비효율적 · 비용 큼</span></div>
+  <div class="pnum">18</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">지금: <span class="acc-t">고정 축</span>으로 어느 겹에서나 같은 모양</h2>
+    <p class="subtitle" data-a="fu" style="--d:.18s">PC1을 가로 · PC2를 세로로 · 평균을 가운데 · 두 축 같은 배율</p>
+  </div>
+  <div class="sky stagebox short" data-seed="149" data-a="sc" style="--d:.28s;margin-top:20px">
+    <svg class="sky-in" viewBox="0 0 1660 470">
+      <g id="s24-a"></g>
+      <path d="M700 232 L890 232" stroke="#fff" stroke-width="3" marker-end="url(#ar24)"/>
+      <text x="795" y="208" font-size="26" font-weight="700" fill="#ECEEF8" text-anchor="middle">+1곡</text>
+      <g id="s24-b"></g>
+      <defs><marker id="ar24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#fff"/></marker></defs>
+    </svg>
+  </div>
+  <div class="concl" data-a="fu" style="--d:2.7s">한 점만 늘어남 · 여정 · 플레이리스트 모두 같은 방식</div>
+  <div class="pnum">19</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">곡을 트는 것이 곧 <span class="acc">움직이는 것</span></h2>
+  </div>
+  <div class="row r-1-1" style="margin-top:14px">
+    <div class="sky stagebox" data-seed="163" data-a="fl" style="--d:.28s">
+      <svg class="sky-in" viewBox="0 0 800 560">
+        <path d="M212 400 L470 232" stroke="#7FD6C4" stroke-width="2.6" stroke-dasharray="12 10" style="--len:330;--d:.8s" data-draw/>
+        <circle cx="470" cy="232" r="30" fill="#2AA38B" opacity=".3" data-a="fi" style="--d:1.1s"/>
+        <circle cx="470" cy="232" r="17" fill="#2AD3AE" data-a="pop" style="--d:1.15s"/>
+        <text x="470" y="186" font-size="22" font-weight="700" fill="#ECEEF8" text-anchor="middle" data-a="fu" style="--d:1.25s">새로 튼 곡</text>
+        <circle cx="212" cy="400" r="26" fill="#8A5FE0" opacity=".4"/><circle cx="212" cy="400" r="15" fill="#B79BF0"/>
+        <g transform="translate(198,422)"><circle cx="14" cy="10" r="10" fill="#2AD3AE"/><path d="M0 40a14 14 0 0128 0z" fill="#2AD3AE"/></g>
+        <text x="212" y="500" font-size="22" font-weight="700" fill="#A2A7C6" text-anchor="middle">지금 곡</text>
+      </svg>
+    </div>
+    <div class="vflow" style="justify-content:center">
+      <div class="vb" data-a="fr" style="--d:.4s">곡 번호만 보냄</div>
+      <div class="va" data-a="fi" style="--d:.5s"></div>
+      <div class="vb" data-a="fr" style="--d:.55s">서버가 DB에서 그 곡 좌표를 읽음</div>
+      <div class="va" data-a="fi" style="--d:.65s"></div>
+      <div class="vb ind" data-a="fr" style="--d:.7s">지도 위 내 자리 = 그 곡</div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:1.35s">브라우저가 보낸 좌표는 믿지 않음 → <b>위치를 속일 수 없음</b></div>
+  <div class="pnum">20</div>
+</section>
+
+<section class="slide" id="sl-grid">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">내 화면에 보이는 <span class="acc-t">사람만</span></h2>
+    <p class="subtitle" data-a="fu" style="--d:.18s">지도를 격자 칸으로 나누고, 화면에 걸친 칸만 본다</p>
+  </div>
+  <div class="sky" data-seed="171" data-density=".35" data-nofill data-a="sc" style="--d:.25s;height:600px;margin-top:20px">
+    <svg class="sky-in gs" viewBox="0 0 1660 600" id="s21-gs"></svg>
+  </div>
+  <div class="pnum">21</div>
+</section>
+
+<section class="slide" id="sl-move">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">화면을 옮기면 <span class="acc-t">필요한 칸만</span> 바꿔 듣는다</h2>
+    <p class="subtitle" style="visibility:hidden">지도를 격자 칸으로 나누고, 화면에 걸친 칸만 본다</p>
+  </div>
+  <div class="sky" data-seed="171" data-density=".35" data-nofill style="--d:.25s;height:600px;margin-top:20px">
+    <svg class="sky-in gs" viewBox="0 0 1660 600" id="s22-gs"></svg>
+  </div>
+  <div class="pnum">22</div>
+</section>
+
+<section class="slide" id="sl-real">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">칸은 후보일 뿐, 실제 화면으로 <span class="acc">한 번 더</span> 거른다</h2>
+    <p class="subtitle" style="visibility:hidden">지도를 격자 칸으로 나누고, 화면에 걸친 칸만 본다</p>
+  </div>
+  <div class="sky" data-seed="171" data-density=".35" data-nofill style="height:600px;margin-top:20px">
+    <svg class="sky-in gs" viewBox="0 0 1660 600" id="s23-gs"></svg>
+  </div>
+  <div class="pnum">23</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">움직임은 <span class="acc">세 가지</span>로 알린다</h2>
+  </div>
+  <div class="cards c3" style="margin-top:44px">
+    <div class="card" data-a="fu" style="text-align:center;padding:34px; --d:.28s">
+      <div class="cellgrid mini" id="s32-a" style="grid-template-columns:repeat(6,1fr);max-width:330px;margin:0 auto 26px"></div>
+      <div style="font-size:32px;font-weight:800;color:var(--teal)">들어옴</div>
+      <div class="card-s" style="margin-top:10px">화면 밖 → 안</div>
+    </div>
+    <div class="card" data-a="fu" style="text-align:center;padding:34px; --d:.4s">
+      <div class="cellgrid mini" id="s32-b" style="grid-template-columns:repeat(6,1fr);max-width:330px;margin:0 auto 26px"></div>
+      <div style="font-size:32px;font-weight:800;color:var(--indigo)">움직임</div>
+      <div class="card-s" style="margin-top:10px">화면 안 → 안</div>
+    </div>
+    <div class="card" data-a="fu" style="text-align:center;padding:34px; --d:.52s">
+      <div class="cellgrid mini" id="s32-c" style="grid-template-columns:repeat(6,1fr);max-width:330px;margin:0 auto 26px"></div>
+      <div style="font-size:32px;font-weight:800;color:var(--orange)">나감</div>
+      <div class="card-s" style="margin-top:10px">화면 안 → 밖</div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.8s">옛 칸 · 새 칸을 보고 있던 화면에만 전달</div>
+  <div class="pnum">24</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">한 명씩 왕복하지 않고 <span class="acc">한 번에 묶어서</span></h2>
+  </div>
+  <div class="row r-1-1" style="margin-top:44px">
+    <div class="card" data-a="fl" style="padding:34px 40px 42px; --d:.28s">
+      <div style="font-size:29px;font-weight:800;color:var(--orange);margin-bottom:24px">한 명씩 왕복</div>
+      <svg viewBox="0 0 640 220" style="width:100%">
+        <rect x="10" y="50" width="160" height="120" rx="18" fill="#14162A"/>
+        <text x="90" y="118" font-size="29" font-weight="800" fill="#fff" text-anchor="middle">서버</text>
+        <rect x="470" y="50" width="160" height="120" rx="18" fill="#EDE8FB"/>
+        <text x="550" y="118" font-size="29" font-weight="800" fill="#8A5FE0" text-anchor="middle">Redis</text>
+        <g stroke="#F09D6B" stroke-width="2.6">
+          <path d="M180 74h280" marker-end="url(#a33)"/><path d="M460 104H180" marker-end="url(#a33b)"/>
+          <path d="M180 134h280" marker-end="url(#a33)"/><path d="M460 164H180" marker-end="url(#a33b)"/>
+        </g>
+        <defs>
+          <marker id="a33" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#F09D6B"/></marker>
+          <marker id="a33b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#F09D6B"/></marker>
+        </defs>
+      </svg>
+      <div style="font-size:45px;font-weight:800;color:var(--orange);text-align:center;margin-top:20px">왕복 4번</div>
+    </div>
+    <div class="card" data-a="fr" style="padding:34px 40px 42px; --d:.42s">
+      <div style="font-size:29px;font-weight:800;color:var(--indigo);margin-bottom:24px">한 번에 묶어서</div>
+      <svg viewBox="0 0 640 220" style="width:100%">
+        <rect x="10" y="50" width="160" height="120" rx="18" fill="#14162A"/>
+        <text x="90" y="118" font-size="29" font-weight="800" fill="#fff" text-anchor="middle">서버</text>
+        <rect x="470" y="50" width="160" height="120" rx="18" fill="#EDE8FB"/>
+        <text x="550" y="118" font-size="29" font-weight="800" fill="#8A5FE0" text-anchor="middle">Redis</text>
+        <ellipse cx="320" cy="110" rx="76" ry="30" fill="#E9ECFF" stroke="#5B67E8" stroke-width="2"/>
+        <g fill="#5B67E8"><circle cx="288" cy="110" r="9"/><circle cx="312" cy="110" r="9"/><circle cx="336" cy="110" r="9"/><circle cx="360" cy="110" r="9"/></g>
+        <path d="M180 110h58" stroke="#5B67E8" stroke-width="2.8" marker-end="url(#a33c)"/>
+        <path d="M400 110h58" stroke="#5B67E8" stroke-width="2.8" marker-end="url(#a33c)"/>
+        <defs><marker id="a33c" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#5B67E8"/></marker></defs>
+      </svg>
+      <div style="font-size:45px;font-weight:800;color:var(--indigo);text-align:center;margin-top:20px">왕복 1번</div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.8s">화면 안 사람들 정보를 한 번에 가져옴</div>
+  <div class="pnum">25</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">사람이 많으면 한 명씩 대신 <span class="acc-o">칸별 숫자</span></h2>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 280px 1fr;align-items:center;gap:30px;margin-top:38px">
+    <div data-a="fl" style="--d:.28s">
+      <div style="font-size:27px;font-weight:800;color:var(--indigo);margin-bottom:22px">한 명씩</div>
+      <div class="cellgrid" id="s34-a" style="grid-template-columns:repeat(6,1fr);gap:9px;max-width:440px;margin:0 auto"></div>
+    </div>
+    <div data-a="fi" style="display:flex;align-items:center;gap:14px; --d:.5s">
+      <svg width="40" height="18"><path d="M0 9h26" stroke="#8F94AA" stroke-width="2.2"/><path d="M24 3l10 6-10 6z" fill="#8F94AA"/></svg>
+      <div class="card" style="text-align:center;font-size:27px;font-weight:800;line-height:1.5;padding:26px 18px">20명 초과<br>또는 36칸 초과</div>
+      <svg width="40" height="18"><path d="M0 9h26" stroke="#8F94AA" stroke-width="2.2"/><path d="M24 3l10 6-10 6z" fill="#8F94AA"/></svg>
+    </div>
+    <div data-a="fr" style="--d:.42s">
+      <div style="font-size:27px;font-weight:800;color:var(--orange);margin-bottom:22px">칸별 인원수 · 5초마다</div>
+      <div class="cellgrid" id="s34-b" style="grid-template-columns:repeat(6,1fr);gap:9px;max-width:440px;margin:0 auto"></div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.8s">사람이 늘어도 보내는 메시지 양이 폭증하지 않음</div>
+  <div class="pnum">26</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">주변 사람 패널 = 같은 겹, <span class="acc-t">가까운 12명</span></h2>
+  </div>
+  <div class="sky stagebox" data-seed="181" data-a="sc" style="--d:.28s;margin-top:20px">
+    <svg class="sky-in" viewBox="0 0 1660 560"><g id="s35-people"></g></svg>
+  </div>
+  <div class="concl" data-a="fu" style="--d:1.3s">서버가 가까운 순 12명을 잘라 줌 · 만남 횟수를 함께 표시</div>
+  <div class="pnum">27</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">따라가기 = 인솔자의 <span class="acc">우주선</span>에 탄다</h2>
+  </div>
+  <div class="row r-1-1" style="margin-top:14px">
+    <div class="sky stagebox short" data-seed="191" data-a="fl" style="--d:.28s">
+      <svg class="sky-in" viewBox="0 0 800 470">
+        <text x="34" y="48" fill="#ECEEF8" font-size="25" font-weight="700">타기 전</text>
+        <g transform="translate(340,180) scale(1.5)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g>
+        <text x="362" y="290" fill="#A2A7C6" font-size="21" font-weight="700" text-anchor="middle">인솔자</text>
+        <g transform="translate(220,110)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <g transform="translate(520,140)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <g transform="translate(140,320)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <g transform="translate(500,330)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+      </svg>
+    </div>
+    <div class="sky stagebox short" data-seed="193" data-a="fr" style="--d:.42s">
+      <svg class="sky-in" viewBox="0 0 800 470">
+        <text x="34" y="48" fill="#ECEEF8" font-size="25" font-weight="700">탄 뒤</text>
+        <ellipse cx="400" cy="210" rx="170" ry="112" fill="#2AD3AE" opacity=".09" stroke="#2AD3AE" stroke-width="3" style="--len:900;--d:.8s" data-draw/>
+        <g transform="translate(378,140) scale(1.4)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g>
+        <g transform="translate(320,230)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <g transform="translate(378,230)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <g transform="translate(436,230)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <text x="400" y="368" fill="#ECEEF8" font-size="22" font-weight="700" text-anchor="middle">동승자는 지도에서 사라지고 우주선 안으로</text>
+      </svg>
+    </div>
+  </div>
+  <div data-a="fu" style="display:flex;gap:18px;align-items:center;margin-top:34px; --d:.9s">
+    <span class="chip org">연결 유효</span>
+    <span class="chip org">이미 탑승 중 ✕</span>
+    <span class="chip org">따라가는 사람은 못 따라감</span>
+    <span class="chip org">정원 20명</span>
+    <span style="font-size:24px;font-weight:600;color:var(--ink2);margin-left:10px">← 탈 때 한 번에 검사</span>
+  </div>
+  <div class="pnum">28</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">인솔자 화면을 <span class="acc">한 번</span> 만들어 동승자에게</h2>
+  </div>
+  <div style="height:500px;margin-top:20px">
+    <svg viewBox="0 0 1660 500" style="width:100%;height:100%">
+      <g data-a="fl" style="--d:.28s">
+        <g transform="translate(60,190) scale(2)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g>
+        <text x="102" y="330" font-size="24" font-weight="700" fill="#5F6480" text-anchor="middle">인솔자</text>
+      </g>
+      <g data-a="fu" style="--d:.4s">
+        <rect x="230" y="80" width="330" height="300" rx="20" fill="#14162A"/>
+        <text x="266" y="140" font-size="26" font-weight="700" fill="#7FD6C4">곡</text>
+        <text x="266" y="205" font-size="26" font-weight="700" fill="#7FD6C4">재생 30초 지점</text>
+        <text x="266" y="270" font-size="26" font-weight="700" fill="#7FD6C4">곡 상세 패널</text>
+        <text x="266" y="335" font-size="26" font-weight="700" fill="#7FD6C4">여정 · 주변 탐색 화면</text>
+      </g>
+      <path d="M580 230h96" stroke="#8F94AA" stroke-width="2.6" marker-end="url(#a37)" data-a="fi" style="--d:.55s"/>
+      <g data-a="sc" style="--d:.6s">
+        <rect x="700" y="160" width="240" height="140" rx="18" fill="#fff" stroke="#E3E5EF" stroke-width="1.5"/>
+        <text x="820" y="218" font-size="26" font-weight="700" fill="#22243A" text-anchor="middle">서버</text>
+        <text x="820" y="252" font-size="26" font-weight="700" fill="#22243A" text-anchor="middle">판단 없이 중계</text>
+      </g>
+      <g stroke="#8A5FE0" stroke-width="2.6" fill="none" data-a="fi" style="--d:.78s">
+        <path d="M950 210 L1130 108" marker-end="url(#a37p)"/>
+        <path d="M950 230h180" marker-end="url(#a37p)"/>
+        <path d="M950 252 L1130 352" marker-end="url(#a37p)"/>
+      </g>
+      <g data-a="fr" style="--d:.85s">
+        <rect x="1150" y="60" width="240" height="96" rx="14" fill="#14162A"/>
+        <rect x="1176" y="82" width="170" height="14" rx="7" fill="#2AD3AE"/><rect x="1176" y="110" width="130" height="14" rx="7" fill="#2AD3AE"/>
+        <g transform="translate(1440,80) scale(1.5)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <rect x="1150" y="182" width="240" height="96" rx="14" fill="#14162A"/>
+        <rect x="1176" y="204" width="170" height="14" rx="7" fill="#2AD3AE"/><rect x="1176" y="232" width="130" height="14" rx="7" fill="#2AD3AE"/>
+        <g transform="translate(1440,202) scale(1.5)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <rect x="1150" y="304" width="240" height="96" rx="14" fill="#14162A"/>
+        <rect x="1176" y="326" width="170" height="14" rx="7" fill="#2AD3AE"/><rect x="1176" y="354" width="130" height="14" rx="7" fill="#2AD3AE"/>
+        <g transform="translate(1440,324) scale(1.5)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+      </g>
+      <text x="60" y="450" font-size="24" font-weight="600" fill="#5F6480">받는 쪽은 &ldquo;무엇을 보는지&rdquo;만 받고 내용은 직접 조회</text>
+      <defs>
+        <marker id="a37" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#8F94AA"/></marker>
+        <marker id="a37p" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#8A5FE0"/></marker>
+      </defs>
+    </svg>
+  </div>
+  <div class="concl" data-a="fu" style="--d:1s">인솔자 한 번 → 동승자 전원 · 오른쪽 패널(주변 사람 · 랭킹)은 공유 안 함</div>
+  <div class="pnum">29</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">선단은 지도에서 <span class="acc">점 하나</span></h2>
+    <p class="subtitle" data-a="fu" style="--d:.18s">다른 사람의 지도에서 본 모습</p>
+  </div>
+  <div class="sky stagebox short" data-seed="199" data-a="sc" style="--d:.3s;margin-top:20px">
+    <svg class="sky-in" viewBox="0 0 1660 470">
+      <circle cx="430" cy="235" r="176" fill="#3A3F7A" opacity=".55"/>
+      <g fill="#B79BF0">
+        <g transform="translate(348,150) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g>
+        <g transform="translate(462,150) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g>
+        <g transform="translate(348,258) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g>
+        <g transform="translate(462,258) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g>
+      </g>
+      <circle cx="588" cy="118" r="32" fill="#F09D6B"/><text x="588" y="130" font-size="31" font-weight="800" fill="#fff" text-anchor="middle">4</text>
+      <path d="M690 235h250" stroke="#fff" stroke-width="3" marker-end="url(#a38)" data-a="fi" style="--d:.9s"/>
+      <g data-a="pop" style="--d:1.05s">
+        <circle cx="1080" cy="248" r="48" fill="#4F8FE8" opacity=".35"/><circle cx="1080" cy="248" r="30" fill="#4F8FE8"/>
+        <circle cx="1136" cy="196" r="26" fill="#F09D6B"/><text x="1136" y="206" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">4</text>
+      </g>
+      <text x="1090" y="348" font-size="24" font-weight="700" fill="#ECEEF8" text-anchor="middle" data-a="fu" style="--d:1.2s">인솔자 한 점 + 인원수</text>
+      <defs><marker id="a38" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#fff"/></marker></defs>
+    </svg>
+  </div>
+  <div class="concl" data-a="fu" style="--d:1.3s">인솔자가 곡을 바꿔도 지도 알림은 사람 수와 상관없이 <b>1건</b></div>
+  <div class="pnum">30</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">늦게 탄 사람은 인솔자가 <span class="acc">듣는 지점</span>부터</h2>
+  </div>
+  <div style="margin-top:56px;position:relative">
+    <div data-a="fu" style="font-size:24px;font-weight:700;color:var(--ink);margin-left:290px;margin-bottom:14px; --d:.28s">서버에 저장 : &ldquo;30초 지점, 저장 시각 t&rdquo;</div>
+    <div style="display:grid;grid-template-columns:140px 1fr;align-items:center;gap:30px;margin-bottom:64px">
+      <div data-a="fl" style="font-size:26px;font-weight:700; --d:.34s">인솔자</div>
+      <div class="tl" data-a="fr" style="--d:.38s"><i style="width:29%;background:#4F8FE8"></i></div>
+    </div>
+    <div style="display:grid;grid-template-columns:140px 1fr;align-items:center;gap:30px">
+      <div data-a="fl" style="font-size:26px;font-weight:700; --d:.5s">동승자</div>
+      <div class="tl" data-a="fr" style="position:relative; --d:.54s">
+        <div style="position:absolute;left:29%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:#8A5FE0"></div>
+      </div>
+    </div>
+    <div data-a="fi" style="position:absolute;left:calc(170px + 29% * 0.895);top:26px;bottom:74px;width:2px;background:#8A5FE0;opacity:.5; --d:.7s"></div>
+    <div data-a="fu" style="font-size:24px;font-weight:700;color:var(--purple);margin-left:290px;margin-top:22px; --d:.8s">40초 뒤 탑승 → 70초 지점부터</div>
+  </div>
+  <div class="card" data-a="sc" style="margin-top:44px;text-align:center;padding:38px; --d:.95s">
+    <div style="font-size:47px;font-weight:800;color:var(--indigo)">시작 지점 = 지금 − 저장 시각 + 저장 위치</div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:1.15s">인솔자는 재생 · 정지 · 구간 이동 때마다 위치를 저장 (따라오는 사람이 없어도)</div>
+  <div class="pnum">31</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">따라가기가 끝나는 <span class="acc">세 가지 길</span></h2>
+  </div>
+  <div class="cards c3" style="margin-top:44px">
+    <div class="card" data-a="fu" style="text-align:center;padding:34px 30px 40px; --d:.28s">
+      <div style="font-size:30px;font-weight:800;color:var(--purple)">동승자가 하차</div>
+      <svg viewBox="0 0 400 190" style="width:100%;margin:18px 0 8px">
+        <rect x="30" y="20" width="270" height="110" rx="55" fill="#1B1E3A"/>
+        <g transform="translate(62,48) scale(1.3)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g>
+        <g transform="translate(150,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <g transform="translate(212,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <path d="M290 105 L330 140" stroke="#B79BF0" stroke-width="2.4" marker-end="url(#a40)"/>
+        <g transform="translate(330,140)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <defs><marker id="a40" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#B79BF0"/></marker></defs>
+      </svg>
+      <div style="font-size:28px;font-weight:800;margin-top:12px">그 사람만 빠짐</div>
+      <div class="card-s" style="margin-top:8px">선단 유지</div>
+    </div>
+    <div class="card" data-a="fu" style="text-align:center;padding:34px 30px 40px; --d:.4s">
+      <div style="font-size:30px;font-weight:800;color:var(--indigo)">인솔자가 전원 하차</div>
+      <svg viewBox="0 0 400 190" style="width:100%;margin:18px 0 8px">
+        <rect x="30" y="20" width="270" height="110" rx="55" fill="#1B1E3A"/>
+        <g transform="translate(62,48) scale(1.3)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g>
+        <g transform="translate(150,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <g transform="translate(212,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <path d="M165 140v34" stroke="#B79BF0" stroke-width="2.4" marker-end="url(#a40b)"/>
+        <defs><marker id="a40b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#B79BF0"/></marker></defs>
+      </svg>
+      <div style="font-size:28px;font-weight:800;margin-top:12px">동승자 전원 복귀</div>
+      <div class="card-s" style="margin-top:8px">인솔자는 지도에 남음</div>
+    </div>
+    <div class="card" data-a="fu" style="text-align:center;padding:34px 30px 40px; --d:.52s">
+      <div style="font-size:30px;font-weight:800;color:var(--orange)">인솔자가 나감 · 끊김</div>
+      <svg viewBox="0 0 400 190" style="width:100%;margin:18px 0 8px">
+        <rect x="30" y="20" width="270" height="110" rx="55" fill="#1B1E3A"/>
+        <g transform="translate(62,48) scale(1.3)" opacity=".4"><circle cx="14" cy="10" r="10" fill="#5F6480"/><path d="M0 40a14 14 0 0128 0z" fill="#5F6480"/></g>
+        <g transform="translate(150,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <g transform="translate(212,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <path d="M165 140v34" stroke="#B79BF0" stroke-width="2.4" marker-end="url(#a40c)"/>
+        <defs><marker id="a40c" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#B79BF0"/></marker></defs>
+      </svg>
+      <div style="font-size:28px;font-weight:800;margin-top:12px">동승자 전원 복귀</div>
+      <div class="card-s" style="margin-top:8px">30초 주기 검사로도 발견</div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.8s">내린 사람은 그 자리 곡 위로 돌아옴 · 하차는 언제나 가능</div>
+  <div class="pnum">32</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">연결이 끊긴 건 <span class="acc">어떻게</span> 아나</h2>
+    <p class="subtitle" data-a="fu" style="--d:.18s">정상적으로 창을 닫으면 즉시 정리 · 갑자기 끊기면 아래처럼</p>
+  </div>
+  <div style="margin-top:44px">
+    <svg viewBox="0 0 1660 200" data-a="fu" style="width:100%;height:200px; --d:.3s">
+      <text x="30" y="34" font-size="25" font-weight="700" fill="#2AA38B">15초마다 &ldquo;나 여기 있어&rdquo;</text>
+      <text x="800" y="34" font-size="25" font-weight="700" fill="#F09D6B">신호 없음 120초</text>
+      <rect x="330" y="72" width="1120" height="42" rx="21" fill="#FBE3D2"/>
+      <path d="M30 93h300" stroke="#A9B0C4" stroke-width="3"/>
+      <g fill="#2AD3AE"><circle cx="40" cy="93" r="15"/><circle cx="130" cy="93" r="15"/><circle cx="220" cy="93" r="15"/><circle cx="310" cy="93" r="15"/></g>
+      <text x="40" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle">0초</text>
+      <text x="130" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle">15초</text>
+      <text x="220" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle">30초</text>
+      <text x="310" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle">45초</text>
+      <rect x="1460" y="52" width="170" height="82" rx="14" fill="#F09D6B"/>
+      <text x="1545" y="102" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">퇴장 처리</text>
+    </svg>
+  </div>
+  <div class="row r-1-1" style="margin-top:34px">
+    <div class="card" data-a="fl" style="--d:.55s">
+      <div style="font-size:26px;font-weight:700;color:var(--ink2);margin-bottom:20px">왜 120초?</div>
+      <div style="font-size:28px;font-weight:800;color:var(--indigo);line-height:1.6">뒤로 보낸 탭은 신호가 느려짐<br>실측 53~61초 간격</div>
+    </div>
+    <div class="card" data-a="fr" style="--d:.65s">
+      <div style="font-size:26px;font-weight:700;color:var(--ink2);margin-bottom:20px">청소 주기</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center">
+        <div><div style="font-size:43px;font-weight:800;color:var(--indigo)">5초</div><div style="font-size:21px;font-weight:600;color:var(--ink2);margin-top:8px">만료된 사람 정리</div></div>
+        <div><div style="font-size:43px;font-weight:800;color:var(--indigo)">60초</div><div style="font-size:21px;font-weight:600;color:var(--ink2);margin-top:8px">칸별 인원수 다시 세기</div></div>
+        <div><div style="font-size:43px;font-weight:800;color:var(--indigo)">30초</div><div style="font-size:21px;font-weight:600;color:var(--ink2);margin-top:8px">주인 없는 선단 정리</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pnum">33</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">탭을 두 개 열면 <span class="acc">마지막 탭</span>만 산다</h2>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 90px 1fr 90px 1fr;align-items:center;margin-top:50px;height:460px">
+    <div style="display:flex;flex-direction:column;gap:52px;justify-content:center;height:100%">
+      <div class="card" data-a="fl" style="--d:.28s"><div style="font-size:24px;font-weight:700;color:var(--ink2);margin-bottom:14px">첫 번째 탭</div><div style="font-size:37px;font-weight:800;color:var(--orange)">연결 번호 3</div></div>
+      <div class="card" data-a="fl" style="--d:.4s"><div style="font-size:24px;font-weight:700;color:var(--ink2);margin-bottom:14px">새 탭</div><div style="font-size:37px;font-weight:800;color:var(--indigo)">연결 번호 4</div></div>
+    </div>
+    <div data-a="fi" style="display:grid;place-items:center;height:100%; --d:.5s">
+      <svg width="80" height="300"><path d="M4 76 L74 140" stroke="#F09D6B" stroke-width="2.6" marker-end="url(#a42a)"/><path d="M4 224 L74 160" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a42b)"/>
+      <defs><marker id="a42a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#F09D6B"/></marker><marker id="a42b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#5B67E8"/></marker></defs></svg>
+    </div>
+    <div data-a="sc" style="background:var(--dark);border-radius:20px;padding:44px 24px;text-align:center;color:#fff;font-size:32px;font-weight:800;line-height:1.5; --d:.55s">서버 기억<br>번호 4</div>
+    <div data-a="fi" style="display:grid;place-items:center;height:100%; --d:.7s">
+      <svg width="80" height="300"><path d="M4 140 L74 76" stroke="#F09D6B" stroke-width="2.6" marker-end="url(#a42c)"/><path d="M4 160 L74 224" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a42d)"/>
+      <defs><marker id="a42c" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#F09D6B"/></marker><marker id="a42d" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#5B67E8"/></marker></defs></svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:52px;justify-content:center;height:100%">
+      <div class="card warm" data-a="fr" style="text-align:center; --d:.75s"><div style="font-size:35px;font-weight:800;color:#B5612B">3 ≠ 4 → 무시</div></div>
+      <div class="card accent" data-a="fr" style="text-align:center; --d:.85s"><div style="font-size:35px;font-weight:800;color:var(--indigo)">4 = 4 → 처리</div></div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:1s">크다 작다가 아니라 같은지만 비교 · 다시 붙을 때마다 새 번호로 덮어씀</div>
+  <div class="pnum">34</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">반응과 만남, <span class="acc">규칙이 다르다</span></h2>
+  </div>
+  <div class="row r-1-1 fill" style="margin-top:20px">
+    <div class="card" data-a="fl" style="padding:38px 44px; --d:.28s">
+      <div style="font-size:35px;font-weight:800;color:var(--purple);margin-bottom:34px">반응 (이모지)</div>
+      <div class="kv">
+        <div class="k">누구에게</div><div class="v">같은 겹 사람</div>
+        <div class="k">쿨다운</div><div class="v">같은 상대 5초</div>
+        <div class="k">방향</div><div class="v">내가 보냄 ≠ 네가 보냄</div>
+        <div class="k">기록</div><div class="v">남기지 않음</div>
+      </div>
+    </div>
+    <div class="card" data-a="fr" style="padding:38px 44px; --d:.42s">
+      <div style="font-size:35px;font-weight:800;color:var(--indigo);margin-bottom:34px">만남</div>
+      <div class="kv">
+        <div class="k">언제</div><div class="v">같은 겹 · 같은 곡</div>
+        <div class="k">쿨다운</div><div class="v">한 쌍 3분</div>
+        <div class="k">방향</div><div class="v">누가 먼저든 한 번</div>
+        <div class="k">기록</div><div class="v">DB에 +1 (뒤에서 처리)</div>
+      </div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.8s">따라가는 동안 · 선단 안에서는 만남으로 세지 않음</div>
+  <div class="pnum">35</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">전체 흐름: <span class="acc">필요한 사람</span>에게만</h2>
+  </div>
+  <div class="steps" style="margin-top:78px;grid-template-columns:repeat(5,1fr)">
+    <div class="step" data-a="fu" style="--d:.26s"><div class="dot-n dk">1</div><div class="arr"></div><div class="lbl">곡 재생</div><div class="card-s" style="margin-top:12px">내 위치 이동</div></div>
+    <div class="step" data-a="fu" style="--d:.36s"><div class="dot-n dk">2</div><div class="arr"></div><div class="lbl">칸 찾기</div><div class="card-s" style="margin-top:12px">옛 칸 · 새 칸</div></div>
+    <div class="step" data-a="fu" style="--d:.46s"><div class="dot-n dk">3</div><div class="arr"></div><div class="lbl">화면 확인</div><div class="card-s" style="margin-top:12px">실제 좌표로 거름</div></div>
+    <div class="step" data-a="fu" style="--d:.56s"><div class="dot-n dk">4</div><div class="arr"></div><div class="lbl">인솔자면</div><div class="card-s" style="margin-top:12px">동승자에게 중계</div></div>
+    <div class="step" data-a="fu" style="--d:.66s"><div class="dot-n teal">5</div><div class="lbl">전달</div><div class="card-s" style="margin-top:12px">관련 있는 사람만</div></div>
+  </div>
+  <div class="card" data-a="fu" style="margin-top:64px;padding:34px 44px;font-size:27px;font-weight:700; --d:.85s">
+    상태는 Redis(메모리) · 여러 값을 한 번에 바꾸는 스크립트 13개로 반쪽 갱신 방지 · 만남 · 재생 기록만 DB
+  </div>
+  <div class="pnum">36</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">지금은 <span class="acc">서버 1대</span> 기준으로 설계</h2>
+  </div>
+  <div class="row r-1-1" style="margin-top:34px">
+    <div class="card" data-a="fl" style="padding:34px 40px 44px; --d:.28s">
+      <div style="font-size:29px;font-weight:800;color:var(--indigo);margin-bottom:28px">지금</div>
+      <svg viewBox="0 0 640 310" style="width:100%">
+        <rect x="30" y="20" width="270" height="270" rx="20" fill="#14162A"/>
+        <text x="165" y="66" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">서버</text>
+        <rect x="58" y="92" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="126" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">연결 번호표</text>
+        <rect x="58" y="158" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="192" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">메시지 순번</text>
+        <rect x="58" y="224" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="258" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">이벤트 전달</text>
+        <path d="M312 155h72" stroke="#8F94AA" stroke-width="2.4"/><path d="M382 149l12 6-12 6z" fill="#8F94AA"/><path d="M320 161l-12-6 12-6z" fill="#8F94AA"/>
+        <rect x="400" y="100" width="210" height="110" rx="18" fill="#EDE8FB"/>
+        <text x="505" y="164" font-size="30" font-weight="800" fill="#8A5FE0" text-anchor="middle">Redis</text>
+      </svg>
+      <div style="font-size:24px;font-weight:700;color:var(--orange);margin-top:14px">주황 = 서버 메모리에만 있음</div>
+    </div>
+    <div class="card" data-a="fr" style="padding:34px 40px 44px; --d:.42s">
+      <div style="font-size:29px;font-weight:800;color:var(--ink2);margin-bottom:28px">늘린다면</div>
+      <svg viewBox="0 0 640 310" style="width:100%">
+        <rect x="30" y="50" width="230" height="86" rx="18" fill="#14162A"/><text x="145" y="103" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">서버 A</text>
+        <rect x="30" y="176" width="230" height="86" rx="18" fill="#14162A"/><text x="145" y="229" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">서버 B</text>
+        <rect x="360" y="98" width="250" height="116" rx="18" fill="#EEF0FF" stroke="#5B67E8" stroke-width="2" stroke-dasharray="9 7"/>
+        <text x="485" y="148" font-size="24" font-weight="800" fill="#5B67E8" text-anchor="middle">메시지 브로커</text>
+        <text x="485" y="180" font-size="24" font-weight="800" fill="#5B67E8" text-anchor="middle">(Redis Pub/Sub 등)</text>
+        <path d="M268 100 L352 136" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a45)"/>
+        <path d="M268 212 L352 176" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a45)"/>
+        <defs><marker id="a45" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#5B67E8"/></marker></defs>
+      </svg>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.8s">실시간 동시 접속 부하는 아직 미측정 · 부하 테스트는 HTTP만 진행</div>
+  <div class="pnum">37</div>
+</section>
+
+</div>
+</div>
+
+<div class="nav">
+  <button data-prev aria-label="이전">←</button>
+  <span class="counter">1 / 42</span>
+  <button data-next aria-label="다음">→</button>
+</div>
+
+<script src="assets/deck.js"></script>
+<script src="assets/feature-figures.js"></script>
+<script>ODY.initDeck({backHref:'index.html#feature'});</script>
+</body>
+</html>

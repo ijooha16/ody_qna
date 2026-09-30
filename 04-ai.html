@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ODY Q&amp;A · 04 AI</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  /* ===== S1 : 핵심 vs 보조 ===== */
+  .split2{display:grid;grid-template-columns:1fr 720px;gap:30px;margin-top:10px}
+  .split2 .card{padding:36px 40px}
+  .split2 .t{font-size:36px;font-weight:800}
+  .split2 .s{font-size:25px;font-weight:600;color:var(--ink2);margin:6px 0 26px}
+  .core{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .core div{background:var(--white);border:1px solid var(--indigo);border-radius:16px;padding:44px 20px;text-align:center;font-size:34px;font-weight:800;color:var(--indigo)}
+  .aux .box{background:#EDEEF4;border-radius:14px;padding:26px 20px;text-align:center;font-size:30px;font-weight:800}
+  .aux .fb{font-size:25px;font-weight:700;color:var(--orange);text-align:center;margin:14px 0 28px}
+
+  /* ===== S3 · S4 : 흐름 아래 붙는 설명 ===== */
+  .under{display:grid;gap:24px;margin-top:36px;align-items:start}
+  .under .card{padding:26px 28px;text-align:center}
+  .under .k{font-size:24px;font-weight:700;color:var(--ink2);margin-bottom:12px}
+  .under .v{font-size:28px;font-weight:800;line-height:1.45}
+  .under .v.big{font-size:34px}
+  .under .warm{display:flex;flex-direction:column;gap:12px;align-items:center}
+  .under .warm span{background:#FDEBDD;color:#B5612B;border-radius:999px;padding:12px 26px;font-size:25px;font-weight:700}
+  .under .gry{background:#EDEEF4;color:var(--ink2);border-radius:14px;padding:22px 20px;font-size:22px;font-weight:700;text-align:center;white-space:nowrap}
+</style>
+</head>
+<body>
+<button class="backbtn" title="질문 목록으로 (Esc)" aria-label="질문 목록"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4l-8 8 8 8"/></svg></button>
+<div class="prog"></div>
+
+<div class="stage">
+<div class="deck">
+
+<!-- ================= S1 ================= -->
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · AI</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">핵심은 <span class="acc">통계</span>, LLM은 보조 두 곳에만</h2>
+  </div>
+  <div class="split2">
+    <div class="card accent" data-a="fl" style="--d:.25s">
+      <div class="t acc">핵심 기능 · LLM 없음</div>
+      <div class="s">소리 좌표(PCA) + 규칙</div>
+      <div class="core"><div>지도</div><div>주변 탐색</div><div>여정</div><div>실시간</div></div>
+    </div>
+    <div class="card aux" data-a="fr" style="--d:.35s">
+      <div class="t" style="color:var(--ink2)">보조 · LLM</div>
+      <div class="s">&nbsp;</div>
+      <div class="box">별자리 작품 채점</div>
+      <div class="fb">실패 → 좋아요만</div>
+      <div class="box">취향 분석 문구</div>
+      <div class="fb" style="margin-bottom:0">실패 → 규칙 문구</div>
+    </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.7s">LLM이 멈춰도 서비스는 그대로 · 느림 · 비용 · 환각을 핵심에서 뺌</div>
+  <div class="pnum">1</div>
+</section>
+
+<!-- ================= S2 ================= -->
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · AI</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">딥러닝 대신 <span class="acc">PCA</span>를 고른 이유</h2>
+  </div>
+  <div class="cmptbl" style="grid-template-columns:300px 1fr 1fr 1fr;margin-top:10px;--d:.25s" data-a="fu">
+    <div class="h"></div><div class="h pick">PCA (채택)</div><div class="h">딥러닝 임베딩</div><div class="h">t-SNE · UMAP</div>
+    <div class="lb">축에 뜻이 있나</div><div class="pick">있음 · "오른쪽 = 밝음"</div><div>없음</div><div>없음</div>
+    <div class="lb">새 곡 올리기</div><div class="pick">곱셈 한 번</div><div>모델 다시 돌림</div><div>전체 다시 계산</div>
+    <div class="lb">지도가 고정되나</div><div class="pick">고정 (축을 얼림)</div><div>모델 따라 변함</div><div>계산마다 변함</div>
+    <div class="lb">검증</div><div class="pick">정답지로 확인 (+0.047)</div><div>—</div><div>—</div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:.7s">나중에 PCA 자리를 바꿔도 DB · 레이어 · 이웃 · 여정 구조는 그대로</div>
+  <div class="pnum">2</div>
+</section>
+
+<!-- ================= S3 ================= -->
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · AI</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">별자리 작품 채점 — <span class="acc">사람 표</span>와 합산</h2>
+  </div>
+  <div class="fill" style="display:grid">
+  <div class="hflow" style="grid-template-columns:1fr 56px 1fr 56px 1fr 56px 1fr 56px 1fr">
+    <div class="bx" data-a="fu" style="--d:.22s">작품 제출</div>
+    <div class="ar" data-a="fi" style="--d:.28s"></div>
+    <div class="bx" data-a="fu" style="--d:.32s">대기열<br><small style="font-size:24px;font-weight:600;color:var(--ink2)">5초마다 3건</small></div>
+    <div class="ar" data-a="fi" style="--d:.38s"></div>
+    <div class="bx ind" data-a="fu" style="--d:.42s">LLM 채점<br><small style="font-size:24px;font-weight:700">0~100 + 한 줄 평</small></div>
+    <div class="ar" data-a="fi" style="--d:.48s"></div>
+    <div class="bx" data-a="fu" style="--d:.52s">형식 · 범위 검사<br><small style="font-size:24px;font-weight:600;color:var(--ink2)">최대 3회 재시도</small></div>
+    <div class="ar" data-a="fi" style="--d:.58s"></div>
+    <div class="bx dk" data-a="fu" style="--d:.62s">최종 순위</div>
+  </div>
+  <div class="under" style="grid-template-columns:2fr 1fr 2fr">
+    <div class="gry" data-a="fu" style="--d:.75s">temperature 0 → 같은 입력 같은 점수</div>
+    <div class="card" data-a="fu" style="--d:.8s"><div class="k">함께 주는 것</div><div class="v">회차 주제<br>기준 그림 · 기준 점수</div></div>
+    <div class="card" data-a="fu" style="--d:.85s"><div class="v big">순위 = 좋아요 + AI 점수 × 가중치</div></div>
+  </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:1s">AI 점수만으로 순위를 정하지 않음</div>
+  <div class="pnum">3</div>
+</section>
+
+<!-- ================= S4 ================= -->
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · AI</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">취향 분석 — 내용은 <span class="acc">규칙</span>이, 문장만 LLM이</h2>
+  </div>
+  <div class="fill" style="display:grid">
+  <div class="hflow" style="grid-template-columns:1fr 60px 1fr 60px 1fr 60px 1fr">
+    <div class="bx" data-a="fu" style="--d:.22s">좋아요한 곡들</div>
+    <div class="ar" data-a="fi" style="--d:.28s"></div>
+    <div class="bx ind" data-a="fu" style="--d:.32s">좌표 16개로<br>규칙이 "발견"</div>
+    <div class="ar" data-a="fi" style="--d:.38s"></div>
+    <div class="bx" data-a="fu" style="--d:.42s">LLM<br>문장만 다듬기</div>
+    <div class="ar" data-a="fi" style="--d:.48s"></div>
+    <div class="bx dk" data-a="fu" style="--d:.52s">취향 한 줄</div>
+  </div>
+  <div class="under" style="grid-template-columns:1fr 60px 1fr 60px 1fr 60px 1fr">
+    <div class="gry" data-a="fu" style="--d:.7s">하루 1회 · 같은 목록이면 재사용</div>
+    <div></div>
+    <div class="card" data-a="fu" style="--d:.76s"><div class="k">예</div><div class="v">PC1 평균보다 높음<br>= 밝고 꽉 찬 소리</div></div>
+    <div></div>
+    <div class="warm" data-a="fu" style="--d:.82s"><span>해요체 160자</span><span>숫자 금지</span><span>장르 · 가수 금지</span></div>
+    <div></div>
+    <div class="card" data-a="fu" style="--d:.88s"><div class="k">실패하면</div><div class="v">규칙 문구 그대로</div></div>
+  </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:1s">없는 말을 지어낼 여지를 규칙으로 막음</div>
+  <div class="pnum">4</div>
+</section>
+
+</div>
+</div>
+
+<div class="nav">
+  <button data-prev aria-label="이전">←</button>
+  <span class="counter">1 / 4</span>
+  <button data-next aria-label="다음">→</button>
+</div>
+
+<script src="assets/deck.js"></script>
+<script>ODY.initDeck({backHref:'index.html#ai'});</script>
+</body>
+</html>

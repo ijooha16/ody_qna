@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ODY Q&amp;A · 01 기획</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  /* ===== S1 : 기존 추천 vs ODY ===== */
+  .cmp{display:grid;grid-template-columns:1fr 92px 1fr;align-items:stretch;gap:0;height:560px}
+  .cmp .card{height:100%;display:flex;flex-direction:column}
+  .cmp-arrow{display:grid;place-items:center}
+  .cmp-arrow svg{overflow:visible}
+  .panel-t{font-size:31px;font-weight:800;margin-bottom:26px}
+  .genres{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;flex:1}
+  .genre{background:#EDEEF4;border-radius:14px;padding:20px 0 24px;display:flex;flex-direction:column;align-items:center}
+  .genre-n{font-size:25px;font-weight:700;color:var(--ink);margin-bottom:18px}
+  .gdots{display:grid;grid-template-columns:repeat(3,18px);gap:16px 20px}
+  .gdots i{width:18px;height:18px;border-radius:50%;display:block}
+  .person{width:22px;height:34px;margin-top:20px;position:relative}
+  .person::before{content:'';position:absolute;top:0;left:4px;width:14px;height:14px;border-radius:50%;background:var(--ink)}
+  .person::after{content:'';position:absolute;bottom:0;left:0;width:22px;height:15px;border-radius:11px 11px 4px 4px;background:var(--ink)}
+  .cap{font-size:26px;font-weight:700;text-align:center;margin-top:20px}
+
+  /* ===== S2 : 사용자 여정 ===== */
+  .steps{display:grid;grid-template-columns:repeat(6,1fr);gap:0;align-items:start;margin-top:14px}
+  .step{text-align:center;position:relative}
+  .step .arr{position:absolute;top:52px;right:-22px;width:44px;height:2px;background:#C8CCDA}
+  .step .arr::after{content:'';position:absolute;right:0;top:-4px;border-left:9px solid #C8CCDA;border-top:5px solid transparent;border-bottom:5px solid transparent}
+  .step .lbl{font-size:28px;font-weight:800;margin-top:22px}
+  .step .box{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:20px 8px;font-size:25px;font-weight:700;margin-top:24px}
+  .step .tag{display:inline-block;margin-top:16px;border-radius:999px;padding:9px 20px;font-size:21px;font-weight:700}
+
+  /* ===== S3 : 결정 여섯 가지 ===== */
+  .dec{display:grid;grid-template-columns:330px 96px 330px 1fr;align-items:center;gap:16px 0;row-gap:20px}
+  .dec .old{background:#EDEEF4;border-radius:12px;padding:18px 24px;font-size:26px;font-weight:700;color:#7C8196;text-decoration:line-through;text-decoration-color:#B4B8C8;text-align:center}
+  .dec .arr2{height:2px;background:var(--indigo);position:relative;margin:0 18px}
+  .dec .arr2::after{content:'';position:absolute;right:0;top:-5px;border-left:10px solid var(--indigo);border-top:6px solid transparent;border-bottom:6px solid transparent}
+  .dec .new{background:var(--indigo);color:#fff;border-radius:12px;padding:18px 24px;font-size:26px;font-weight:800;text-align:center}
+  .dec .why{font-size:25px;font-weight:600;color:var(--ink2);padding-left:34px}
+
+  /* ===== S4 : 음원 비저장 ===== */
+  .fl{display:grid;grid-template-columns:1fr 62px 1fr 62px 1fr 62px 200px;align-items:center;margin-bottom:30px}
+  .fl .bx{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:30px 20px;text-align:center;font-size:28px;font-weight:700;line-height:1.35;min-height:118px;display:grid;place-items:center}
+  .fl .bx.ind{color:var(--indigo);font-weight:800}
+  .fl .bx.dk{background:var(--dark);color:#fff;border-color:var(--dark);font-size:26px}
+  .fl .ar{height:2px;background:#C8CCDA;margin:0 14px;position:relative}
+  .fl .ar::after{content:'';position:absolute;right:0;top:-4px;border-left:9px solid #C8CCDA;border-top:5px solid transparent;border-bottom:5px solid transparent}
+  .fl .side{font-size:24px;font-weight:600;color:var(--ink2);padding-left:24px}
+  .xmark{position:absolute;top:-16px;right:-14px;font-size:45px;font-weight:800;color:var(--orange);line-height:1}
+  .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:8px;text-align:left}
+
+  /* ===== S5 : 한계 ===== */
+  .lim{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .lim .card{padding:30px 32px}
+  .lim .t{display:flex;align-items:center;gap:12px;font-size:30px;font-weight:800}
+  .lim .t::before{content:'';width:13px;height:13px;border-radius:50%;background:var(--orange);flex:none}
+  .lim .s{font-size:24px;font-weight:600;color:var(--ink2);margin:16px 0 22px}
+  .lim .nx{background:#E9ECFF;color:var(--indigo);border-radius:12px;padding:14px 20px;font-size:24px;font-weight:700}
+</style>
+</head>
+<body>
+<button class="backbtn" title="질문 목록으로 (Esc)" aria-label="질문 목록"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4l-8 8 8 8"/></svg></button>
+<div class="prog"></div>
+
+<div class="stage">
+<div class="deck">
+
+<!-- ================= S1 ================= -->
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 기획</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">장르가 아니라 <span class="acc">소리</span>로 놓은 지도</h2>
+  </div>
+
+  <div class="cmp">
+    <div class="card" data-a="fl" style="--d:.25s">
+      <div class="panel-t">기존 추천</div>
+      <div class="genres">
+        <div class="genre">
+          <div class="genre-n">발라드</div>
+          <div class="gdots">
+            <i style="background:var(--peri)"></i><i style="background:var(--peri)"></i><i style="background:var(--peri)"></i>
+            <i style="background:var(--peri)"></i><i style="background:var(--peri)"></i><i style="background:var(--peri)"></i>
+            <i style="background:var(--peri)"></i><i style="background:var(--peri)"></i><i style="background:var(--peri)"></i>
+          </div>
+          <div class="person"></div>
+        </div>
+        <div class="genre">
+          <div class="genre-n">힙합</div>
+          <div class="gdots">
+            <i style="background:var(--orange)"></i><i style="background:var(--orange)"></i><i style="background:var(--orange)"></i>
+            <i style="background:var(--orange)"></i><i style="background:var(--orange)"></i><i style="background:var(--orange)"></i>
+            <i style="background:var(--orange)"></i><i style="background:var(--orange)"></i><i style="background:var(--orange)"></i>
+          </div>
+        </div>
+        <div class="genre">
+          <div class="genre-n">재즈</div>
+          <div class="gdots">
+            <i style="background:var(--teal)"></i><i style="background:var(--teal)"></i><i style="background:var(--teal)"></i>
+            <i style="background:var(--teal)"></i><i style="background:var(--teal)"></i><i style="background:var(--teal)"></i>
+            <i style="background:var(--teal)"></i><i style="background:var(--teal)"></i><i style="background:var(--teal)"></i>
+          </div>
+        </div>
+      </div>
+      <div class="cap acc-o">같은 칸 안에서만 맴돔</div>
+    </div>
+
+    <div class="cmp-arrow" data-a="fi" style="--d:.5s">
+      <svg width="60" height="24" viewBox="0 0 60 24"><path d="M0 12h46" stroke="#5B67E8" stroke-width="3"/><path d="M44 5l12 7-12 7z" fill="#5B67E8"/></svg>
+    </div>
+
+    <div class="card" data-a="fr" style="--d:.4s">
+      <div class="panel-t acc">ODY</div>
+      <svg viewBox="0 0 560 330" style="flex:1;width:100%">
+        <g id="s1-scatter"></g>
+        <path id="s1-path" d="M64 286 L176 236 L268 188 L364 142 L470 92" stroke="#5B67E8" stroke-width="3.5" fill="none"
+              style="--len:520;--d:.85s" data-draw/>
+        <g>
+          <circle cx="64"  cy="286" r="15" fill="#98A4FF" stroke="#5B67E8" stroke-width="3" data-a="pop" style="--d:1.5s"/>
+          <circle cx="176" cy="236" r="15" fill="#F09D6B" stroke="#5B67E8" stroke-width="3" data-a="pop" style="--d:1.6s"/>
+          <circle cx="268" cy="188" r="15" fill="#2AA38B" stroke="#5B67E8" stroke-width="3" data-a="pop" style="--d:1.7s"/>
+          <circle cx="364" cy="142" r="15" fill="#98A4FF" stroke="#5B67E8" stroke-width="3" data-a="pop" style="--d:1.8s"/>
+          <circle cx="470" cy="92"  r="15" fill="#F09D6B" stroke="#5B67E8" stroke-width="3" data-a="pop" style="--d:1.9s"/>
+        </g>
+      </svg>
+      <div class="cap acc" data-a="fu" style="--d:2s">소리가 비슷하면 가까이 · 장르를 넘어 이어짐</div>
+    </div>
+  </div>
+
+  <div class="concl" data-a="fu" style="--d:1.1s">469만 곡 · 소리 특징만으로 배치 · 장르는 색과 필터로만</div>
+  <div class="pnum">1</div>
+</section>
+
+<!-- ================= S2 ================= -->
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 기획</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">사용자 한 명의 <span class="acc">5분</span></h2>
+  </div>
+
+  <div class="steps" style="margin-top:56px">
+    <div class="step" data-a="fu" style="--d:.25s"><div class="dot-n gray">1</div><div class="arr"></div><div class="lbl">구글 로그인</div><div class="box">토큰 발급</div><div><span class="tag chip gry">계정</span></div></div>
+    <div class="step" data-a="fu" style="--d:.35s"><div class="dot-n">2</div><div class="arr"></div><div class="lbl">지도 첫 화면</div><div class="box">표본 7,204곡</div><div><span class="tag chip ind">지도</span></div></div>
+    <div class="step" data-a="fu" style="--d:.45s"><div class="dot-n">3</div><div class="arr"></div><div class="lbl">별 클릭 · 재생</div><div class="box">내 위치 = 그 곡</div><div><span class="tag chip ind">지도 · 실시간</span></div></div>
+    <div class="step" data-a="fu" style="--d:.55s"><div class="dot-n">4</div><div class="arr"></div><div class="lbl">가까운 10곡</div><div class="box">2.24ms</div><div><span class="tag chip ind">지도</span></div></div>
+    <div class="step" data-a="fu" style="--d:.65s"><div class="dot-n">5</div><div class="arr"></div><div class="lbl">여정</div><div class="box">2~20곡</div><div><span class="tag chip ind">지도</span></div></div>
+    <div class="step" data-a="fu" style="--d:.75s"><div class="dot-n org">6</div><div class="lbl">따라가기</div><div class="box">실시간 전달</div><div><span class="tag chip org">실시간</span></div></div>
+  </div>
+
+  <div class="concl" data-a="fu" style="--d:.95s">재생 한 번이 위치 · 기록 · 만남 · 동승자 전달까지 한꺼번에</div>
+  <div class="pnum">2</div>
+</section>
+
+<!-- ================= S3 ================= -->
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 기획</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">실측으로 바꾼 결정 <span class="acc">여섯 가지</span></h2>
+  </div>
+
+  <div class="dec fill-lg" style="margin-top:20px">
+    <div class="old" data-a="fl" style="--d:.24s">장르 3단 계층</div><div class="arr2" data-a="fi" style="--d:.3s"></div><div class="new" data-a="fr" style="--d:.28s">소리 좌표만</div><div class="why" data-a="fi" style="--d:.36s">장르는 색 · 필터로</div>
+    <div class="old" data-a="fl" style="--d:.32s">64차원</div><div class="arr2" data-a="fi" style="--d:.38s"></div><div class="new" data-a="fr" style="--d:.36s">16차원</div><div class="why" data-a="fi" style="--d:.44s">65% 기준 넘는 최소 · 8겹 × 2축</div>
+    <div class="old" data-a="fl" style="--d:.40s">트리로 나눈 레이어</div><div class="arr2" data-a="fi" style="--d:.46s"></div><div class="new" data-a="fr" style="--d:.44s">좌표 두 개씩 레이어</div><div class="why" data-a="fi" style="--d:.52s">경계에서 곡이 갈리는 문제</div>
+    <div class="old" data-a="fl" style="--d:.48s">Neo4j</div><div class="arr2" data-a="fi" style="--d:.54s"></div><div class="new" data-a="fr" style="--d:.52s">pgvector</div><div class="why" data-a="fi" style="--d:.60s">정확도 0.912 → <b class="acc">0.9995</b> · 서버 추가 없음</div>
+    <div class="old" data-a="fl" style="--d:.56s">kNN + 최단 경로</div><div class="arr2" data-a="fi" style="--d:.62s"></div><div class="new" data-a="fr" style="--d:.60s">직선 축 + 동적 계획법</div><div class="why" data-a="fi" style="--d:.68s">듣기 자연스러움 · 메모리 15GB 초과</div>
+    <div class="old" data-a="fl" style="--d:.64s">칸당 1곡 첫 화면</div><div class="arr2" data-a="fi" style="--d:.70s"></div><div class="new" data-a="fr" style="--d:.68s">밀도 비례 표본</div><div class="why" data-a="fi" style="--d:.76s">바둑판 무늬 83.5% → <b class="acc">24.7%</b></div>
+  </div>
+  <div class="pnum">3</div>
+</section>
+
+<!-- ================= S4 ================= -->
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 기획</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">음원은 <span class="acc">한 곡도</span> 저장하지 않는다</h2>
+  </div>
+
+  <div class="fill-lg" style="margin-top:20px;display:grid;align-content:center">
+    <div class="fl">
+      <div class="bx" data-a="fu" style="position:relative; --d:.24s">음원 파일<span class="xmark">✕</span></div>
+      <div class="ar" data-a="fi" style="--d:.3s"></div>
+      <div class="bx ind" data-a="fu" style="--d:.34s">소리 분석 숫자<br>2,900개</div>
+      <div class="ar" data-a="fi" style="--d:.4s"></div>
+      <div class="bx ind" data-a="fu" style="--d:.44s">지도 좌표</div>
+      <div></div>
+      <div class="side" data-a="fi" style="--d:.5s">지도 만들기</div>
+    </div>
+    <div class="fl" style="margin-bottom:12px">
+      <div class="bx" data-a="fu" style="--d:.54s">곡 이름</div>
+      <div class="ar" data-a="fi" style="--d:.6s"></div>
+      <div class="bx" data-a="fu" style="--d:.64s">YouTube 검색<br>+ 재생 가능 확인</div>
+      <div class="ar" data-a="fi" style="--d:.7s"></div>
+      <div class="bx ind" data-a="fu" style="--d:.74s">영상 ID만 저장</div>
+      <div class="ar" data-a="fi" style="--d:.8s"></div>
+      <div class="bx dk" data-a="fu" style="--d:.84s">공식<br>플레이어</div>
+    </div>
+
+    <div class="nums" style="margin-top:44px">
+      <div data-a="fu" style="--d:.95s"><div class="big acc">0 곡</div><div class="big-cap">음원 저장</div></div>
+      <div data-a="fu" style="--d:1.05s"><div class="big acc-o">564 곡</div><div class="big-cap">재생 불가 → 지도에서 뺌</div></div>
+      <div data-a="fu" style="--d:1.15s"><div class="big acc">72 / 84</div><div class="big-cap">신곡 영상 확보</div></div>
+    </div>
+  </div>
+  <div class="pnum">4</div>
+</section>
+
+<!-- ================= S5 ================= -->
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 기획</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">알고 있는 <span class="acc">한계</span>와 다음 단계</h2>
+  </div>
+
+  <div class="lim fill-lg" style="margin-top:20px">
+    <div class="card" data-a="fu" style="--d:.24s"><div class="t">실시간 부하 미측정</div><div class="s">서버 1대 전제</div><div class="nx">→ 메시지 브로커 분리</div></div>
+    <div class="card" data-a="fu" style="--d:.32s"><div class="t">깊은 겹 설명력</div><div class="s">6~8겹 축 1~2%</div><div class="nx">→ &ldquo;경향&rdquo; 수준 라벨</div></div>
+    <div class="card" data-a="fu" style="--d:.40s"><div class="t">한국곡 · 신곡 적음</div><div class="s">해외 · 2022년까지</div><div class="nx">→ 신곡 추가 경로 확대</div></div>
+    <div class="card" data-a="fu" style="--d:.48s"><div class="t">영상 매칭 추측</div><div class="s">유사도 0.6 채택</div><div class="nx">→ 신뢰도 표시 · 신고</div></div>
+    <div class="card" data-a="fu" style="--d:.56s"><div class="t">보안 설정</div><div class="s">WS 출처 * · 호출 제한 없음</div><div class="nx">→ 출처 제한 · rate limit</div></div>
+    <div class="card" data-a="fu" style="--d:.64s"><div class="t">무중단의 대가</div><div class="s">서버 자원 두 벌</div><div class="nx">→ DB 변경은 호환되게</div></div>
+  </div>
+  <div class="pnum">5</div>
+</section>
+
+</div>
+</div>
+
+<div class="nav">
+  <button data-prev aria-label="이전">←</button>
+  <span class="counter">1 / 5</span>
+  <button data-next aria-label="다음">→</button>
+</div>
+
+<script src="assets/deck.js"></script>
+<script>
+// S1 산점도 (결정론적)
+(function(){
+  const g = document.getElementById('s1-scatter');
+  if(!g) return;
+  const r = ODY.rng(99);
+  const cols = ['#98A4FF','#F09D6B','#2AA38B','#C3CAFF','#7FD6C4'];
+  let html = '';
+  for(let i=0;i<58;i++){
+    const x = 30 + r()*500, y = 24 + r()*286;
+    const rad = 5 + r()*4;
+    html += '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+rad.toFixed(1)+'" fill="'+cols[Math.floor(r()*cols.length)]+'" opacity="'+(0.55+r()*0.4).toFixed(2)+'"/>';
+  }
+  g.innerHTML = html;
+  g.setAttribute('data-a','fi');
+  g.style.setProperty('--d','.6s');
+})();
+ODY.initDeck({backHref:'index.html#planning'});
+</script>
+</body>
+</html>

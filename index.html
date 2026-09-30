@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ODY · 최종 발표 Q&amp;A</title>
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  body{background:var(--dark)}
+  .slide.home{display:block;background:var(--dark);padding:0}
+  .home-grid{position:absolute;inset:0;display:grid;grid-template-columns:860px 1fr}
+
+  /* 좌측 */
+  .home-l{padding:64px 0 56px 130px;display:flex;flex-direction:column;position:relative;z-index:2}
+  .brand-eyebrow{font-size:28px;font-weight:800;letter-spacing:.22em;color:var(--dink3)}
+  .brand{font-size:150px;font-weight:800;letter-spacing:-.045em;line-height:.92;color:var(--dink);margin:22px 0 0}
+  .brand-def{font-size:35px;font-weight:600;color:var(--dink2);margin-top:20px;letter-spacing:-.01em}
+  .brand-tag{font-size:26px;font-weight:500;color:#9AA0CC;margin-top:10px}
+
+  .cats{margin-top:30px;display:flex;flex-direction:column;gap:12px;width:610px}
+  .cat{
+    display:flex;align-items:center;gap:22px;width:100%;text-align:left;cursor:pointer;
+    background:rgba(255,255,255,.035);border:1px solid rgba(152,164,255,.16);
+    border-radius:20px;padding:15px 30px;font:inherit;color:var(--dink);
+    transition:background .22s var(--ease),border-color .22s var(--ease),transform .22s var(--ease);
+  }
+  .cat:hover{background:rgba(91,103,232,.16);border-color:rgba(152,164,255,.45);transform:translateX(6px)}
+  .cat.on{background:var(--indigo);border-color:var(--indigo)}
+  .cat .num{font-size:27px;font-weight:800;letter-spacing:.06em;color:var(--dink3);min-width:36px}
+  .cat.on .num{color:#C9CFFF}
+  .cat .nm{font-size:36px;font-weight:800;letter-spacing:-.01em}
+  .cat .cnt{margin-left:auto;font-size:22px;font-weight:600;color:var(--dink3)}
+  .cat.on .cnt{color:#D5DAFF}
+  .cat[disabled]{opacity:.34;cursor:default}
+  .cat[disabled]:hover{transform:none;background:rgba(255,255,255,.035);border-color:rgba(152,164,255,.16)}
+
+  .home-hint{margin-top:auto;font-size:21px;font-weight:500;color:#8C93C4}
+  .home-hint b{color:#B8BEE8;font-weight:700}
+
+  /* 우측 질문 패널 */
+  .home-r{position:relative;background:#1A1F4B;overflow:hidden}
+  .qwrap{position:absolute;inset:0;padding:96px 110px 84px 76px;display:flex;flex-direction:column;z-index:2}
+  .qempty{margin:auto;text-align:center;color:#8A90BE;font-size:29px;font-weight:600;line-height:1.7}
+  .qempty span{display:block;font-size:22px;font-weight:500;color:#7A80B0;margin-top:12px}
+
+  .qhead{font-size:27px;font-weight:800;letter-spacing:.18em;color:var(--peri);margin-bottom:8px}
+  .qsub{font-size:25px;font-weight:500;color:#9AA0CC;margin-bottom:30px}
+  .qlist{display:flex;flex-direction:column;gap:9px;overflow-y:auto;padding-right:14px;flex:1}
+  .qlist::-webkit-scrollbar{width:7px}
+  .qlist::-webkit-scrollbar-thumb{background:#2E3360;border-radius:4px}
+  .q{
+    display:flex;align-items:flex-start;gap:18px;cursor:pointer;text-align:left;
+    background:rgba(255,255,255,.028);border:1px solid rgba(152,164,255,.1);border-left:3px solid transparent;
+    border-radius:14px;padding:17px 22px;font:inherit;color:var(--dink);text-decoration:none;
+    transition:background .18s var(--ease),border-color .18s var(--ease),transform .18s var(--ease);
+  }
+  .q:hover{background:rgba(91,103,232,.2);border-left-color:var(--peri);transform:translateX(5px)}
+  .q .qn{font-size:21px;font-weight:800;color:var(--dink3);min-width:40px;padding-top:3px;letter-spacing:.04em}
+  .q:hover .qn{color:var(--peri)}
+  .q .qt{font-size:27px;font-weight:700;line-height:1.4;letter-spacing:-.01em}
+  .q .qp{margin-left:auto;font-size:20px;font-weight:600;color:#9096C8;padding-top:5px;white-space:nowrap}
+
+  .qsect{font-size:22px;font-weight:800;letter-spacing:.16em;color:var(--teal-s);margin:24px 0 6px;padding-left:4px}
+  .qsect:first-child{margin-top:0}
+
+  .fadein{animation:fu .5s var(--ease) both}
+
+  /* 검색 */
+  .search{margin-top:20px;margin-bottom:20px;width:610px}
+  .search input{
+    width:100%;font:inherit;font-size:30px;font-weight:600;color:var(--dink);
+    background:rgba(255,255,255,.05);border:1px solid rgba(152,164,255,.3);border-radius:18px;padding:14px 28px;outline:none;
+  }
+  .search input::placeholder{color:#7A80B0}
+  .search input:focus{border-color:var(--peri);background:rgba(91,103,232,.12)}
+  .q .qbody{display:flex;flex-direction:column;gap:6px;min-width:0}
+  .q .qc{font-size:19px;font-weight:700;color:var(--dink3);letter-spacing:.04em}
+  .q .qst{font-size:21px;font-weight:600;color:#A9AFDA}
+  .q .qsn{font-size:20px;font-weight:500;color:#9096C8;line-height:1.5}
+  .q.sel{background:rgba(91,103,232,.28);border-left-color:var(--peri)}
+  .q mark{background:rgba(255,212,0,.85);color:#111;border-radius:4px;padding:0 3px}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="deck">
+    <section class="slide home is-active">
+      <div class="home-grid">
+        <div class="home-l">
+          <div class="brand-eyebrow" data-a="fd">ODY · 최종 발표 Q&amp;A</div>
+          <h1 class="brand" data-a="fu" style="--d:.1s">ODY</h1>
+          <p class="brand-def" data-a="fu" style="--d:.2s">장르가 아니라 <span style="color:var(--peri)">소리</span>로 놓은 음악 지도</p>
+          <p class="brand-tag" data-a="fu" style="--d:.28s">469만 곡 · 16차원 좌표 · 실시간 위치 공유</p>
+
+          <nav class="cats" data-a="fu" style="--d:.38s">
+            <button class="cat" data-cat="planning"><span class="num">01</span><span class="nm">기획</span><span class="cnt">5문항</span></button>
+            <button class="cat" data-cat="feature"><span class="num">02</span><span class="nm">기능</span><span class="cnt">29문항</span></button>
+            <button class="cat" data-cat="domain"><span class="num">03</span><span class="nm">도메인</span><span class="cnt">18문항</span></button>
+            <button class="cat" data-cat="ai"><span class="num">04</span><span class="nm">AI</span><span class="cnt">4문항</span></button>
+            <button class="cat" data-cat="reserve"><span class="num">05</span><span class="nm">예비</span><span class="cnt">3문항</span></button>
+          </nav>
+
+          <div class="search" data-a="fu" style="--d:.48s">
+            <input id="sq" type="search" placeholder="키워드 검색  ( / )" autocomplete="off">
+          </div>
+
+          <p class="home-hint" data-a="fi" style="--d:.6s">카테고리를 누르면 오른쪽에 질문 목록 · 질문을 누르면 해당 장표로 이동<br>검색: <b>/</b> 포커스 · <b>↑ ↓ Enter</b> 이동 · <b>Esc</b> 지우기<br>덱 안에서는 <b>← →</b> 로 이동, <b>Esc</b> 로 목록 복귀, <b>F</b> 전체화면</p>
+        </div>
+
+        <div class="home-r">
+          <div class="qwrap">
+            <div class="qempty" id="qempty">질문 목록<span>왼쪽에서 카테고리를 선택하세요</span></div>
+            <div id="qpanel" style="display:none;flex-direction:column;flex:1;min-height:0">
+              <div class="qhead" id="qhead"></div>
+              <div class="qsub" id="qsub"></div>
+              <div class="qlist" id="qlist"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="assets/deck.js"></script>
+<script src="assets/search-index.js"></script>
+<script>
+const DATA = {
+  planning: {
+    label: '01 · 기획',
+    sub: '지도의 전제, 사용자 흐름, 결정의 근거와 한계',
+    file: '01-planning.html',
+    items: [
+      {n:'Q1', t:'왜 장르가 아니라 소리로 지도를 놓았나', s:1},
+      {n:'Q2', t:'사용자 한 명이 5분 동안 무엇을 하나', s:2},
+      {n:'Q3', t:'실측으로 바꾼 결정 여섯 가지는 무엇인가', s:3},
+      {n:'Q4', t:'음원 저작권은 어떻게 피해 가나', s:4},
+      {n:'Q5', t:'알고 있는 한계와 다음 단계는', s:5}
+    ]
+  },
+  feature: {
+    label: '02 · 기능',
+    sub: '주변 탐색 · 여정 · 실시간 따라가기',
+    file: '02-feature.html',
+    items: [
+      {sect:'주변 탐색'},
+      {n:'Q1', t:'내 곡과 소리가 비슷한 10곡을 어떻게 고르나', s:1},
+      {n:'Q2', t:'469만 곡을 전부 비교하면 느리지 않나', s:2},
+      {n:'Q3', t:'가까운 순 그대로 쓰면 이상한 곡이 섞이지 않나', s:4},
+      {n:'Q4', t:'규칙 숫자(1.66 · 3곡 · 4.9)는 어떻게 정했나', s:6},
+      {n:'Q5', t:'화면에서 바로 옆인데 주변 목록에 없는 이유는', s:7},
+      {n:'Q6', t:'비슷한 곡이 정말 가까이 있다는 근거는', s:9},
+      {sect:'여정'},
+      {n:'Q7', t:'출발 곡과 도착 곡 사이를 어떻게 잇나', s:10},
+      {n:'Q8', t:'최단 경로(kNN 그래프)는 왜 버렸나', s:11},
+      {n:'Q9', t:'직선 축 + 정거장 방식은 어떻게 동작하나', s:12},
+      {n:'Q10', t:'조합 폭발은 어떻게 피했나', s:15},
+      {n:'Q11', t:'최단 경로와 비교하면 무엇이 좋아졌나', s:16},
+      {n:'Q12', t:'여정 한 번의 결과는 어떤 모습인가', s:17},
+      {n:'Q13', t:'곡을 더하면 별자리 모양이 바뀌지 않나', s:18},
+      {sect:'따라가기'},
+      {n:'Q14', t:'지도 위 내 위치는 어떻게 정해지나', s:20},
+      {n:'Q15', t:'누가 움직이면 누구에게 알려야 하나', s:21},
+      {n:'Q16', t:'화면 안 사람만 어떻게 골라내나', s:23},
+      {n:'Q17', t:'움직임은 어떤 종류로 알리나', s:24},
+      {n:'Q18', t:'Redis 왕복은 어떻게 줄였나', s:25},
+      {n:'Q19', t:'사람이 아주 많아지면 어떻게 하나', s:26},
+      {n:'Q20', t:'주변 사람 패널은 어떤 기준인가', s:27},
+      {n:'Q21', t:'따라가기는 내부적으로 어떻게 동작하나', s:28},
+      {n:'Q22', t:'늦게 탄 사람은 어느 지점부터 듣나', s:31},
+      {n:'Q23', t:'따라가기는 어떻게 끝나나', s:32},
+      {n:'Q24', t:'연결이 끊긴 건 어떻게 아나', s:33},
+      {n:'Q25', t:'탭을 두 개 열면 어떻게 되나', s:34},
+      {n:'Q26', t:'반응과 만남은 규칙이 어떻게 다른가', s:35},
+      {n:'Q27', t:'전체 흐름을 한 장으로 보면', s:36},
+      {n:'Q28', t:'서버를 늘리면 그대로 동작하나', s:37}
+    ]
+  },
+  domain: {
+    label: '03 · 도메인',
+    sub: '데이터 정제 · 소리 좌표 · 파이프라인 · 검증 · 운영',
+    file: '03-domain.html',
+    items: [
+      {sect:'데이터 정제'},
+      {n:'Q1', t:'2,946만 제출본을 469만 곡으로 어떻게 줄였나', s:1},
+      {n:'Q2', t:'제외 규칙 16개는 무엇인가', s:2},
+      {n:'Q3', t:'곡 길이 상한을 왜 6분으로 정했나', s:3},
+      {n:'Q4', t:'분석기 버전이 다른 곡은 어떻게 처리했나', s:4},
+      {sect:'소리 좌표'},
+      {n:'Q5', t:'곡 하나는 어떤 숫자로 표현되나', s:5},
+      {n:'Q6', t:'단위가 다른 숫자를 어떻게 같은 자로 맞췄나', s:6},
+      {n:'Q7', t:'270개를 16개로 줄여도 정보가 남나', s:7},
+      {n:'Q8', t:'축마다 뜻이 있다는 게 무슨 말인가', s:8},
+      {n:'Q9', t:'겹(레이어)을 내려가면 무엇이 달라지나', s:9},
+      {sect:'파이프라인'},
+      {n:'Q10', t:'첫 화면 7,204곡은 어떻게 뽑았나', s:10},
+      {n:'Q11', t:'원본에서 DB까지 파이프라인은 어떻게 구성되나', s:11},
+      {n:'Q12', t:'Spark를 실제로 끝까지 돌렸나', s:12},
+      {n:'Q13', t:'분산 결과가 한 대 결과와 같다는 근거는', s:13},
+      {sect:'검증'},
+      {n:'Q14', t:'지도가 좋아졌다는 걸 어떻게 채점했나', s:14},
+      {n:'Q15', t:'합격선은 어떻게 정했나', s:15},
+      {sect:'운영'},
+      {n:'Q16', t:'신곡은 어떻게 추가하나', s:16},
+      {n:'Q17', t:'저장소를 둘로 나눈 이유는', s:17},
+      {n:'Q18', t:'pgvector를 고른 이유는', s:18}
+    ]
+  },
+  ai: {
+    label: '04 · AI',
+    sub: 'LLM의 역할과 한계, PCA를 고른 이유',
+    file: '04-ai.html',
+    items: [
+      {n:'Q1', t:'LLM은 어디에 쓰이나', s:1},
+      {n:'Q2', t:'딥러닝 대신 PCA를 고른 이유는', s:2},
+      {n:'Q3', t:'별자리 작품 채점은 어떻게 하나', s:3},
+      {n:'Q4', t:'취향 분석 문구는 어떻게 만드나', s:4}
+    ]
+  },
+  reserve: {
+    label: '05 · 예비',
+    sub: '인프라 · 무중단 배포 · 인증',
+    file: '05-reserve.html',
+    items: [
+      {n:'Q1', t:'서버 구성과 배포는 어떻게 되나', s:1},
+      {n:'Q2', t:'무중단 배포는 어떻게 동작하나', s:2},
+      {n:'Q3', t:'로그인 토큰은 어떻게 관리하나', s:3}
+    ]
+  }
+};
+
+const qempty = document.getElementById('qempty');
+const qpanel = document.getElementById('qpanel');
+const qhead  = document.getElementById('qhead');
+const qsub   = document.getElementById('qsub');
+const qlist  = document.getElementById('qlist');
+var curCat = null;
+
+function openCat(key){
+  const d = DATA[key];
+  if(!d) return;
+  curCat = key;
+  document.getElementById('sq').value = '';
+  document.querySelectorAll('.cat').forEach(b => b.classList.toggle('on', b.dataset.cat === key));
+  qempty.style.display = 'none';
+  qpanel.style.display = 'flex';
+  qhead.textContent = d.label;
+  qsub.textContent = d.sub;
+  qlist.innerHTML = '';
+  d.items.forEach((it, idx) => {
+    if(it.sect){
+      const h = document.createElement('div');
+      h.className = 'qsect'; h.textContent = it.sect;
+      qlist.appendChild(h); return;
+    }
+    const a = document.createElement('a');
+    a.className = 'q';
+    a.href = d.file + '#s' + it.s;
+    a.innerHTML = '<span class="qn">'+it.n+'</span><span class="qt">'+it.t+'</span><span class="qp">p.'+it.s+'</span>';
+    a.style.animationDelay = (idx * 0.018) + 's';
+    a.classList.add('fadein');
+    qlist.appendChild(a);
+  });
+  history.replaceState(null,'','#'+key);
+}
+
+document.querySelectorAll('.cat').forEach(b => {
+  if(b.disabled) return;
+  b.addEventListener('click', () => openCat(b.dataset.cat));
+});
+
+// 덱에서 뒤로가기로 돌아왔을 때 해당 카테고리 목록을 열어둠
+const h = location.hash.replace('#','');
+if(DATA[h]) openCat(h);
+
+// ---------- 검색 ----------
+const sq = document.getElementById('sq');
+const SLIDES = window.SEARCH || [];
+let selIdx = -1;
+
+const esc = t => t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hl = (t, terms) => {
+  let out = esc(t);
+  terms.forEach(w => {
+    const re = new RegExp(esc(w).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    out = out.replace(re, m => '<mark>' + m + '</mark>');
+  });
+  return out;
+};
+const snippet = (body, w) => {
+  const i = body.toLowerCase().indexOf(w);
+  const a = Math.max(0, i - 40), b = Math.min(body.length, i + w.length + 90);
+  return (a > 0 ? '…' : '') + body.slice(a, b) + (b < body.length ? '…' : '');
+};
+// 슬라이드 번호 → 그 슬라이드가 속한 질문
+function questionOf(file, s){
+  for(const key in DATA){
+    const d = DATA[key];
+    if(d.file !== file) continue;
+    let best = null;
+    d.items.forEach(it => { if(it.n && it.s <= s && (!best || it.s > best.s)) best = it; });
+    return {d, it: best};
+  }
+  return null;
+}
+function hitRow(d, it, s, terms, slideTitle, snip){
+  const a = document.createElement('a');
+  a.className = 'q';
+  a.href = d.file + '#s' + s;
+  let body = '<span class="qc">' + esc(d.label) + '</span><span class="qt">' + hl(it ? it.t : slideTitle, terms) + '</span>';
+  if(slideTitle && it && slideTitle !== it.t) body += '<span class="qst">장표 · ' + hl(slideTitle, terms) + '</span>';
+  if(snip) body += '<span class="qsn">' + hl(snip, terms) + '</span>';
+  a.innerHTML = '<span class="qn">' + (it ? it.n : '') + '</span><span class="qbody">' + body + '</span><span class="qp">p.' + s + '</span>';
+  return a;
+}
+
+function runSearch(raw){
+  const terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
+  selIdx = -1;
+  if(!terms.length){
+    if(curCat) openCat(curCat);
+    else { qpanel.style.display = 'none'; qempty.style.display = ''; }
+    return;
+  }
+  const has = t => { t = t.toLowerCase(); return terms.every(w => t.includes(w)); };
+  const titleHits = [], bodyHits = [], seen = new Set();
+
+  // 1순위: 질문 제목
+  for(const key in DATA){
+    const d = DATA[key];
+    d.items.forEach(it => {
+      if(!it.n || !has(it.t)) return;
+      seen.add(d.file + '#' + it.s);
+      const sl = SLIDES.find(x => x.file === d.file && x.s === it.s);
+      titleHits.push(hitRow(d, it, it.s, terms, sl ? sl.title : '', ''));
+    });
+  }
+  // 1순위: 장표 큰 제목 / 2순위: 장표 내용
+  SLIDES.forEach(sl => {
+    const id = sl.file + '#' + sl.s;
+    if(seen.has(id)) return;
+    const q = questionOf(sl.file, sl.s);
+    if(!q) return;
+    if(has(sl.title)){
+      seen.add(id);
+      titleHits.push(hitRow(q.d, q.it, sl.s, terms, sl.title, ''));
+    } else if(has(sl.title + ' ' + sl.body)){
+      seen.add(id);
+      bodyHits.push(hitRow(q.d, q.it, sl.s, terms, sl.title, snippet(sl.body, terms.find(w => sl.body.toLowerCase().includes(w)) || terms[0])));
+    }
+  });
+
+  document.querySelectorAll('.cat').forEach(b => b.classList.remove('on'));
+  qempty.style.display = 'none';
+  qpanel.style.display = 'flex';
+  qhead.textContent = 'SEARCH';
+  qsub.textContent = '“' + raw.trim() + '” · ' + (titleHits.length + bodyHits.length) + '건';
+  qlist.innerHTML = '';
+  const sect = (label, arr) => {
+    const el = document.createElement('div');
+    el.className = 'qsect'; el.textContent = label + ' · ' + arr.length;
+    qlist.appendChild(el);
+    arr.forEach(a => qlist.appendChild(a));
+  };
+  sect('제목에 포함', titleHits);
+  sect('내용에 포함', bodyHits);
+}
+
+function moveSel(dir){
+  const rows = [...qlist.querySelectorAll('a.q')];
+  if(!rows.length) return;
+  rows.forEach(r => r.classList.remove('sel'));
+  selIdx = Math.max(0, Math.min(rows.length - 1, selIdx + dir));
+  rows[selIdx].classList.add('sel');
+  rows[selIdx].scrollIntoView({block: 'nearest'});
+}
+
+sq.addEventListener('input', () => runSearch(sq.value));
+sq.addEventListener('click', e => e.stopPropagation());  // 덱의 클릭 넘기기 방지
+sq.addEventListener('keydown', e => {
+  e.stopPropagation();
+  if(e.key === 'Escape'){ sq.value = ''; runSearch(''); sq.blur(); }
+  if(e.key === 'ArrowDown'){ e.preventDefault(); moveSel(1); }
+  if(e.key === 'ArrowUp'){ e.preventDefault(); moveSel(-1); }
+  if(e.key === 'Enter'){
+    const rows = qlist.querySelectorAll('a.q');
+    const r = rows[selIdx >= 0 ? selIdx : 0];
+    if(r) location.href = r.href;
+  }
+});
+
+// 숫자 키로 카테고리 선택
+document.addEventListener('keydown', e => {
+  if(e.target === sq) return;
+  if(e.key === '/'){ e.preventDefault(); sq.focus(); return; }
+  if(e.key === '1') openCat('planning');
+  if(e.key === '2') openCat('feature');
+  if(e.key === '3') openCat('domain');
+  if(e.key === '4') openCat('ai');
+  if(e.key === '5') openCat('reserve');
+  if((e.key === 'f' || e.key === 'F')){
+    if(document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen();
+  }
+});
+</script>
+</body>
+</html>
