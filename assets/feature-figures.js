@@ -215,7 +215,6 @@
       const c = svg('circle', {cx:p.x.toFixed(1), cy:p.y.toFixed(1), r:p.rad.toFixed(1), fill:'#D7DAEA', 'fill-opacity':p.op.toFixed(2)});
       c.setAttribute('data-a', 'pop');
       c.style.setProperty('--d', (0.5 + p.si * 0.45 + p.i * 0.028).toFixed(3) + 's');
-      c.style.transformOrigin = p.x.toFixed(1) + 'px ' + p.y.toFixed(1) + 'px';
       g.appendChild(c);
     });
   })();
@@ -262,7 +261,6 @@
       [halo, c].forEach(function (n) {
         n.setAttribute('data-a', 'pop');
         n.style.setProperty('--d', t.toFixed(2) + 's');
-        n.style.transformOrigin = p.x.toFixed(1) + 'px ' + p.y.toFixed(1) + 'px';
         pick.appendChild(n);
       });
     });
@@ -434,21 +432,23 @@
     const a = $('s34-a');
     if (a) {
       const dots = {'4,1':'#4FBF7E','2,2':'#E86B6B','5,3':'#8A5FE0','4,4':'#4F8FE8','1,5':'#8A5FE0','3,5':'#4FBF7E','6,6':'#F09D6B'};
-      let h = '';
+      let h = '', n = 0, j = 0;
       for (let y = 1; y <= 6; y++) for (let x = 1; x <= 6; x++) {
         const k = x + ',' + y;
-        h += '<div class="cell keep" style="position:relative">' + (dots[k] ? '<span style="position:absolute;inset:28%;border-radius:50%;background:' + dots[k] + '"></span>' : '') + '</div>';
+        h += '<div class="cell keep" data-a="fi" style="position:relative; --d:' + (0.5 + n++ * 0.012).toFixed(3) + 's">' +
+             (dots[k] ? '<span data-a="pop" style="position:absolute;inset:28%;border-radius:50%;background:' + dots[k] + '; --d:' + (1.05 + j++ * 0.09).toFixed(2) + 's"></span>' : '') + '</div>';
       }
       a.innerHTML = h;
     }
     const b = $('s34-b');
     if (b) {
       const nums = [[null,3,12,5,null,1],[8,25,40,9,2,null],[4,18,33,14,6,1],[null,7,11,21,3,null],[2,null,5,9,4,1],[null,1,null,2,null,null]];
-      let h = '';
+      let h = '', n = 0;
       nums.forEach(function (row) {
         row.forEach(function (v) {
-          const hot = v >= 18;
-          h += '<div class="cell keep" style="display:grid;place-items:center;font-size:22px;font-weight:800;color:' + (hot ? '#F09D6B' : '#98A4FF') + '">' + (v == null ? '' : v) + '</div>';
+          const hot = v >= 18, d = 2.6 + n++ * 0.022;
+          h += '<div class="cell keep" data-a="fi" style="display:grid;place-items:center;font-size:22px;font-weight:800;color:' + (hot ? '#F09D6B' : '#98A4FF') + '; --d:' + d.toFixed(3) + 's">' +
+               (v == null ? '' : '<span data-a="pop" style="--d:' + (d + 0.12).toFixed(3) + 's">' + v + '</span>') + '</div>';
         });
       });
       b.innerHTML = h;
@@ -476,15 +476,18 @@
     near.forEach(function (p, i) {
       const x = cx + p[0], y = cy + p[1];
       const ln = svg('line', {x1:cx, y1:cy, x2:x, y2:y, stroke:'#2AD3AE', 'stroke-width':1.8, opacity:.9});
-      ln.setAttribute('data-draw',''); ln.style.setProperty('--len', '300'); ln.style.setProperty('--d', (0.55 + i * 0.05).toFixed(2) + 's');
+      ln.setAttribute('data-draw',''); ln.style.setProperty('--len', '300'); ln.style.setProperty('--d', (0.9 + i * 0.07).toFixed(2) + 's');
       g.appendChild(ln);
-      const pp = person(x - 14, y - 22, 1, '#2AD3AE', 1);
-      pp.setAttribute('data-a', 'pop'); pp.style.setProperty('--d', (0.7 + i * 0.05).toFixed(2) + 's');
-      g.appendChild(pp);
+      const wrap = svg('g', {});
+      wrap.setAttribute('data-a', 'pop'); wrap.style.setProperty('--d', (1.05 + i * 0.07).toFixed(2) + 's');
+      wrap.appendChild(person(x - 14, y - 22, 1, '#2AD3AE', 1));
+      g.appendChild(wrap);
     });
-    g.appendChild(svg('circle', {cx:cx, cy:cy, r:28, fill:'#fff', opacity:.22}));
-    g.appendChild(svg('circle', {cx:cx, cy:cy, r:16, fill:'#fff'}));
-    const me = person(cx - 14, cy + 4, 1.1, '#fff', 1);
-    g.appendChild(me);
+    const meg = svg('g', {});
+    meg.setAttribute('data-a', 'pop'); meg.style.setProperty('--d', '.6s');
+    meg.appendChild(svg('circle', {cx:cx, cy:cy, r:28, fill:'#fff', opacity:.22}));
+    meg.appendChild(svg('circle', {cx:cx, cy:cy, r:16, fill:'#fff'}));
+    meg.appendChild(person(cx - 14, cy + 4, 1.1, '#fff', 1));
+    g.appendChild(meg);
   })();
 })();

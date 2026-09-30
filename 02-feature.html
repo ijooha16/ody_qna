@@ -191,6 +191,13 @@
   @keyframes dim{to{opacity:.28}}
   .slide.is-active .cand-dim{animation:dim .6s ease var(--d,0s) forwards}
   #sl-real.is-active .gs .dim{animation:dim .5s ease 2s forwards}
+  /* SVG 안 애니메이션은 자기 박스 중심 기준으로 */
+  svg [data-a]{transform-box:fill-box;transform-origin:center}
+  /* 막대가 왼쪽부터 자라남 */
+  @keyframes growx{from{transform:scaleX(0)}to{transform:none}}
+  .slide.is-active .grow,.slide.is-active .growx{transform-box:fill-box;transform-origin:left center;animation:growx var(--dur,1s) cubic-bezier(.45,.05,.55,.95) var(--d,0s) both}
+  @keyframes fadeout{to{opacity:.35;filter:grayscale(1)}}
+  .slide.is-active .fade-out{animation:fadeout .6s ease var(--d,0s) forwards}
   /* 움직임 세 가지 */
   .mv3 .cellgrid{grid-template-columns:repeat(6,1fr);gap:8px;width:100%;max-width:440px;margin:0 auto 34px}
   .mv3 .mv-t{font-size:46px;font-weight:800;letter-spacing:-.01em}
@@ -756,33 +763,33 @@
         <rect x="470" y="50" width="160" height="120" rx="18" fill="#EDE8FB"/>
         <text x="550" y="118" font-size="29" font-weight="800" fill="#8A5FE0" text-anchor="middle">Redis</text>
         <g stroke="#F09D6B" stroke-width="2.6">
-          <path d="M180 74h280" marker-end="url(#a33)"/><path d="M460 104H180" marker-end="url(#a33b)"/>
-          <path d="M180 134h280" marker-end="url(#a33)"/><path d="M460 164H180" marker-end="url(#a33b)"/>
+          <path d="M180 74h280" marker-end="url(#a33)" data-a="fl" style="--d:.9s"/><path d="M460 104H180" marker-end="url(#a33b)" data-a="fr" style="--d:1.2s"/>
+          <path d="M180 134h280" marker-end="url(#a33)" data-a="fl" style="--d:1.5s"/><path d="M460 164H180" marker-end="url(#a33b)" data-a="fr" style="--d:1.8s"/>
         </g>
         <defs>
           <marker id="a33" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#F09D6B"/></marker>
           <marker id="a33b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#F09D6B"/></marker>
         </defs>
       </svg>
-      <div style="font-size:45px;font-weight:800;color:var(--orange);text-align:center;margin-top:20px">왕복 4번</div>
+      <div data-a="pop" style="font-size:45px;font-weight:800;color:var(--orange);text-align:center;margin-top:20px; --d:2.2s">왕복 4번</div>
     </div>
-    <div class="card" data-a="fr" style="padding:34px 40px 42px; --d:.42s">
+    <div class="card" data-a="fr" style="padding:34px 40px 42px; --d:2.3s">
       <div style="font-size:29px;font-weight:800;color:var(--indigo);margin-bottom:24px">한 번에 묶어서</div>
       <svg viewBox="0 0 640 220" style="width:100%">
         <rect x="10" y="50" width="160" height="120" rx="18" fill="#14162A"/>
         <text x="90" y="118" font-size="29" font-weight="800" fill="#fff" text-anchor="middle">서버</text>
         <rect x="470" y="50" width="160" height="120" rx="18" fill="#EDE8FB"/>
         <text x="550" y="118" font-size="29" font-weight="800" fill="#8A5FE0" text-anchor="middle">Redis</text>
-        <ellipse cx="320" cy="110" rx="76" ry="30" fill="#E9ECFF" stroke="#5B67E8" stroke-width="2"/>
-        <g fill="#5B67E8"><circle cx="288" cy="110" r="9"/><circle cx="312" cy="110" r="9"/><circle cx="336" cy="110" r="9"/><circle cx="360" cy="110" r="9"/></g>
-        <path d="M180 110h58" stroke="#5B67E8" stroke-width="2.8" marker-end="url(#a33c)"/>
-        <path d="M400 110h58" stroke="#5B67E8" stroke-width="2.8" marker-end="url(#a33c)"/>
+        <ellipse cx="320" cy="110" rx="76" ry="30" fill="#E9ECFF" stroke="#5B67E8" stroke-width="2" data-a="sc" style="--d:2.6s"/>
+        <g fill="#5B67E8"><circle cx="288" cy="110" r="9" data-a="pop" style="--d:2.85s"/><circle cx="312" cy="110" r="9" data-a="pop" style="--d:2.95s"/><circle cx="336" cy="110" r="9" data-a="pop" style="--d:3.05s"/><circle cx="360" cy="110" r="9" data-a="pop" style="--d:3.15s"/></g>
+        <path d="M180 110h58" stroke="#5B67E8" stroke-width="2.8" marker-end="url(#a33c)" data-a="fl" style="--d:3.4s"/>
+        <path d="M400 110h58" stroke="#5B67E8" stroke-width="2.8" marker-end="url(#a33c)" data-a="fl" style="--d:3.6s"/>
         <defs><marker id="a33c" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#5B67E8"/></marker></defs>
       </svg>
-      <div style="font-size:45px;font-weight:800;color:var(--indigo);text-align:center;margin-top:20px">왕복 1번</div>
+      <div data-a="pop" style="font-size:45px;font-weight:800;color:var(--indigo);text-align:center;margin-top:20px; --d:3.9s">왕복 1번</div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">화면 안 사람들 정보를 한 번에 가져옴</div>
+  <div class="concl" data-a="fu" style="--d:4.3s">화면 안 사람들 정보를 한 번에 가져옴</div>
   <div class="pnum">24</div>
 </section>
 
@@ -796,17 +803,17 @@
       <div style="font-size:27px;font-weight:800;color:var(--indigo);margin-bottom:22px">한 명씩</div>
       <div class="cellgrid" id="s34-a" style="grid-template-columns:repeat(6,1fr);gap:9px;max-width:440px;margin:0 auto"></div>
     </div>
-    <div data-a="fi" style="display:flex;align-items:center;gap:14px; --d:.5s">
+    <div data-a="sc" style="display:flex;align-items:center;gap:14px; --d:1.9s">
       <svg width="40" height="18"><path d="M0 9h26" stroke="#8F94AA" stroke-width="2.2"/><path d="M24 3l10 6-10 6z" fill="#8F94AA"/></svg>
       <div class="card" style="text-align:center;font-size:27px;font-weight:800;line-height:1.5;padding:26px 18px">20명 초과<br>또는 36칸 초과</div>
       <svg width="40" height="18"><path d="M0 9h26" stroke="#8F94AA" stroke-width="2.2"/><path d="M24 3l10 6-10 6z" fill="#8F94AA"/></svg>
     </div>
-    <div data-a="fr" style="--d:.42s">
+    <div data-a="fr" style="--d:2.3s">
       <div style="font-size:27px;font-weight:800;color:var(--orange);margin-bottom:22px">칸별 인원수 · 5초마다</div>
       <div class="cellgrid" id="s34-b" style="grid-template-columns:repeat(6,1fr);gap:9px;max-width:440px;margin:0 auto"></div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">사람이 늘어도 보내는 메시지 양이 폭증하지 않음</div>
+  <div class="concl" data-a="fu" style="--d:3.6s">사람이 늘어도 보내는 메시지 양이 폭증하지 않음</div>
   <div class="pnum">25</div>
 </section>
 
@@ -818,7 +825,7 @@
   <div class="sky stagebox" data-seed="181" data-a="sc" style="--d:.28s;margin-top:20px">
     <svg class="sky-in" viewBox="0 0 1660 560"><g id="s35-people"></g></svg>
   </div>
-  <div class="concl" data-a="fu" style="--d:1.3s">서버가 가까운 순 12명을 잘라 줌 · 만남 횟수를 함께 표시</div>
+  <div class="concl" data-a="fu" style="--d:2.1s">서버가 가까운 순 12명을 잘라 줌 · 만남 횟수를 함께 표시</div>
   <div class="pnum">26</div>
 </section>
 
@@ -831,32 +838,32 @@
     <div class="sky stagebox short" data-seed="191" data-a="fl" style="--d:.28s">
       <svg class="sky-in" viewBox="0 0 800 470">
         <text x="34" y="48" fill="#ECEEF8" font-size="25" font-weight="700">타기 전</text>
-        <g transform="translate(340,180) scale(1.5)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g>
+        <g data-a="pop" style="--d:.6s"><g transform="translate(340,180) scale(1.5)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g></g>
         <text x="362" y="290" fill="#A2A7C6" font-size="21" font-weight="700" text-anchor="middle">인솔자</text>
-        <g transform="translate(220,110)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <g transform="translate(520,140)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <g transform="translate(140,320)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <g transform="translate(500,330)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <g data-a="pop" style="--d:0.85s"><g transform="translate(220,110)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <g data-a="pop" style="--d:0.97s"><g transform="translate(520,140)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <g data-a="pop" style="--d:1.09s"><g transform="translate(140,320)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <g data-a="pop" style="--d:1.21s"><g transform="translate(500,330)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
       </svg>
     </div>
-    <div class="sky stagebox short" data-seed="193" data-a="fr" style="--d:.42s">
+    <div class="sky stagebox short" data-seed="193" data-a="fr" style="--d:1.5s">
       <svg class="sky-in" viewBox="0 0 800 470">
         <text x="34" y="48" fill="#ECEEF8" font-size="25" font-weight="700">탄 뒤</text>
-        <ellipse cx="400" cy="210" rx="170" ry="112" fill="#2AD3AE" opacity=".09" stroke="#2AD3AE" stroke-width="3" style="--len:900;--d:.8s" data-draw/>
-        <g transform="translate(378,140) scale(1.4)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g>
-        <g transform="translate(320,230)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <g transform="translate(378,230)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <g transform="translate(436,230)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <text x="400" y="368" fill="#ECEEF8" font-size="22" font-weight="700" text-anchor="middle">동승자는 지도에서 사라지고 우주선 안으로</text>
+        <ellipse cx="400" cy="210" rx="170" ry="112" fill="#2AD3AE" opacity=".09" stroke="#2AD3AE" stroke-width="3" style="--len:900;--d:1.9s" data-draw/>
+        <g data-a="pop" style="--d:2.3s"><g transform="translate(378,140) scale(1.4)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g></g>
+        <g data-a="fd" style="--d:2.60s"><g transform="translate(320,230)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <g data-a="fd" style="--d:2.75s"><g transform="translate(378,230)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <g data-a="fd" style="--d:2.90s"><g transform="translate(436,230)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <text x="400" y="368" fill="#ECEEF8" font-size="22" font-weight="700" text-anchor="middle" data-a="fu" style="--d:3.1s">동승자는 지도에서 사라지고 우주선 안으로</text>
       </svg>
     </div>
   </div>
-  <div data-a="fu" style="display:flex;gap:18px;align-items:center;margin-top:34px; --d:.9s">
-    <span class="chip org">연결 유효</span>
-    <span class="chip org">이미 탑승 중 ✕</span>
-    <span class="chip org">따라가는 사람은 못 따라감</span>
-    <span class="chip org">정원 20명</span>
-    <span style="font-size:24px;font-weight:600;color:var(--ink2);margin-left:10px">← 탈 때 한 번에 검사</span>
+  <div style="display:flex;gap:18px;align-items:center;margin-top:34px">
+    <span class="chip org" data-a="pop" style="--d:3.40s">연결 유효</span>
+    <span class="chip org" data-a="pop" style="--d:3.52s">이미 탑승 중 ✕</span>
+    <span class="chip org" data-a="pop" style="--d:3.64s">따라가는 사람은 못 따라감</span>
+    <span class="chip org" data-a="pop" style="--d:3.76s">정원 20명</span>
+    <span data-a="fl" style="font-size:24px;font-weight:600;color:var(--ink2);margin-left:10px; --d:3.95s">← 탈 때 한 번에 검사</span>
   </div>
   <div class="pnum">27</div>
 </section>
@@ -874,41 +881,47 @@
       </g>
       <g data-a="fu" style="--d:.4s">
         <rect x="230" y="80" width="330" height="300" rx="20" fill="#14162A"/>
-        <text x="266" y="140" font-size="26" font-weight="700" fill="#7FD6C4">곡</text>
-        <text x="266" y="205" font-size="26" font-weight="700" fill="#7FD6C4">재생 30초 지점</text>
-        <text x="266" y="270" font-size="26" font-weight="700" fill="#7FD6C4">곡 상세 패널</text>
-        <text x="266" y="335" font-size="26" font-weight="700" fill="#7FD6C4">여정 · 주변 탐색 화면</text>
+        <text x="266" y="140" font-size="26" font-weight="700" fill="#7FD6C4" data-a="fl" style="--d:.7s">곡</text>
+        <text x="266" y="205" font-size="26" font-weight="700" fill="#7FD6C4" data-a="fl" style="--d:.85s">재생 30초 지점</text>
+        <text x="266" y="270" font-size="26" font-weight="700" fill="#7FD6C4" data-a="fl" style="--d:1s">곡 상세 패널</text>
+        <text x="266" y="335" font-size="26" font-weight="700" fill="#7FD6C4" data-a="fl" style="--d:1.15s">여정 · 주변 탐색 화면</text>
       </g>
-      <path d="M580 230h96" stroke="#8F94AA" stroke-width="2.6" marker-end="url(#a37)" data-a="fi" style="--d:.55s"/>
-      <g data-a="sc" style="--d:.6s">
+      <path d="M580 230h96" stroke="#8F94AA" stroke-width="2.6" marker-end="url(#a37)" data-a="fl" style="--d:1.45s"/>
+      <g data-a="pop" style="--d:1.65s">
         <rect x="700" y="160" width="240" height="140" rx="18" fill="#fff" stroke="#E3E5EF" stroke-width="1.5"/>
         <text x="820" y="218" font-size="26" font-weight="700" fill="#22243A" text-anchor="middle">서버</text>
         <text x="820" y="252" font-size="26" font-weight="700" fill="#22243A" text-anchor="middle">판단 없이 중계</text>
       </g>
-      <g stroke="#8A5FE0" stroke-width="2.6" fill="none" data-a="fi" style="--d:.78s">
-        <path d="M950 210 L1130 108" marker-end="url(#a37p)"/>
-        <path d="M950 230h180" marker-end="url(#a37p)"/>
-        <path d="M950 252 L1130 352" marker-end="url(#a37p)"/>
+      <g stroke="#8A5FE0" stroke-width="2.6" fill="none">
+        <path d="M950 210 L1130 108" marker-end="url(#a37p)" data-a="fl" style="--d:2.05s"/>
+        <path d="M950 230h180" marker-end="url(#a37p)" data-a="fl" style="--d:2.05s"/>
+        <path d="M950 252 L1130 352" marker-end="url(#a37p)" data-a="fl" style="--d:2.05s"/>
       </g>
-      <g data-a="fr" style="--d:.85s">
+            <g>
+        <g data-a="fr" style="--d:2.35s">
         <rect x="1150" y="60" width="240" height="96" rx="14" fill="#14162A"/>
         <rect x="1176" y="82" width="170" height="14" rx="7" fill="#2AD3AE"/><rect x="1176" y="110" width="130" height="14" rx="7" fill="#2AD3AE"/>
         <g transform="translate(1440,80) scale(1.5)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        </g>
+        <g data-a="fr" style="--d:2.50s">
         <rect x="1150" y="182" width="240" height="96" rx="14" fill="#14162A"/>
         <rect x="1176" y="204" width="170" height="14" rx="7" fill="#2AD3AE"/><rect x="1176" y="232" width="130" height="14" rx="7" fill="#2AD3AE"/>
         <g transform="translate(1440,202) scale(1.5)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        </g>
+        <g data-a="fr" style="--d:2.65s">
         <rect x="1150" y="304" width="240" height="96" rx="14" fill="#14162A"/>
         <rect x="1176" y="326" width="170" height="14" rx="7" fill="#2AD3AE"/><rect x="1176" y="354" width="130" height="14" rx="7" fill="#2AD3AE"/>
         <g transform="translate(1440,324) scale(1.5)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        </g>
       </g>
-      <text x="60" y="450" font-size="24" font-weight="600" fill="#5F6480">받는 쪽은 &ldquo;무엇을 보는지&rdquo;만 받고 내용은 직접 조회</text>
+      <text x="60" y="450" font-size="24" font-weight="600" fill="#5F6480" data-a="fu" style="--d:2.9s">받는 쪽은 &ldquo;무엇을 보는지&rdquo;만 받고 내용은 직접 조회</text>
       <defs>
         <marker id="a37" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#8F94AA"/></marker>
         <marker id="a37p" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#8A5FE0"/></marker>
       </defs>
     </svg>
   </div>
-  <div class="concl" data-a="fu" style="--d:1s">인솔자 한 번 → 동승자 전원 · 오른쪽 패널(주변 사람 · 랭킹)은 공유 안 함</div>
+  <div class="concl" data-a="fu" style="--d:3.3s">인솔자 한 번 → 동승자 전원 · 오른쪽 패널(주변 사람 · 랭킹)은 공유 안 함</div>
   <div class="pnum">28</div>
 </section>
 
@@ -920,24 +933,24 @@
   </div>
   <div class="sky stagebox short" data-seed="199" data-a="sc" style="--d:.3s;margin-top:20px">
     <svg class="sky-in" viewBox="0 0 1660 470">
-      <circle cx="430" cy="235" r="176" fill="#3A3F7A" opacity=".55"/>
+      <circle cx="430" cy="235" r="176" fill="#3A3F7A" opacity=".55" data-a="sc" style="--d:.55s"/>
       <g fill="#B79BF0">
-        <g transform="translate(348,150) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g>
-        <g transform="translate(462,150) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g>
-        <g transform="translate(348,258) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g>
-        <g transform="translate(462,258) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g>
+        <g data-a="pop" style="--d:0.80s"><g transform="translate(348,150) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g></g>
+        <g data-a="pop" style="--d:0.92s"><g transform="translate(462,150) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g></g>
+        <g data-a="pop" style="--d:1.04s"><g transform="translate(348,258) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g></g>
+        <g data-a="pop" style="--d:1.16s"><g transform="translate(462,258) scale(1.3)"><circle cx="14" cy="10" r="10"/><path d="M0 40a14 14 0 0128 0z"/></g></g>
       </g>
-      <circle cx="588" cy="118" r="32" fill="#F09D6B"/><text x="588" y="130" font-size="31" font-weight="800" fill="#fff" text-anchor="middle">4</text>
-      <path d="M690 235h250" stroke="#fff" stroke-width="3" marker-end="url(#a38)" data-a="fi" style="--d:.9s"/>
-      <g data-a="pop" style="--d:1.05s">
+      <g data-a="pop" style="--d:1.35s"><circle cx="588" cy="118" r="32" fill="#F09D6B"/><text x="588" y="130" font-size="31" font-weight="800" fill="#fff" text-anchor="middle">4</text></g>
+      <path d="M690 235h250" stroke="#fff" stroke-width="3" marker-end="url(#a38)" data-a="fl" style="--d:1.8s"/>
+      <g data-a="pop" style="--d:2.15s">
         <circle cx="1080" cy="248" r="48" fill="#4F8FE8" opacity=".35"/><circle cx="1080" cy="248" r="30" fill="#4F8FE8"/>
         <circle cx="1136" cy="196" r="26" fill="#F09D6B"/><text x="1136" y="206" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">4</text>
       </g>
-      <text x="1090" y="348" font-size="24" font-weight="700" fill="#ECEEF8" text-anchor="middle" data-a="fu" style="--d:1.2s">인솔자 한 점 + 인원수</text>
+      <text x="1090" y="348" font-size="24" font-weight="700" fill="#ECEEF8" text-anchor="middle" data-a="fu" style="--d:2.4s">인솔자 한 점 + 인원수</text>
       <defs><marker id="a38" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#fff"/></marker></defs>
     </svg>
   </div>
-  <div class="concl" data-a="fu" style="--d:1.3s">인솔자가 곡을 바꿔도 지도 알림은 사람 수와 상관없이 <b>1건</b></div>
+  <div class="concl" data-a="fu" style="--d:2.8s">인솔자가 곡을 바꿔도 지도 알림은 사람 수와 상관없이 <b>1건</b></div>
   <div class="pnum">29</div>
 </section>
 
@@ -950,21 +963,21 @@
     <div data-a="fu" style="font-size:24px;font-weight:700;color:var(--ink);margin-left:290px;margin-bottom:14px; --d:.28s">서버에 저장 : &ldquo;30초 지점, 저장 시각 t&rdquo;</div>
     <div style="display:grid;grid-template-columns:140px 1fr;align-items:center;gap:30px;margin-bottom:64px">
       <div data-a="fl" style="font-size:26px;font-weight:700; --d:.34s">인솔자</div>
-      <div class="tl" data-a="fr" style="--d:.38s"><i style="width:29%;background:#4F8FE8"></i></div>
+      <div class="tl" data-a="fi" style="--d:.38s"><i class="grow" style="width:29%;background:#4F8FE8; --d:.6s"></i></div>
     </div>
     <div style="display:grid;grid-template-columns:140px 1fr;align-items:center;gap:30px">
-      <div data-a="fl" style="font-size:26px;font-weight:700; --d:.5s">동승자</div>
-      <div class="tl" data-a="fr" style="position:relative; --d:.54s">
-        <div style="position:absolute;left:29%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:#8A5FE0"></div>
+      <div data-a="fl" style="font-size:26px;font-weight:700; --d:1.3s">동승자</div>
+      <div class="tl" data-a="fi" style="position:relative; --d:1.4s">
+        <div style="position:absolute;left:29%;top:50%;margin:-15px 0 0 -15px;width:30px;height:30px;border-radius:50%;background:#8A5FE0; --d:1.9s" data-a="pop"></div>
       </div>
     </div>
-    <div data-a="fi" style="position:absolute;left:calc(170px + 29% * 0.895);top:26px;bottom:74px;width:2px;background:#8A5FE0;opacity:.5; --d:.7s"></div>
-    <div data-a="fu" style="font-size:24px;font-weight:700;color:var(--purple);margin-left:290px;margin-top:22px; --d:.8s">40초 뒤 탑승 → 70초 지점부터</div>
+    <div data-a="fi" style="position:absolute;left:calc(170px + 29% * 0.895);top:26px;bottom:74px;width:2px;background:#8A5FE0;opacity:.5; --d:1.6s"></div>
+    <div data-a="fu" style="font-size:24px;font-weight:700;color:var(--purple);margin-left:290px;margin-top:22px; --d:2.1s">40초 뒤 탑승 → 70초 지점부터</div>
   </div>
-  <div class="card" data-a="sc" style="margin-top:44px;text-align:center;padding:38px; --d:.95s">
+  <div class="card" data-a="sc" style="margin-top:44px;text-align:center;padding:38px; --d:2.6s">
     <div style="font-size:47px;font-weight:800;color:var(--indigo)">시작 지점 = 지금 − 저장 시각 + 저장 위치</div>
   </div>
-  <div class="concl" data-a="fu" style="--d:1.15s">인솔자는 재생 · 정지 · 구간 이동 때마다 위치를 저장 (따라오는 사람이 없어도)</div>
+  <div class="concl" data-a="fu" style="--d:3.1s">인솔자는 재생 · 정지 · 구간 이동 때마다 위치를 저장 (따라오는 사람이 없어도)</div>
   <div class="pnum">30</div>
 </section>
 
@@ -974,48 +987,48 @@
     <h2 class="title" data-a="fu" style="--d:.1s">따라가기가 끝나는 <span class="acc">세 가지 길</span></h2>
   </div>
   <div class="cards c3" style="margin-top:44px">
-    <div class="card" data-a="fu" style="text-align:center;padding:34px 30px 40px; --d:.28s">
+    <div class="card" data-a="fu" style="text-align:center;padding:34px 30px 40px; --d:0.30s">
       <div style="font-size:30px;font-weight:800;color:var(--purple)">동승자가 하차</div>
       <svg viewBox="0 0 400 190" style="width:100%;margin:18px 0 8px">
-        <rect x="30" y="20" width="270" height="110" rx="55" fill="#1B1E3A"/>
-        <g transform="translate(62,48) scale(1.3)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g>
-        <g transform="translate(150,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <g transform="translate(212,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <path d="M290 105 L330 140" stroke="#B79BF0" stroke-width="2.4" marker-end="url(#a40)"/>
-        <g transform="translate(330,140)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
+        <rect x="30" y="20" width="270" height="110" rx="55" fill="#1B1E3A" data-a="sc" style="--d:0.45s"/>
+        <g data-a="pop" style="--d:0.60s"><g transform="translate(62,48) scale(1.3)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g></g>
+        <g data-a="pop" style="--d:0.68s"><g transform="translate(150,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <g data-a="pop" style="--d:0.76s"><g transform="translate(212,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <path d="M290 105 L330 140" stroke="#B79BF0" stroke-width="2.4" marker-end="url(#a40)" data-a="fu" style="--d:0.95s"/>
+        <g data-a="fd" style="--d:1.05s"><g transform="translate(330,140)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
         <defs><marker id="a40" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#B79BF0"/></marker></defs>
       </svg>
-      <div style="font-size:28px;font-weight:800;margin-top:12px">그 사람만 빠짐</div>
-      <div class="card-s" style="margin-top:8px">선단 유지</div>
+      <div data-a="fu" style="font-size:28px;font-weight:800;margin-top:12px; --d:1.20s">그 사람만 빠짐</div>
+      <div class="card-s" data-a="fu" style="margin-top:8px; --d:1.30s">선단 유지</div>
     </div>
-    <div class="card" data-a="fu" style="text-align:center;padding:34px 30px 40px; --d:.4s">
+    <div class="card" data-a="fu" style="text-align:center;padding:34px 30px 40px; --d:1.40s">
       <div style="font-size:30px;font-weight:800;color:var(--indigo)">인솔자가 전원 하차</div>
       <svg viewBox="0 0 400 190" style="width:100%;margin:18px 0 8px">
-        <rect x="30" y="20" width="270" height="110" rx="55" fill="#1B1E3A"/>
-        <g transform="translate(62,48) scale(1.3)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g>
-        <g transform="translate(150,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <g transform="translate(212,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <path d="M165 140v34" stroke="#B79BF0" stroke-width="2.4" marker-end="url(#a40b)"/>
+        <rect x="30" y="20" width="270" height="110" rx="55" fill="#1B1E3A" data-a="sc" style="--d:1.55s"/>
+        <g data-a="pop" style="--d:1.70s"><g transform="translate(62,48) scale(1.3)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g></g>
+        <g data-a="pop" style="--d:1.78s"><g transform="translate(150,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <g data-a="pop" style="--d:1.86s"><g transform="translate(212,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <path d="M165 140v34" stroke="#B79BF0" stroke-width="2.4" marker-end="url(#a40b)" data-a="fu" style="--d:2.05s"/>
         <defs><marker id="a40b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#B79BF0"/></marker></defs>
       </svg>
-      <div style="font-size:28px;font-weight:800;margin-top:12px">동승자 전원 복귀</div>
-      <div class="card-s" style="margin-top:8px">인솔자는 지도에 남음</div>
+      <div data-a="fu" style="font-size:28px;font-weight:800;margin-top:12px; --d:2.30s">동승자 전원 복귀</div>
+      <div class="card-s" data-a="fu" style="margin-top:8px; --d:2.40s">인솔자는 지도에 남음</div>
     </div>
-    <div class="card" data-a="fu" style="text-align:center;padding:34px 30px 40px; --d:.52s">
+    <div class="card" data-a="fu" style="text-align:center;padding:34px 30px 40px; --d:2.50s">
       <div style="font-size:30px;font-weight:800;color:var(--orange)">인솔자가 나감 · 끊김</div>
       <svg viewBox="0 0 400 190" style="width:100%;margin:18px 0 8px">
-        <rect x="30" y="20" width="270" height="110" rx="55" fill="#1B1E3A"/>
-        <g transform="translate(62,48) scale(1.3)" opacity=".4"><circle cx="14" cy="10" r="10" fill="#5F6480"/><path d="M0 40a14 14 0 0128 0z" fill="#5F6480"/></g>
-        <g transform="translate(150,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <g transform="translate(212,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g>
-        <path d="M165 140v34" stroke="#B79BF0" stroke-width="2.4" marker-end="url(#a40c)"/>
+        <rect x="30" y="20" width="270" height="110" rx="55" fill="#1B1E3A" data-a="sc" style="--d:2.65s"/>
+        <g class="fade-out" style="--d:3.10s"><g transform="translate(62,48) scale(1.3)"><circle cx="14" cy="10" r="10" fill="#4F8FE8"/><path d="M0 40a14 14 0 0128 0z" fill="#4F8FE8"/></g></g>
+        <g data-a="pop" style="--d:2.88s"><g transform="translate(150,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <g data-a="pop" style="--d:2.96s"><g transform="translate(212,52)"><circle cx="14" cy="10" r="10" fill="#B79BF0"/><path d="M0 40a14 14 0 0128 0z" fill="#B79BF0"/></g></g>
+        <path d="M165 140v34" stroke="#B79BF0" stroke-width="2.4" marker-end="url(#a40c)" data-a="fu" style="--d:3.15s"/>
         <defs><marker id="a40c" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#B79BF0"/></marker></defs>
       </svg>
-      <div style="font-size:28px;font-weight:800;margin-top:12px">동승자 전원 복귀</div>
-      <div class="card-s" style="margin-top:8px">30초 주기 검사로도 발견</div>
+      <div data-a="fu" style="font-size:28px;font-weight:800;margin-top:12px; --d:3.40s">동승자 전원 복귀</div>
+      <div class="card-s" data-a="fu" style="margin-top:8px; --d:3.50s">30초 주기 검사로도 발견</div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">내린 사람은 그 자리 곡 위로 돌아옴 · 하차는 언제나 가능</div>
+  <div class="concl" data-a="fu" style="--d:3.9s">내린 사람은 그 자리 곡 위로 돌아옴 · 하차는 언제나 가능</div>
   <div class="pnum">31</div>
 </section>
 
@@ -1026,31 +1039,31 @@
     <p class="subtitle" data-a="fu" style="--d:.18s">정상적으로 창을 닫으면 즉시 정리 · 갑자기 끊기면 아래처럼</p>
   </div>
   <div style="margin-top:44px">
-    <svg viewBox="0 0 1660 200" data-a="fu" style="width:100%;height:200px; --d:.3s">
-      <text x="30" y="34" font-size="25" font-weight="700" fill="#2AA38B">15초마다 &ldquo;나 여기 있어&rdquo;</text>
-      <text x="800" y="34" font-size="25" font-weight="700" fill="#F09D6B">신호 없음 120초</text>
-      <rect x="330" y="72" width="1120" height="42" rx="21" fill="#FBE3D2"/>
-      <path d="M30 93h300" stroke="#A9B0C4" stroke-width="3"/>
-      <g fill="#2AD3AE"><circle cx="40" cy="93" r="15"/><circle cx="130" cy="93" r="15"/><circle cx="220" cy="93" r="15"/><circle cx="310" cy="93" r="15"/></g>
-      <text x="40" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle">0초</text>
-      <text x="130" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle">15초</text>
-      <text x="220" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle">30초</text>
-      <text x="310" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle">45초</text>
-      <rect x="1460" y="52" width="170" height="82" rx="14" fill="#F09D6B"/>
-      <text x="1545" y="102" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">퇴장 처리</text>
+    <svg viewBox="0 0 1660 200" style="width:100%;height:200px;overflow:visible">
+      <text x="30" y="34" font-size="25" font-weight="700" fill="#2AA38B" data-a="fu" style="--d:.3s">15초마다 &ldquo;나 여기 있어&rdquo;</text>
+      <text x="800" y="34" font-size="25" font-weight="700" fill="#F09D6B" data-a="fu" style="--d:2.3s">신호 없음 120초</text>
+      <rect x="330" y="72" width="1120" height="42" rx="21" fill="#FBE3D2" class="growx" style="--d:2.2s;--dur:1.6s"/>
+      <path d="M30 93h300" stroke="#A9B0C4" stroke-width="3" data-draw style="--len:300;--d:.45s;animation-duration:1.4s;animation-timing-function:linear"/>
+      <g fill="#2AD3AE"><circle cx="40" cy="93" r="15" data-a="pop" style="--d:.45s"/><circle cx="130" cy="93" r="15" data-a="pop" style="--d:.9s"/><circle cx="220" cy="93" r="15" data-a="pop" style="--d:1.35s"/><circle cx="310" cy="93" r="15" data-a="pop" style="--d:1.8s"/></g>
+      <text x="40" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle" data-a="fi" style="--d:.5s">0초</text>
+      <text x="130" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle" data-a="fi" style="--d:.95s">15초</text>
+      <text x="220" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle" data-a="fi" style="--d:1.4s">30초</text>
+      <text x="310" y="146" font-size="21" font-weight="600" fill="#5F6480" text-anchor="middle" data-a="fi" style="--d:1.85s">45초</text>
+      <g data-a="pop" style="--d:3.8s"><rect x="1460" y="52" width="170" height="82" rx="14" fill="#F09D6B"/>
+      <text x="1545" y="102" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">퇴장 처리</text></g>
     </svg>
   </div>
   <div class="row r-1-1" style="margin-top:34px">
-    <div class="card" data-a="fl" style="--d:.55s">
+    <div class="card" data-a="fl" style="--d:4.2s">
       <div style="font-size:26px;font-weight:700;color:var(--ink2);margin-bottom:20px">왜 120초?</div>
       <div style="font-size:28px;font-weight:800;color:var(--indigo);line-height:1.6">뒤로 보낸 탭은 신호가 느려짐<br>실측 53~61초 간격</div>
     </div>
-    <div class="card" data-a="fr" style="--d:.65s">
+    <div class="card" data-a="fr" style="--d:4.5s">
       <div style="font-size:26px;font-weight:700;color:var(--ink2);margin-bottom:20px">청소 주기</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center">
-        <div><div style="font-size:43px;font-weight:800;color:var(--indigo)">5초</div><div style="font-size:21px;font-weight:600;color:var(--ink2);margin-top:8px">만료된 사람 정리</div></div>
-        <div><div style="font-size:43px;font-weight:800;color:var(--indigo)">60초</div><div style="font-size:21px;font-weight:600;color:var(--ink2);margin-top:8px">칸별 인원수 다시 세기</div></div>
-        <div><div style="font-size:43px;font-weight:800;color:var(--indigo)">30초</div><div style="font-size:21px;font-weight:600;color:var(--ink2);margin-top:8px">주인 없는 선단 정리</div></div>
+        <div><div data-a="pop" style="font-size:43px;font-weight:800;color:var(--indigo); --d:4.80s">5초</div><div style="font-size:21px;font-weight:600;color:var(--ink2);margin-top:8px">만료된 사람 정리</div></div>
+        <div><div data-a="pop" style="font-size:43px;font-weight:800;color:var(--indigo); --d:4.95s">60초</div><div style="font-size:21px;font-weight:600;color:var(--ink2);margin-top:8px">칸별 인원수 다시 세기</div></div>
+        <div><div data-a="pop" style="font-size:43px;font-weight:800;color:var(--indigo); --d:5.10s">30초</div><div style="font-size:21px;font-weight:600;color:var(--ink2);margin-top:8px">주인 없는 선단 정리</div></div>
       </div>
     </div>
   </div>
@@ -1065,23 +1078,23 @@
   <div style="display:grid;grid-template-columns:1fr 90px 1fr 90px 1fr;align-items:center;margin-top:50px;height:460px">
     <div style="display:flex;flex-direction:column;gap:52px;justify-content:center;height:100%">
       <div class="card" data-a="fl" style="--d:.28s"><div style="font-size:24px;font-weight:700;color:var(--ink2);margin-bottom:14px">첫 번째 탭</div><div style="font-size:37px;font-weight:800;color:var(--orange)">연결 번호 3</div></div>
-      <div class="card" data-a="fl" style="--d:.4s"><div style="font-size:24px;font-weight:700;color:var(--ink2);margin-bottom:14px">새 탭</div><div style="font-size:37px;font-weight:800;color:var(--indigo)">연결 번호 4</div></div>
+      <div class="card" data-a="fl" style="--d:.7s"><div style="font-size:24px;font-weight:700;color:var(--ink2);margin-bottom:14px">새 탭</div><div style="font-size:37px;font-weight:800;color:var(--indigo)">연결 번호 4</div></div>
     </div>
-    <div data-a="fi" style="display:grid;place-items:center;height:100%; --d:.5s">
-      <svg width="80" height="300"><path d="M4 76 L74 140" stroke="#F09D6B" stroke-width="2.6" marker-end="url(#a42a)"/><path d="M4 224 L74 160" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a42b)"/>
+    <div style="display:grid;place-items:center;height:100%">
+      <svg width="80" height="300" style="overflow:visible"><path d="M4 76 L74 140" stroke="#F09D6B" stroke-width="2.6" marker-end="url(#a42a)" data-a="fl" style="--d:1.1s"/><path d="M4 224 L74 160" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a42b)" data-a="fl" style="--d:1.25s"/>
       <defs><marker id="a42a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#F09D6B"/></marker><marker id="a42b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#5B67E8"/></marker></defs></svg>
     </div>
-    <div data-a="sc" style="background:var(--dark);border-radius:20px;padding:44px 24px;text-align:center;color:#fff;font-size:32px;font-weight:800;line-height:1.5; --d:.55s">서버 기억<br>번호 4</div>
-    <div data-a="fi" style="display:grid;place-items:center;height:100%; --d:.7s">
-      <svg width="80" height="300"><path d="M4 140 L74 76" stroke="#F09D6B" stroke-width="2.6" marker-end="url(#a42c)"/><path d="M4 160 L74 224" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a42d)"/>
+    <div data-a="sc" style="background:var(--dark);border-radius:20px;padding:44px 24px;text-align:center;color:#fff;font-size:32px;font-weight:800;line-height:1.5; --d:1.5s">서버 기억<br>번호 4</div>
+    <div style="display:grid;place-items:center;height:100%">
+      <svg width="80" height="300" style="overflow:visible"><path d="M4 140 L74 76" stroke="#F09D6B" stroke-width="2.6" marker-end="url(#a42c)" data-a="fl" style="--d:1.95s"/><path d="M4 160 L74 224" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a42d)" data-a="fl" style="--d:2.6s"/>
       <defs><marker id="a42c" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#F09D6B"/></marker><marker id="a42d" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#5B67E8"/></marker></defs></svg>
     </div>
     <div style="display:flex;flex-direction:column;gap:52px;justify-content:center;height:100%">
-      <div class="card warm" data-a="fr" style="text-align:center; --d:.75s"><div style="font-size:35px;font-weight:800;color:#B5612B">3 ≠ 4 → 무시</div></div>
-      <div class="card accent" data-a="fr" style="text-align:center; --d:.85s"><div style="font-size:35px;font-weight:800;color:var(--indigo)">4 = 4 → 처리</div></div>
+      <div class="card warm" data-a="fr" style="text-align:center; --d:2.2s"><div style="font-size:35px;font-weight:800;color:#B5612B">3 ≠ 4 → 무시</div></div>
+      <div class="card accent" data-a="fr" style="text-align:center; --d:2.85s"><div style="font-size:35px;font-weight:800;color:var(--indigo)">4 = 4 → 처리</div></div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:1s">크다 작다가 아니라 같은지만 비교 · 다시 붙을 때마다 새 번호로 덮어씀</div>
+  <div class="concl" data-a="fu" style="--d:3.4s">크다 작다가 아니라 같은지만 비교 · 다시 붙을 때마다 새 번호로 덮어씀</div>
   <div class="pnum">33</div>
 </section>
 
@@ -1094,23 +1107,23 @@
     <div class="card" data-a="fl" style="padding:38px 44px; --d:.28s">
       <div style="font-size:35px;font-weight:800;color:var(--purple);margin-bottom:34px">반응 (이모지)</div>
       <div class="kv">
-        <div class="k">누구에게</div><div class="v">같은 겹 사람</div>
-        <div class="k">쿨다운</div><div class="v">같은 상대 5초</div>
-        <div class="k">방향</div><div class="v">내가 보냄 ≠ 네가 보냄</div>
-        <div class="k">기록</div><div class="v">남기지 않음</div>
+        <div class="k" data-a="fu" style="--d:0.75s">누구에게</div><div class="v" data-a="fu" style="--d:0.75s">같은 겹 사람</div>
+        <div class="k" data-a="fu" style="--d:0.97s">쿨다운</div><div class="v" data-a="fu" style="--d:0.97s">같은 상대 5초</div>
+        <div class="k" data-a="fu" style="--d:1.19s">방향</div><div class="v" data-a="fu" style="--d:1.19s">내가 보냄 ≠ 네가 보냄</div>
+        <div class="k" data-a="fu" style="--d:1.41s">기록</div><div class="v" data-a="fu" style="--d:1.41s">남기지 않음</div>
       </div>
     </div>
-    <div class="card" data-a="fr" style="padding:38px 44px; --d:.42s">
+    <div class="card" data-a="fr" style="padding:38px 44px; --d:1.7s">
       <div style="font-size:35px;font-weight:800;color:var(--indigo);margin-bottom:34px">만남</div>
       <div class="kv">
-        <div class="k">언제</div><div class="v">같은 겹 · 같은 곡</div>
-        <div class="k">쿨다운</div><div class="v">한 쌍 3분</div>
-        <div class="k">방향</div><div class="v">누가 먼저든 한 번</div>
-        <div class="k">기록</div><div class="v">DB에 +1 (뒤에서 처리)</div>
+        <div class="k" data-a="fu" style="--d:2.00s">언제</div><div class="v" data-a="fu" style="--d:2.00s">같은 겹 · 같은 곡</div>
+        <div class="k" data-a="fu" style="--d:2.22s">쿨다운</div><div class="v" data-a="fu" style="--d:2.22s">한 쌍 3분</div>
+        <div class="k" data-a="fu" style="--d:2.44s">방향</div><div class="v" data-a="fu" style="--d:2.44s">누가 먼저든 한 번</div>
+        <div class="k" data-a="fu" style="--d:2.66s">기록</div><div class="v" data-a="fu" style="--d:2.66s">DB에 +1 (뒤에서 처리)</div>
       </div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">따라가는 동안 · 선단 안에서는 만남으로 세지 않음</div>
+  <div class="concl" data-a="fu" style="--d:3.2s">따라가는 동안 · 선단 안에서는 만남으로 세지 않음</div>
   <div class="pnum">34</div>
 </section>
 
@@ -1120,13 +1133,13 @@
     <h2 class="title" data-a="fu" style="--d:.1s">전체 흐름: <span class="acc">필요한 사람</span>에게만</h2>
   </div>
   <div class="steps" style="margin-top:78px;grid-template-columns:repeat(5,1fr)">
-    <div class="step" data-a="fu" style="--d:.26s"><div class="dot-n dk">1</div><div class="arr"></div><div class="lbl">곡 재생</div><div class="card-s" style="margin-top:12px">내 위치 이동</div></div>
-    <div class="step" data-a="fu" style="--d:.36s"><div class="dot-n dk">2</div><div class="arr"></div><div class="lbl">칸 찾기</div><div class="card-s" style="margin-top:12px">옛 칸 · 새 칸</div></div>
-    <div class="step" data-a="fu" style="--d:.46s"><div class="dot-n dk">3</div><div class="arr"></div><div class="lbl">화면 확인</div><div class="card-s" style="margin-top:12px">실제 좌표로 거름</div></div>
-    <div class="step" data-a="fu" style="--d:.56s"><div class="dot-n dk">4</div><div class="arr"></div><div class="lbl">인솔자면</div><div class="card-s" style="margin-top:12px">동승자에게 중계</div></div>
-    <div class="step" data-a="fu" style="--d:.66s"><div class="dot-n teal">5</div><div class="lbl">전달</div><div class="card-s" style="margin-top:12px">관련 있는 사람만</div></div>
+    <div class="step" data-a="fu" style="--d:0.30s"><div class="dot-n dk">1</div><div class="arr"></div><div class="lbl">곡 재생</div><div class="card-s" style="margin-top:12px">내 위치 이동</div></div>
+    <div class="step" data-a="fu" style="--d:0.80s"><div class="dot-n dk">2</div><div class="arr"></div><div class="lbl">칸 찾기</div><div class="card-s" style="margin-top:12px">옛 칸 · 새 칸</div></div>
+    <div class="step" data-a="fu" style="--d:1.30s"><div class="dot-n dk">3</div><div class="arr"></div><div class="lbl">화면 확인</div><div class="card-s" style="margin-top:12px">실제 좌표로 거름</div></div>
+    <div class="step" data-a="fu" style="--d:1.80s"><div class="dot-n dk">4</div><div class="arr"></div><div class="lbl">인솔자면</div><div class="card-s" style="margin-top:12px">동승자에게 중계</div></div>
+    <div class="step" data-a="fu" style="--d:2.30s"><div class="dot-n teal">5</div><div class="lbl">전달</div><div class="card-s" style="margin-top:12px">관련 있는 사람만</div></div>
   </div>
-  <div class="card" data-a="fu" style="margin-top:64px;padding:34px 44px;font-size:27px;font-weight:700; --d:.85s">
+  <div class="card" data-a="fu" style="margin-top:64px;padding:34px 44px;font-size:27px;font-weight:700; --d:3s">
     상태는 Redis(메모리) · 여러 값을 한 번에 바꾸는 스크립트 13개로 반쪽 갱신 방지 · 만남 · 재생 기록만 DB
   </div>
   <div class="pnum">35</div>
@@ -1141,32 +1154,32 @@
     <div class="card" data-a="fl" style="padding:34px 40px 44px; --d:.28s">
       <div style="font-size:29px;font-weight:800;color:var(--indigo);margin-bottom:28px">지금</div>
       <svg viewBox="0 0 640 310" style="width:100%">
-        <rect x="30" y="20" width="270" height="270" rx="20" fill="#14162A"/>
-        <text x="165" y="66" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">서버</text>
-        <rect x="58" y="92" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="126" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">연결 번호표</text>
-        <rect x="58" y="158" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="192" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">메시지 순번</text>
-        <rect x="58" y="224" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="258" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">이벤트 전달</text>
-        <path d="M312 155h72" stroke="#8F94AA" stroke-width="2.4"/><path d="M382 149l12 6-12 6z" fill="#8F94AA"/><path d="M320 161l-12-6 12-6z" fill="#8F94AA"/>
-        <rect x="400" y="100" width="210" height="110" rx="18" fill="#EDE8FB"/>
-        <text x="505" y="164" font-size="30" font-weight="800" fill="#8A5FE0" text-anchor="middle">Redis</text>
+        <rect x="30" y="20" width="270" height="270" rx="20" fill="#14162A" data-a="sc" style="--d:.5s"/>
+        <text x="165" y="66" font-size="27" font-weight="800" fill="#fff" text-anchor="middle" data-a="fi" style="--d:.6s">서버</text>
+        <g data-a="pop" style="--d:0.85s"><rect x="58" y="92" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="126" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">연결 번호표</text></g>
+        <g data-a="pop" style="--d:1.03s"><rect x="58" y="158" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="192" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">메시지 순번</text></g>
+        <g data-a="pop" style="--d:1.21s"><rect x="58" y="224" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="258" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">이벤트 전달</text></g>
+        <g data-a="fi" style="--d:1.5s"><path d="M312 155h72" stroke="#8F94AA" stroke-width="2.4"/><path d="M382 149l12 6-12 6z" fill="#8F94AA"/><path d="M320 161l-12-6 12-6z" fill="#8F94AA"/></g>
+        <g data-a="fr" style="--d:1.6s"><rect x="400" y="100" width="210" height="110" rx="18" fill="#EDE8FB"/>
+        <text x="505" y="164" font-size="30" font-weight="800" fill="#8A5FE0" text-anchor="middle">Redis</text></g>
       </svg>
-      <div style="font-size:24px;font-weight:700;color:var(--orange);margin-top:14px">주황 = 서버 메모리에만 있음</div>
+      <div data-a="fu" style="font-size:24px;font-weight:700;color:var(--orange);margin-top:14px; --d:1.9s">주황 = 서버 메모리에만 있음</div>
     </div>
-    <div class="card" data-a="fr" style="padding:34px 40px 44px; --d:.42s">
+    <div class="card" data-a="fr" style="padding:34px 40px 44px; --d:2.3s">
       <div style="font-size:29px;font-weight:800;color:var(--ink2);margin-bottom:28px">늘린다면</div>
       <svg viewBox="0 0 640 310" style="width:100%">
-        <rect x="30" y="50" width="230" height="86" rx="18" fill="#14162A"/><text x="145" y="103" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">서버 A</text>
-        <rect x="30" y="176" width="230" height="86" rx="18" fill="#14162A"/><text x="145" y="229" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">서버 B</text>
-        <rect x="360" y="98" width="250" height="116" rx="18" fill="#EEF0FF" stroke="#5B67E8" stroke-width="2" stroke-dasharray="9 7"/>
+        <g data-a="fl" style="--d:2.6s"><rect x="30" y="50" width="230" height="86" rx="18" fill="#14162A"/><text x="145" y="103" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">서버 A</text></g>
+        <g data-a="fl" style="--d:2.75s"><rect x="30" y="176" width="230" height="86" rx="18" fill="#14162A"/><text x="145" y="229" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">서버 B</text></g>
+        <g data-a="pop" style="--d:3.3s"><rect x="360" y="98" width="250" height="116" rx="18" fill="#EEF0FF" stroke="#5B67E8" stroke-width="2" stroke-dasharray="9 7"/>
         <text x="485" y="148" font-size="24" font-weight="800" fill="#5B67E8" text-anchor="middle">메시지 브로커</text>
-        <text x="485" y="180" font-size="24" font-weight="800" fill="#5B67E8" text-anchor="middle">(Redis Pub/Sub 등)</text>
-        <path d="M268 100 L352 136" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a45)"/>
-        <path d="M268 212 L352 176" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a45)"/>
+        <text x="485" y="180" font-size="24" font-weight="800" fill="#5B67E8" text-anchor="middle">(Redis Pub/Sub 등)</text></g>
+        <path d="M268 100 L352 136" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a45)" data-a="fl" style="--d:3.05s"/>
+        <path d="M268 212 L352 176" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a45)" data-a="fl" style="--d:3.05s"/>
         <defs><marker id="a45" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#5B67E8"/></marker></defs>
       </svg>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">실시간 동시 접속 부하는 아직 미측정 · 부하 테스트는 HTTP만 진행</div>
+  <div class="concl" data-a="fu" style="--d:3.8s">실시간 동시 접속 부하는 아직 미측정 · 부하 테스트는 HTTP만 진행</div>
   <div class="pnum">36</div>
 </section>
 
