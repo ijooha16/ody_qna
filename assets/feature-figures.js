@@ -395,13 +395,15 @@
     {at:[5.9,2.9], col:'#4F8FE8', show:.9, dim:true}]});
   gridScene($('s22-gs'), {frame:[3,3,6,5], next:[3,1,6,3], t0:0.2, people:[{at:[4,3], col:'#F5B971'}, {at:[5,5], col:'#2AD3AE', cls:'gr'}]});
 
-  /* ---------- S32 : 들어옴 / 움직임 / 나감 ---------- */
+  /* ---------- S32 : 들어옴 / 움직임 / 나감 ----------
+     칸이 깔리고 → 흐린 점(이전 위치)에서 새 위치로 점이 움직이며 선이 그려짐 */
   function miniGrid(el, view, from, to, color) {
     if (!el) return;
-    let h = '';
+    const base = parseFloat(el.dataset.base || 0), T = parseFloat(el.dataset.t || 1), DUR = 0.9;
+    let h = '', n = 0;
     for (let y = 1; y <= 5; y++) for (let x = 1; x <= 6; x++) {
       const k = x + ',' + y;
-      h += '<div class="cell' + (view.indexOf(k) >= 0 ? ' on' : '') + '"></div>';
+      h += '<div class="cell' + (view.indexOf(k) >= 0 ? ' on' : '') + '" data-a="fi" style="--d:' + (base + n++ * 0.014).toFixed(3) + 's"></div>';
     }
     el.innerHTML = h;
     el.style.position = 'relative';
@@ -410,10 +412,16 @@
     const cw = 100 / 6, ch = 100 / 5;
     const px = function (p) { return [(p[0] - 0.5) * cw, (p[1] - 0.5) * ch]; };
     const a = px(from), b = px(to);
-    ov.innerHTML = '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%">' +
-      '<line x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '" stroke="' + color + '" stroke-width="1" vector-effect="non-scaling-stroke" style="stroke-width:2.6px"/></svg>' +
-      '<span style="position:absolute;left:' + a[0] + '%;top:' + a[1] + '%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:#B98A5E;opacity:.75"></span>' +
-      '<span style="position:absolute;left:' + b[0] + '%;top:' + b[1] + '%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:#F09D6B"></span>';
+    const ax = a[0] * 1.2, bx = b[0] * 1.2;          // viewBox 120×100 (격자 가로:세로 ≈ 6:5)
+    const len = Math.hypot(bx - ax, b[1] - a[1]).toFixed(1);
+    ov.innerHTML =
+      '<svg viewBox="0 0 120 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">' +
+        '<line x1="' + ax + '" y1="' + a[1] + '" x2="' + bx + '" y2="' + b[1] + '" stroke="' + color + '" stroke-width="1.5" stroke-linecap="round" ' +
+        'data-draw style="--len:' + len + ';--d:' + T + 's;animation-duration:' + DUR + 's;animation-timing-function:cubic-bezier(.45,.05,.55,.95)"/></svg>' +
+      '<span data-a="pop" style="--d:' + (base + 0.5).toFixed(2) + 's;position:absolute;left:' + a[0] + '%;top:' + a[1] + '%;margin:-11px 0 0 -11px;width:22px;height:22px;border-radius:50%;background:#B98A5E;opacity:.7"></span>' +
+      '<span class="mvdot" style="--x0:' + a[0] + '%;--y0:' + a[1] + '%;--x1:' + b[0] + '%;--y1:' + b[1] + '%;--d:' + T + 's;--dur:' + DUR + 's;' +
+        'position:absolute;margin:-14px 0 0 -14px;width:28px;height:28px;border-radius:50%;background:#F09D6B;box-shadow:0 0 14px rgba(240,157,107,.7)">' +
+        '<span class="ring" style="--c:' + color + ';--d2:' + (T + DUR) + 's;position:absolute;inset:0;border-radius:50%"></span></span>';
     el.appendChild(ov);
   }
   const VIEW5 = ['2,2','3,2','4,2','2,3','3,3','4,3','2,4','3,4','4,4'];

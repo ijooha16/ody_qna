@@ -191,6 +191,14 @@
   @keyframes dim{to{opacity:.28}}
   .slide.is-active .cand-dim{animation:dim .6s ease var(--d,0s) forwards}
   #sl-real.is-active .gs .dim{animation:dim .5s ease 2s forwards}
+  /* 움직임 세 가지 */
+  .mv3 .cellgrid{grid-template-columns:repeat(6,1fr);gap:8px;width:100%;max-width:440px;margin:0 auto 34px}
+  .mv3 .mv-t{font-size:46px;font-weight:800;letter-spacing:-.01em}
+  .mv3 .mv-s{font-size:30px;margin-top:12px}
+  @keyframes mvdot{from{left:var(--x0);top:var(--y0)}to{left:var(--x1);top:var(--y1)}}
+  .slide.is-active .mvdot{animation:mvdot var(--dur,.9s) cubic-bezier(.45,.05,.55,.95) var(--d,0s) both}
+  @keyframes arrive{0%{box-shadow:0 0 0 0 var(--c)}100%{box-shadow:0 0 0 22px transparent}}
+  .slide.is-active .mvdot .ring{animation:arrive .7s ease-out var(--d2,0s) both}
   /* S6 픽토그램 */
   .st4 .pic{width:300px;height:135px;display:block;margin:0 auto 22px}
 </style>
@@ -713,24 +721,24 @@
     <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
     <h2 class="title" data-a="fu" style="--d:.1s">움직임은 <span class="acc">세 가지</span>로 알린다</h2>
   </div>
-  <div class="cards c3" style="margin-top:44px">
-    <div class="card" data-a="fu" style="text-align:center;padding:34px; --d:.28s">
-      <div class="cellgrid mini" id="s32-a" style="grid-template-columns:repeat(6,1fr);max-width:330px;margin:0 auto 26px"></div>
-      <div style="font-size:32px;font-weight:800;color:var(--teal)">들어옴</div>
-      <div class="card-s" style="margin-top:10px">화면 밖 → 안</div>
+  <div class="cards c3 mv3" style="margin-top:40px">
+    <div class="card" data-a="fu" style="text-align:center;padding:40px 36px; --d:0.28s">
+      <div class="cellgrid mini" id="s32-a" data-t="1.4" data-base="0.45"></div>
+      <div class="mv-t" data-a="pop" style="color:var(--teal); --d:2.15s">들어옴</div>
+      <div class="card-s mv-s" data-a="fu" style="--d:2.25s">화면 밖 → 안</div>
     </div>
-    <div class="card" data-a="fu" style="text-align:center;padding:34px; --d:.4s">
-      <div class="cellgrid mini" id="s32-b" style="grid-template-columns:repeat(6,1fr);max-width:330px;margin:0 auto 26px"></div>
-      <div style="font-size:32px;font-weight:800;color:var(--indigo)">움직임</div>
-      <div class="card-s" style="margin-top:10px">화면 안 → 안</div>
+    <div class="card" data-a="fu" style="text-align:center;padding:40px 36px; --d:0.40s">
+      <div class="cellgrid mini" id="s32-b" data-t="2.1" data-base="0.57"></div>
+      <div class="mv-t" data-a="pop" style="color:var(--indigo); --d:2.85s">움직임</div>
+      <div class="card-s mv-s" data-a="fu" style="--d:2.95s">화면 안 → 안</div>
     </div>
-    <div class="card" data-a="fu" style="text-align:center;padding:34px; --d:.52s">
-      <div class="cellgrid mini" id="s32-c" style="grid-template-columns:repeat(6,1fr);max-width:330px;margin:0 auto 26px"></div>
-      <div style="font-size:32px;font-weight:800;color:var(--orange)">나감</div>
-      <div class="card-s" style="margin-top:10px">화면 안 → 밖</div>
+    <div class="card" data-a="fu" style="text-align:center;padding:40px 36px; --d:0.52s">
+      <div class="cellgrid mini" id="s32-c" data-t="2.8" data-base="0.69"></div>
+      <div class="mv-t" data-a="pop" style="color:var(--orange); --d:3.55s">나감</div>
+      <div class="card-s mv-s" data-a="fu" style="--d:3.65s">화면 안 → 밖</div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">옛 칸 · 새 칸을 보고 있던 화면에만 전달</div>
+  <div class="concl" data-a="fu" style="--d:3.9s">옛 칸 · 새 칸을 보고 있던 화면에만 전달</div>
   <div class="pnum">23</div>
 </section>
 
