@@ -117,10 +117,10 @@
   .ring{transform-box:fill-box;transform-origin:center;opacity:0}
   .slide.is-active .ring{animation:ringg 1.2s var(--ease) var(--d,0s) both}
   @keyframes ringg{from{transform:scale(0);opacity:0}to{opacity:1}}
-  .nb3{display:grid;grid-template-columns:560px 1fr 420px 1fr 500px;align-items:center;margin-top:24px}
-  .nb3 .scroller{height:420px}
-  .nb3 .sq10{grid-template-columns:repeat(5,88px);gap:15px}
-  .nb3 .sq{width:88px;height:88px}
+  .nb3{display:grid;grid-template-columns:700px 1fr 380px 1fr 480px;align-items:center;margin-top:24px}
+  .nb3 .scroller{height:520px}
+  .nb3 .sq10{grid-template-columns:repeat(5,84px);gap:15px}
+  .nb3 .sq{width:84px;height:84px}
   .nb-cap{font-size:27px;font-weight:800;color:var(--indigo);text-align:center;margin-bottom:12px}
   .gate{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:0 16px}
   .gate-ar{width:100%;height:3px;background:var(--indigo);position:relative}
@@ -214,6 +214,8 @@
   .slide.is-active .cy-mk{animation:growy .5s ease var(--d) both}
   @keyframes growy{from{transform:scaleY(0)}}
   .cy-mk span{position:absolute;top:100%;left:0;margin-top:8px;white-space:nowrap;font-size:25px;font-weight:700;color:var(--ink)}
+  @keyframes stamp{0%{opacity:0;transform:scale(2.4) rotate(-12deg)}70%{opacity:1;transform:scale(.92) rotate(-4deg)}100%{opacity:1;transform:rotate(-4deg)}}
+  .slide.is-active [data-a="stamp"]{animation-name:stamp;animation-duration:.5s}
   @keyframes mvx{from{transform:translateX(var(--fx,0))}}
   .slide.is-active .mv{animation:mvx var(--dur,1.2s) cubic-bezier(.5,0,.25,1) var(--d,0s) both}
   @keyframes wave{0%,100%{transform:translateY(-12px)}50%{transform:translateY(12px)}}
@@ -227,7 +229,6 @@
 </style>
 </head>
 <body>
-<button class="backbtn" title="질문 목록으로 (Esc)" aria-label="질문 목록"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4l-8 8 8 8"/></svg></button>
 <div class="prog"></div>
 
 <div class="stage">
@@ -235,18 +236,18 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <div class="eyebrow" data-a="fd">Q. 비슷한 곡은 어떻게 빠르게 찾나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s"><span class="acc">469만 곡</span>과 전부 거리를 재면 느리다</h2>
   </div>
   <div class="row r-7-3">
-    <div class="sky stagebox" data-seed="47" data-a="sc" style="--d:.25s">
+    <div class="sky stagebox" data-seed="47" data-a="sc" style="--d:.25s;height:690px">
       <svg class="sky-in" viewBox="0 0 900 560">
         <g id="s3-rays" stroke="#F09D6B" stroke-width="1.4" opacity=".75"></g>
         <circle cx="450" cy="285" r="30" fill="#fff" opacity=".22"/>
         <circle cx="450" cy="285" r="16" fill="#fff"/>
       </svg>
     </div>
-    <div class="card stagebox" data-a="fr" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center; --d:.5s">
+    <div class="card stagebox" data-a="fr" style="height:690px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center; --d:.5s">
       <div style="font-size:31px;font-weight:700;color:var(--ink2)">처음부터 끝까지 비교</div>
       <div class="big acc-o" style="margin-top:34px">469만 번</div>
       <div class="big acc-o" style="margin-top:34px">95ms</div>
@@ -258,12 +259,12 @@
 
 <section class="slide" id="sl-filter">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <div class="eyebrow" data-a="fd">Q. 비슷한 곡은 어떻게 빠르게 찾나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">목차로 <span class="acc">근처 200곡</span>만 보고, 10곡이 차면 멈춘다</h2>
   </div>
   <div class="nb3">
     <div data-a="sc" style="--d:.2s">
-      <svg viewBox="0 0 560 470" style="width:100%;height:470px;display:block;overflow:visible">
+      <svg viewBox="0 0 560 470" style="width:100%;height:auto;display:block;overflow:visible">
         <rect x="0" y="0" width="560" height="470" rx="24" fill="#fff" stroke="#E3E5EF" stroke-width="2"/>
         <text x="28" y="48" font-size="26" font-weight="700" fill="#5F6480">469만 곡 지도 (좌표 16개)</text>
         <g id="s4-dots"></g>
@@ -290,7 +291,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <div class="eyebrow" data-a="fd">Q. 주변 곡을 거르는 기준은 어떻게 정했나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">규칙 숫자는 <span class="acc">통계</span>로 정했다</h2>
   </div>
   <div class="st4 fill" style="margin-top:20px">
@@ -305,7 +306,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <div class="eyebrow" data-a="fd">Q. 화면에서 가까운데 목록에 없는 곡이 있는 이유는?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">화면에서 바로 옆인데 주변 목록에 <span class="acc-o">없다?</span></h2>
   </div>
   <div class="sky stagebox" data-seed="53" data-density=".5" data-a="sc" style="--d:.25s;margin-top:20px">
@@ -323,7 +324,7 @@
 
 <section class="slide" id="sl-far">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <div class="eyebrow" data-a="fd">Q. 화면에서 가까운데 목록에 없는 곡이 있는 이유는?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">다른 축으로 보면 둘은 <span class="acc">멀다</span></h2>
   </div>
   <div class="sky stagebox" data-seed="53" data-density=".5" style="margin-top:20px">
@@ -342,7 +343,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
+    <div class="eyebrow" data-a="fd">Q. 비슷한 곡끼리 정말 가깝게 모여 있나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">비슷한 곡이 정말 <span class="acc">가까이</span> 있다</h2>
   </div>
   <div class="row r-7-3" style="margin-top:10px;align-items:center">
@@ -380,7 +381,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <div class="eyebrow" data-a="fd">Q. 여정 경로는 어떤 방식으로 만들었나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">처음 계획: 가까운 곡끼리 이어 <span class="acc">최단 경로</span></h2>
     <p class="subtitle" data-a="fu" style="--d:.18s">곡마다 가까운 30곡을 선으로 잇고(kNN 그래프) 다익스트라</p>
   </div>
@@ -408,7 +409,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow">Q&amp;A · 여정</div>
+    <div class="eyebrow">Q. 여정 경로는 어떤 방식으로 만들었나요?</div>
     <h2 class="title">처음 계획: 가까운 곡끼리 이어 <span class="acc">최단 경로</span></h2>
     <p class="subtitle" style="visibility:hidden">곡마다 가까운 30곡을 선으로 잇고(kNN 그래프) 다익스트라</p>
   </div>
@@ -438,7 +439,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <div class="eyebrow" data-a="fd">Q. 여정 경로는 어떤 방식으로 만들었나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">해결 1: A–B <span class="acc">직선</span>을 긋고 정거장을 찍는다</h2>
   </div>
   <div class="sky stagebox short" data-seed="127" data-nofill data-a="sc" style="--d:.25s;margin-top:20px">
@@ -468,7 +469,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow">Q&amp;A · 여정</div>
+    <div class="eyebrow">Q. 여정 경로는 어떤 방식으로 만들었나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">해결 2: 정거장마다 가까운 후보 <span class="acc">60곡</span></h2>
   </div>
   <div class="sky stagebox short" data-seed="127" data-nofill style="margin-top:20px">
@@ -493,7 +494,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow">Q&amp;A · 여정</div>
+    <div class="eyebrow">Q. 여정 경로는 어떤 방식으로 만들었나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">해결 3: 후보 중 가장 <span class="acc-t">자연스러운 한 줄</span></h2>
   </div>
   <div class="sky stagebox short" data-seed="127" data-nofill style="margin-top:20px">
@@ -526,7 +527,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <div class="eyebrow" data-a="fd">Q. 여정 경로는 어떤 방식으로 만들었나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">모든 조합을 <span class="acc">다 보지 않는다</span></h2>
   </div>
   <div class="row r-1-1" style="margin-top:26px">
@@ -547,7 +548,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <div class="eyebrow" data-a="fd">Q. 여정 경로는 어떤 방식으로 만들었나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">결과: 최단 경로 <span style="color:var(--ink2)">vs</span> <span class="acc">직선 축</span></h2>
   </div>
   <div class="cmp-tbl" style="margin-top:52px">
@@ -581,7 +582,7 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <div class="eyebrow" data-a="fd">Q. 여정 경로는 어떤 방식으로 만들었나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">여정 하나는 <span class="acc">이런 모습</span>이다</h2>
   </div>
   <div class="sky" data-seed="161" data-nofill data-a="sc" style="--d:.25s;height:300px;margin-top:14px">
@@ -609,7 +610,106 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <div class="eyebrow" data-a="fd">Q. 비터비 알고리즘을 쓴 건가요?</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">비터비 <span class="acc">그대로</span>가 아니라 비터비 <span class="acc">방식</span>의 DP</h2>
+  </div>
+  <svg viewBox="0 0 1660 600" style="width:100%;height:600px;display:block;overflow:visible;margin-top:10px">
+    <g data-a="fl" style="--d:.3s"><rect x="40" y="70" width="640" height="440" rx="26" fill="#fff" stroke="#E3E5EF" stroke-width="2"/>
+      <text x="360" y="150" font-size="34" font-weight="800" fill="#5F6480" text-anchor="middle">원래 비터비 알고리즘</text>
+      <text x="360" y="200" font-size="26" font-weight="700" fill="#8F94AA" text-anchor="middle">HMM · 확률 · 시간축</text>
+      <g fill="#C8CBD8"><circle cx="200" cy="300" r="16"/><circle cx="200" cy="370" r="16"/><circle cx="200" cy="440" r="16"/><circle cx="360" cy="300" r="16"/><circle cx="360" cy="370" r="16"/><circle cx="360" cy="440" r="16"/><circle cx="520" cy="300" r="16"/><circle cx="520" cy="370" r="16"/><circle cx="520" cy="440" r="16"/></g>
+      <path d="M200 370L360 300L520 440" stroke="#8F94AA" stroke-width="5" fill="none"/></g>
+    <g data-a="fr" style="--d:1.1s"><rect x="980" y="70" width="640" height="440" rx="26" fill="#F0F2FF" stroke="#5B67E8" stroke-width="3"/>
+      <text x="1300" y="150" font-size="34" font-weight="800" fill="#5B67E8" text-anchor="middle">비터비 방식의 DP</text>
+      <text x="1300" y="200" font-size="26" font-weight="700" fill="#5B67E8" text-anchor="middle">곡 · 비용 · 출발→도착 구간</text>
+      <g fill="#98A4FF"><circle cx="1140" cy="300" r="16"/><circle cx="1140" cy="370" r="16"/><circle cx="1140" cy="440" r="16"/><circle cx="1300" cy="300" r="16"/><circle cx="1300" cy="370" r="16"/><circle cx="1300" cy="440" r="16"/><circle cx="1460" cy="300" r="16"/><circle cx="1460" cy="370" r="16"/><circle cx="1460" cy="440" r="16"/></g>
+      <path d="M1140 370L1300 300L1460 440" stroke="#5B67E8" stroke-width="6" fill="none" data-draw style="--len:420;--d:1.6s"/></g>
+    <g data-a="pop" style="--d:2.2s"><rect x="720" y="250" width="220" height="80" rx="40" fill="#22243A"/><text x="830" y="301" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">뼈대만 빌림</text></g>
+    <path d="M690 290H710M950 290H970" stroke="#22243A" stroke-width="4" data-a="fi" style="--d:2.2s"/>
+  </svg>
+  <div class="concl" data-a="fu">정확히는 비터비 알고리즘 그대로가 아니라, 비터비 방식의 동적 계획법을 쓴 것</div>
+  <div class="pnum">15</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q. 비터비 알고리즘을 쓴 건가요?</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">원래 비터비: <span class="acc">확률이 가장 높은</span> 상태열</h2>
+  </div>
+  <svg viewBox="0 0 1660 600" style="width:100%;height:600px;display:block;overflow:visible;margin-top:10px">
+    <g data-a="fi" style="--d:.9s"><path d="M260 200L620 200" stroke="#D9DBE4" stroke-width="2"/><path d="M260 200L620 320" stroke="#D9DBE4" stroke-width="2"/><path d="M260 200L620 440" stroke="#D9DBE4" stroke-width="2"/><path d="M260 320L620 200" stroke="#D9DBE4" stroke-width="2"/><path d="M260 320L620 320" stroke="#D9DBE4" stroke-width="2"/><path d="M260 320L620 440" stroke="#D9DBE4" stroke-width="2"/><path d="M260 440L620 200" stroke="#D9DBE4" stroke-width="2"/><path d="M260 440L620 320" stroke="#D9DBE4" stroke-width="2"/><path d="M260 440L620 440" stroke="#D9DBE4" stroke-width="2"/><path d="M620 200L980 200" stroke="#D9DBE4" stroke-width="2"/><path d="M620 200L980 320" stroke="#D9DBE4" stroke-width="2"/><path d="M620 200L980 440" stroke="#D9DBE4" stroke-width="2"/><path d="M620 320L980 200" stroke="#D9DBE4" stroke-width="2"/><path d="M620 320L980 320" stroke="#D9DBE4" stroke-width="2"/><path d="M620 320L980 440" stroke="#D9DBE4" stroke-width="2"/><path d="M620 440L980 200" stroke="#D9DBE4" stroke-width="2"/><path d="M620 440L980 320" stroke="#D9DBE4" stroke-width="2"/><path d="M620 440L980 440" stroke="#D9DBE4" stroke-width="2"/><path d="M980 200L1340 200" stroke="#D9DBE4" stroke-width="2"/><path d="M980 200L1340 320" stroke="#D9DBE4" stroke-width="2"/><path d="M980 200L1340 440" stroke="#D9DBE4" stroke-width="2"/><path d="M980 320L1340 200" stroke="#D9DBE4" stroke-width="2"/><path d="M980 320L1340 320" stroke="#D9DBE4" stroke-width="2"/><path d="M980 320L1340 440" stroke="#D9DBE4" stroke-width="2"/><path d="M980 440L1340 200" stroke="#D9DBE4" stroke-width="2"/><path d="M980 440L1340 320" stroke="#D9DBE4" stroke-width="2"/><path d="M980 440L1340 440" stroke="#D9DBE4" stroke-width="2"/></g>
+    <circle cx="260" cy="200" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.3s"/><circle cx="260" cy="320" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.3s"/><circle cx="260" cy="440" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.3s"/><text x="260" y="540" font-size="28" font-weight="800" fill="#5F6480" text-anchor="middle" data-a="fi" style="--d:0.3s">시점 1</text><circle cx="620" cy="200" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.5s"/><circle cx="620" cy="320" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.5s"/><circle cx="620" cy="440" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.5s"/><text x="620" y="540" font-size="28" font-weight="800" fill="#5F6480" text-anchor="middle" data-a="fi" style="--d:0.5s">시점 2</text><circle cx="980" cy="200" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.7s"/><circle cx="980" cy="320" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.7s"/><circle cx="980" cy="440" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.7s"/><text x="980" y="540" font-size="28" font-weight="800" fill="#5F6480" text-anchor="middle" data-a="fi" style="--d:0.7s">시점 3</text><circle cx="1340" cy="200" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.9s"/><circle cx="1340" cy="320" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.9s"/><circle cx="1340" cy="440" r="24" fill="#fff" stroke="#8F94AA" stroke-width="3" data-a="pop" style="--d:0.9s"/><text x="1340" y="540" font-size="28" font-weight="800" fill="#5F6480" text-anchor="middle" data-a="fi" style="--d:0.9s">시점 4</text>
+    <text x="80" y="60" font-size="28" font-weight="700" fill="#5F6480" data-a="fi" style="--d:.2s">시점마다 가능한 상태 여러 개</text>
+    <path d="M260 320 L620 200 L980 440 L1340 320" stroke="#5B67E8" stroke-width="7" fill="none" stroke-linejoin="round" data-draw style="--len:1300;--d:1.9s;animation-duration:1.2s"/>
+    <circle cx="260" cy="320" r="24" fill="#5B67E8" data-a="pop" style="--d:2.00s"/><circle cx="620" cy="200" r="24" fill="#5B67E8" data-a="pop" style="--d:2.25s"/><circle cx="980" cy="440" r="24" fill="#5B67E8" data-a="pop" style="--d:2.50s"/><circle cx="1340" cy="320" r="24" fill="#5B67E8" data-a="pop" style="--d:2.75s"/>
+    <g data-a="pop" style="--d:3.2s"><rect x="1080" y="40" width="540" height="64" rx="32" fill="#5B67E8"/><text x="1350" y="83" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">확률이 가장 높은 상태열</text></g>
+    <path d="M200 580H1400" stroke="#C8CCDA" stroke-width="3"/><text x="1420" y="588" font-size="26" font-weight="700" fill="#8F94AA">시간 →</text>
+  </svg>
+  <div class="concl" data-a="fu">원래 비터비는 시점마다 상태를 하나씩 골라, 확률이 가장 높은 상태열을 찾는 방식</div>
+  <div class="pnum">16</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q. 비터비 알고리즘을 쓴 건가요?</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">시간 대신 <span class="acc">구간</span>, 상태 대신 <span class="acc">후보 곡</span></h2>
+  </div>
+  <svg viewBox="0 0 1660 600" style="width:100%;height:600px;display:block;overflow:visible;margin-top:10px">
+    <path d="M140 330H1520" stroke="#22243A" stroke-width="4" stroke-dasharray="12 10" data-a="fi" style="--d:.3s"/>
+    <g data-a="pop" style="--d:.3s"><circle cx="140" cy="330" r="40" fill="#2AA38B"/><text x="140" y="342" font-size="32" font-weight="800" fill="#fff" text-anchor="middle">A</text><text x="140" y="410" font-size="25" font-weight="700" fill="#5F6480" text-anchor="middle">출발곡</text></g>
+    <g data-a="pop" style="--d:.5s"><circle cx="1520" cy="330" r="40" fill="#22243A"/><text x="1520" y="342" font-size="32" font-weight="800" fill="#fff" text-anchor="middle">B</text><text x="1520" y="410" font-size="25" font-weight="700" fill="#5F6480" text-anchor="middle">도착곡</text></g>
+    <text x="470" y="120" font-size="28" font-weight="800" fill="#5B67E8" text-anchor="middle" data-a="fi" style="--d:0.8s">구간 1</text><path d="M470 150V500" stroke="#C3CAFF" stroke-width="3" stroke-dasharray="6 8" data-a="fi" style="--d:0.8s"/><circle cx="473" cy="195" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.20s"/><circle cx="477" cy="267" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.26s"/><circle cx="440" cy="343" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.32s"/><circle cx="494" cy="400" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.38s"/><circle cx="451" cy="475" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.44s"/><text x="830" y="120" font-size="28" font-weight="800" fill="#5B67E8" text-anchor="middle" data-a="fi" style="--d:1.1s">구간 2</text><path d="M830 150V500" stroke="#C3CAFF" stroke-width="3" stroke-dasharray="6 8" data-a="fi" style="--d:1.1s"/><circle cx="828" cy="210" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.50s"/><circle cx="828" cy="277" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.56s"/><circle cx="806" cy="343" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.62s"/><circle cx="856" cy="413" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.68s"/><circle cx="847" cy="480" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.74s"/><text x="1190" y="120" font-size="28" font-weight="800" fill="#5B67E8" text-anchor="middle" data-a="fi" style="--d:1.4s">구간 3</text><path d="M1190 150V500" stroke="#C3CAFF" stroke-width="3" stroke-dasharray="6 8" data-a="fi" style="--d:1.4s"/><circle cx="1159" cy="203" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.80s"/><circle cx="1196" cy="275" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.86s"/><circle cx="1157" cy="336" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.92s"/><circle cx="1188" cy="417" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:1.98s"/><circle cx="1217" cy="484" r="17" fill="#98A4FF" stroke="#fff" stroke-width="3" data-a="pop" style="--d:2.04s"/>
+    <g data-a="fu" style="--d:2.6s"><rect x="300" y="530" width="460" height="60" rx="30" fill="#E9ECFF"/><text x="530" y="570" font-size="27" font-weight="800" fill="#5B67E8" text-anchor="middle">시점 → 출발~도착 구간</text></g>
+    <g data-a="fu" style="--d:2.9s"><rect x="900" y="530" width="460" height="60" rx="30" fill="#E9ECFF"/><text x="1130" y="570" font-size="27" font-weight="800" fill="#5B67E8" text-anchor="middle">상태 → 구간별 후보 곡</text></g>
+  </svg>
+  <div class="concl" data-a="fu">시간축 대신 출발곡부터 도착곡까지 구간을 두고, 구간별 후보 곡을 상태로 본 구조</div>
+  <div class="pnum">17</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q. 비터비 알고리즘을 쓴 건가요?</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">확률 대신 <span class="acc">비용</span>을 최소로</h2>
+  </div>
+  <svg viewBox="0 0 1660 600" style="width:100%;height:600px;display:block;overflow:visible;margin-top:10px">
+    <path d="M140 330H1520" stroke="#C8CCDA" stroke-width="3" data-a="fi" style="--d:.2s"/>
+    <text x="1540" y="320" font-size="24" font-weight="700" fill="#8F94AA">기준선</text>
+    <path d="M140 330L470 250" stroke="#5B67E8" stroke-width="6" data-draw style="--len:420;--d:0.6s"/><path d="M470 250L830 380" stroke="#5B67E8" stroke-width="6" data-draw style="--len:420;--d:0.9s"/><path d="M830 380L1190 290" stroke="#5B67E8" stroke-width="6" data-draw style="--len:420;--d:1.2s"/><path d="M1190 290L1520 330" stroke="#5B67E8" stroke-width="6" data-draw style="--len:420;--d:1.5s"/><path d="M470 250V330" stroke="#F09D6B" stroke-width="5" stroke-dasharray="6 6" data-a="fi" style="--d:2.0s"/><path d="M830 380V330" stroke="#F09D6B" stroke-width="5" stroke-dasharray="6 6" data-a="fi" style="--d:2.2s"/><path d="M1190 290V330" stroke="#F09D6B" stroke-width="5" stroke-dasharray="6 6" data-a="fi" style="--d:2.4s"/><circle cx="140" cy="330" r="20" fill="#2AA38B" data-a="pop" style="--d:0.4s"/><circle cx="470" cy="250" r="20" fill="#5B67E8" data-a="pop" style="--d:0.7s"/><circle cx="830" cy="380" r="20" fill="#5B67E8" data-a="pop" style="--d:1.0s"/><circle cx="1190" cy="290" r="20" fill="#5B67E8" data-a="pop" style="--d:1.3s"/><circle cx="1520" cy="330" r="20" fill="#22243A" data-a="pop" style="--d:1.6s"/>
+    <g data-a="fi" style="--d:1.4s"><text x="300" y="250" font-size="27" font-weight="800" fill="#5B67E8" text-anchor="middle">걸음</text></g>
+    <g data-a="fi" style="--d:2.4s"><text x="860" y="460" font-size="27" font-weight="800" fill="#DD7A3B" text-anchor="middle">기준선 이탈</text></g>
+    <g data-a="pop" style="--d:3s"><rect x="330" y="500" width="1000" height="90" rx="20" fill="#22243A"/>
+      <text x="830" y="558" font-size="38" font-weight="800" fill="#fff" text-anchor="middle">비용 = <tspan fill="#98A4FF">Σ 걸음²</tspan> + 2 × <tspan fill="#F5B98F">Σ 이탈²</tspan></text></g>
+    <g data-a="stamp" style="--d:3.5s"><rect x="1360" y="40" width="270" height="62" rx="12" fill="none" stroke="#5B67E8" stroke-width="4"/><text x="1495" y="82" font-size="27" font-weight="800" fill="#5B67E8" text-anchor="middle">확률 대신 비용</text></g>
+  </svg>
+  <div class="concl" data-a="fu">확률 대신 걸음²과 기준선 이탈²의 합을 비용으로 두고, 가장 작은 순서를 찾은 것</div>
+  <div class="pnum">18</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q. 비터비 알고리즘을 쓴 건가요?</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">당장 가까운 곡이 아니라 <span class="acc">전체 비용 최소</span></h2>
+  </div>
+  <svg viewBox="0 0 1660 600" style="width:100%;height:600px;display:block;overflow:visible;margin-top:10px">
+    <path d="M140 330H1520" stroke="#C8CCDA" stroke-width="3" stroke-dasharray="10 10" data-a="fi" style="--d:.2s"/>
+    <g data-a="pop" style="--d:.2s"><circle cx="140" cy="330" r="34" fill="#2AA38B"/><text x="140" y="341" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">A</text></g>
+    <g data-a="pop" style="--d:.3s"><circle cx="1520" cy="330" r="34" fill="#22243A"/><text x="1520" y="341" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">B</text></g>
+    <path d="M140 330 L470 300 L830 180 L1190 120 L1520 330" stroke="#F09D6B" stroke-width="6" fill="none" stroke-linejoin="round" data-draw style="--len:1800;--d:.6s;animation-duration:1.6s"/>
+    <circle cx="470" cy="300" r="16" fill="#F09D6B" data-a="pop" style="--d:0.70s"/><circle cx="830" cy="180" r="16" fill="#F09D6B" data-a="pop" style="--d:1.05s"/><circle cx="1190" cy="120" r="16" fill="#F09D6B" data-a="pop" style="--d:1.40s"/>
+    <g data-a="fu" style="--d:2.1s"><text x="1190" y="90" font-size="28" font-weight="800" fill="#DD7A3B" text-anchor="middle">매번 당장 가까운 곡</text><text x="1400" y="210" font-size="28" font-weight="800" fill="#DD7A3B" text-anchor="middle">→ 끝에서 큰 점프</text></g>
+    <path d="M140 330 L470 350 L830 320 L1190 340 L1520 330" stroke="#5B67E8" stroke-width="7" fill="none" stroke-linejoin="round" data-draw style="--len:1500;--d:2.6s;animation-duration:1.4s"/>
+    <circle cx="470" cy="350" r="17" fill="#5B67E8" data-a="pop" style="--d:2.70s"/><circle cx="830" cy="320" r="17" fill="#5B67E8" data-a="pop" style="--d:3.00s"/><circle cx="1190" cy="340" r="17" fill="#5B67E8" data-a="pop" style="--d:3.30s"/>
+    <g data-a="fu" style="--d:4s"><text x="830" y="430" font-size="30" font-weight="800" fill="#5B67E8" text-anchor="middle">끝까지 이었을 때 전체 비용이 가장 작은 경로</text></g>
+    <g data-a="pop" style="--d:4.3s"><rect x="420" y="490" width="380" height="80" rx="18" fill="#FDEBDD"/><text x="610" y="542" font-size="30" font-weight="800" fill="#B5612B" text-anchor="middle">그리디 · 합계 큼</text></g>
+    <g data-a="pop" style="--d:4.5s"><rect x="860" y="490" width="380" height="80" rx="18" fill="#5B67E8"/><text x="1050" y="542" font-size="30" font-weight="800" fill="#fff" text-anchor="middle">DP · 합계 최소</text></g>
+  </svg>
+  <div class="concl" data-a="fu">핵심은 당장 가까운 곡이 아니라, 끝까지 이었을 때 전체 비용이 가장 작은 경로</div>
+  <div class="pnum">19</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q. 겹을 바꾸면 별자리 모양이 달라지지 않나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">겹마다 축이 달라 <span class="acc-o">별자리 모양이 바뀌었다</span></h2>
     <p class="subtitle" data-a="fu" style="--d:.18s">같은 곡들인데 겹을 내려갈 때마다 다른 두 축으로 그려짐</p>
   </div>
@@ -630,12 +730,12 @@
     </svg>
   </div>
   <div class="concl" data-a="fu">두 축으로 지도처럼 보여 주다 보니, 겹을 옮길 때마다 같은 별자리가 <span class="acc-o">딴 모양이 돼서 헷갈리는 문제</span></div>
-  <div class="pnum">15</div>
+  <div class="pnum">20</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <div class="eyebrow" data-a="fd">Q. 겹을 바꾸면 별자리 모양이 달라지지 않나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">별자리는 <span class="acc-t">최상단 겹의 PC1 · PC2</span>로 고정</h2>
     <p class="subtitle" data-a="fu" style="--d:.18s">모든 곡이 있는 1겹의 두 축으로만 그려서 어느 겹에서나 같은 모양</p>
   </div>
@@ -656,48 +756,48 @@
     </svg>
   </div>
   <div class="concl" data-a="fu">그래서 모든 곡이 있는 최상단 겹의 PC1과 PC2로 고정해, 어느 겹에 가도 똑같이 보이는 별자리</div>
-  <div class="pnum">16</div>
+  <div class="pnum">21</div>
 </section>
 
 <section class="slide" id="sl-grid">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 실시간 위치는 누구에게 어떻게 전달되나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">내 화면에 보이는 <span class="acc-t">사람만</span></h2>
   </div>
   <div class="sky" data-seed="171" data-density=".35" data-nofill data-a="sc" style="--d:.25s;height:600px;margin-top:20px">
     <svg class="sky-in gs" viewBox="0 0 1660 600" id="s21-gs"></svg>
   </div>
   <div class="concl" data-a="fu">지도를 격자 칸으로 나눠서, 내 화면에 걸친 칸의 사람만 보는 방식</div>
-  <div class="pnum">17</div>
+  <div class="pnum">22</div>
 </section>
 
 <section class="slide" id="sl-move">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 실시간 위치는 누구에게 어떻게 전달되나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">화면을 옮기면 <span class="acc-t">필요한 칸만</span> 바꿔 듣는다</h2>
   </div>
   <div class="sky" data-seed="171" data-density=".35" data-nofill style="--d:.25s;height:600px;margin-top:20px">
     <svg class="sky-in gs" viewBox="0 0 1660 600" id="s22-gs"></svg>
   </div>
   <div class="concl" data-a="fu">화면을 옮기면 새로 걸친 칸만 더 듣고, 벗어난 칸은 끊는 방식</div>
-  <div class="pnum">18</div>
+  <div class="pnum">23</div>
 </section>
 
 <section class="slide" id="sl-real">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 실시간 위치는 누구에게 어떻게 전달되나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">칸은 후보일 뿐, 실제 화면으로 <span class="acc">한 번 더</span> 거른다</h2>
   </div>
   <div class="sky" data-seed="171" data-density=".35" data-nofill style="height:600px;margin-top:20px">
     <svg class="sky-in gs" viewBox="0 0 1660 600" id="s23-gs"></svg>
   </div>
   <div class="concl" data-a="fu">칸은 후보일 뿐이라, 실제 화면 좌표로 한 번 더 거른 결과</div>
-  <div class="pnum">19</div>
+  <div class="pnum">24</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 실시간 위치는 누구에게 어떻게 전달되나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">움직임은 <span class="acc">세 가지</span>로 알린다</h2>
   </div>
   <div class="cards c3 mv3" style="margin-top:40px">
@@ -718,12 +818,12 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:3.9s">옛 칸이나 새 칸을 보고 있던 화면에만 알려 주는 방식</div>
-  <div class="pnum">20</div>
+  <div class="pnum">25</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 사용자가 많아지면 감당할 수 있나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">한 명씩 왕복하지 않고 <span class="acc">한 번에 묶어서</span></h2>
   </div>
   <div class="row r-1-1" style="margin-top:44px">
@@ -762,12 +862,12 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:4.3s">화면 안 사람들 정보를 한 번에 묶어서 가져오는 방식</div>
-  <div class="pnum">21</div>
+  <div class="pnum">26</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 사용자가 많아지면 감당할 수 있나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">사람이 많으면 한 명씩 대신 <span class="acc-o">칸별 숫자</span></h2>
   </div>
   <div style="display:grid;grid-template-columns:1fr 280px 1fr;align-items:center;gap:30px;margin-top:38px">
@@ -786,24 +886,24 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:3.6s">사람이 늘어나도 보내는 메시지 양은 폭증하지 않는 구조</div>
-  <div class="pnum">22</div>
+  <div class="pnum">27</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 주변 사람 목록은 어떻게 정하나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">주변 사람 패널 = 같은 겹, <span class="acc-t">가까운 12명</span></h2>
   </div>
   <div class="sky stagebox" data-seed="181" data-a="sc" style="--d:.28s;margin-top:20px">
     <svg class="sky-in" viewBox="0 0 1660 560"><g id="s35-people"></g></svg>
   </div>
   <div class="concl" data-a="fu" style="--d:2.1s">서버가 가까운 순으로 12명만 잘라 주고, 만남 횟수도 함께 보여 주는 방식</div>
-  <div class="pnum">23</div>
+  <div class="pnum">28</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 따라가기는 어떻게 동작하나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">따라가기 = 인솔자의 <span class="acc">우주선</span>에 탄다</h2>
   </div>
   <div class="row r-1-1" style="margin-top:14px">
@@ -837,12 +937,12 @@
     <span data-a="fl" style="font-size:24px;font-weight:600;color:var(--ink2);margin-left:10px; --d:3.95s">← 탈 때 한 번에 검사</span>
   </div>
   <div class="concl" data-a="fu">따라가기는 인솔자의 우주선에 타는 것, 탈 때 조건을 한 번에 검사하는 구조</div>
-  <div class="pnum">24</div>
+  <div class="pnum">29</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 따라가기는 어떻게 동작하나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">인솔자 화면을 <span class="acc">한 번</span> 만들어 동승자에게</h2>
   </div>
   <div style="height:500px;margin-top:20px">
@@ -894,12 +994,12 @@
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:3.3s">인솔자 화면을 한 번만 만들어 동승자 전원에게 보내고, 주변 사람과 랭킹 패널은 공유하지 않는 방식</div>
-  <div class="pnum">25</div>
+  <div class="pnum">30</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 따라가기는 어떻게 동작하나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">선단은 지도에서 <span class="acc">점 하나</span></h2>
     <p class="subtitle" data-a="fu" style="--d:.18s">다른 사람의 지도에서 본 모습</p>
   </div>
@@ -922,12 +1022,12 @@
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:2.8s">인솔자가 곡을 바꿔도 지도 알림은 사람 수와 상관없이 <b>1건</b></div>
-  <div class="pnum">26</div>
+  <div class="pnum">31</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 따라가기는 어떻게 동작하나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">늦게 탄 사람은 인솔자가 <span class="acc">듣는 지점</span>부터</h2>
   </div>
   <div style="margin-top:56px;position:relative">
@@ -949,12 +1049,12 @@
     <div style="font-size:54px;font-weight:800;color:var(--indigo)">시작 지점 = 지금 − 저장 시각 + 저장 위치</div>
   </div>
   <div class="concl" data-a="fu" style="--d:3.1s">따라오는 사람이 없어도 인솔자가 재생, 정지, 구간 이동 때마다 위치를 저장하는 구조</div>
-  <div class="pnum">27</div>
+  <div class="pnum">32</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 따라가기는 어떻게 동작하나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">따라가기가 끝나는 <span class="acc">세 가지 길</span></h2>
   </div>
   <div class="cards c3" style="margin-top:44px">
@@ -994,12 +1094,12 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:3.9s">내린 사람은 그 자리 곡 위로 돌아오고, 하차는 언제든 가능한 구조</div>
-  <div class="pnum">28</div>
+  <div class="pnum">33</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 연결이 끊기거나 여러 탭을 열면 어떻게 되나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">연결이 끊긴 건 <span class="acc">어떻게</span> 아나</h2>
     <p class="subtitle" data-a="fu" style="--d:.18s">정상적으로 창을 닫으면 즉시 정리 · 갑자기 끊기면 아래처럼</p>
   </div>
@@ -1037,17 +1137,17 @@
     </div>
   </div>
   <div class="concl" data-a="fu">15초마다 신호를 보내고, 120초 동안 신호가 없으면 퇴장 처리하는 방식</div>
-  <div class="pnum">29</div>
+  <div class="pnum">34</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 연결이 끊기거나 여러 탭을 열면 어떻게 되나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">탭을 두 개 열면 <span class="acc">마지막 탭</span>만 산다</h2>
   </div>
-  <div style="margin-top:30px">
-    <svg viewBox="0 0 1660 470" style="width:100%;height:470px;overflow:visible">
-      <path d="M470 120 C580 120 600 220 680 230M470 350 C580 350 600 250 680 250" stroke="#C9CDDB" stroke-width="3" stroke-dasharray="8 8" fill="none" data-a="fi" style="--d:.6s"/>
+  <div style="margin-top:16px">
+    <svg viewBox="0 0 1660 590" style="width:100%;height:590px;overflow:visible">
+      <path d="M470 120 C580 120 600 270 680 290M470 470 C580 470 600 330 680 310" stroke="#C9CDDB" stroke-width="3" stroke-dasharray="8 8" fill="none" data-a="fi" style="--d:.6s"/>
       <g data-a="fl" style="--d:0.3s"><g class="fade-out" style="--d:5.3s">
         <rect x="40" y="30" width="430" height="180" rx="18" fill="#fff" stroke="#E2E4EC" stroke-width="2"/>
         <path d="M40 48a18 18 0 0118-18h394a18 18 0 0118 18v26H40z" fill="#EDEEF4"/>
@@ -1057,44 +1157,44 @@
         <text x="70" y="178" font-size="42" font-weight="800" fill="#DD7A3B">연결 번호 3</text>
       </g></g>
       <g data-a="fl" style="--d:2.0s"><g class="">
-        <rect x="40" y="260" width="430" height="180" rx="18" fill="#fff" stroke="#E2E4EC" stroke-width="2"/>
-        <path d="M40 278a18 18 0 0118-18h394a18 18 0 0118 18v26H40z" fill="#EDEEF4"/>
-        <g stroke="#5F6480" stroke-width="2" fill="none"><path d="M352 282h14"/><rect x="383" y="275" width="14" height="14"/><path d="M416 275l14 14M430 275l-14 14"/></g>
-        <rect x="52" y="270" width="150" height="34" rx="8" fill="#fff"/><text x="127" y="294" font-size="21" font-weight="700" fill="#5F6480" text-anchor="middle">ODY</text>
-        <text x="70" y="352" font-size="28" font-weight="700" fill="#5F6480">새 탭</text>
-        <text x="70" y="408" font-size="42" font-weight="800" fill="#5B67E8">연결 번호 4</text>
+        <rect x="40" y="380" width="430" height="180" rx="18" fill="#fff" stroke="#E2E4EC" stroke-width="2"/>
+        <path d="M40 398a18 18 0 0118-18h394a18 18 0 0118 18v26H40z" fill="#EDEEF4"/>
+        <g stroke="#5F6480" stroke-width="2" fill="none"><path d="M352 402h14"/><rect x="383" y="395" width="14" height="14"/><path d="M416 395l14 14M430 395l-14 14"/></g>
+        <rect x="52" y="390" width="150" height="34" rx="8" fill="#fff"/><text x="127" y="414" font-size="21" font-weight="700" fill="#5F6480" text-anchor="middle">ODY</text>
+        <text x="70" y="472" font-size="28" font-weight="700" fill="#5F6480">새 탭</text>
+        <text x="70" y="528" font-size="42" font-weight="800" fill="#5B67E8">연결 번호 4</text>
       </g></g>
       <g data-a="sc" style="--d:.5s">
-        <rect x="680" y="90" width="300" height="290" rx="22" fill="#1B1D2E"/>
-        <rect x="720" y="118" width="220" height="22" rx="6" fill="#2C2F45"/><rect x="720" y="148" width="220" height="22" rx="6" fill="#2C2F45"/>
-        <circle cx="742" cy="129" r="5" fill="#2AD3AE"/><circle cx="742" cy="159" r="5" fill="#2AD3AE"/>
-        <text x="830" y="210" font-size="26" font-weight="700" fill="#A2A7C6" text-anchor="middle">서버가 기억하는 번호</text>
-        <rect x="740" y="232" width="180" height="120" rx="16" fill="#2C2F45"/>
+        <rect x="680" y="110" width="300" height="390" rx="22" fill="#1B1D2E"/>
+        <rect x="720" y="150" width="220" height="22" rx="6" fill="#2C2F45"/><rect x="720" y="180" width="220" height="22" rx="6" fill="#2C2F45"/>
+        <circle cx="742" cy="161" r="5" fill="#2AD3AE"/><circle cx="742" cy="191" r="5" fill="#2AD3AE"/>
+        <text x="830" y="256" font-size="26" font-weight="700" fill="#A2A7C6" text-anchor="middle">서버가 기억하는 번호</text>
+        <rect x="740" y="290" width="180" height="140" rx="16" fill="#2C2F45"/>
       </g>
-      <g data-a="pop" style="--d:1.6s"><text class="gone" style="--d:3.3s" x="830" y="316" font-size="72" font-weight="800" fill="#F09D6B" text-anchor="middle">3</text></g>
-      <g data-a="pop" style="--d:3.4s"><text x="830" y="316" font-size="72" font-weight="800" fill="#98A4FF" text-anchor="middle">4</text></g>
-      <text x="830" y="420" font-size="27" font-weight="800" fill="#5B67E8" text-anchor="middle" data-a="fu" style="--d:3.6s">새 탭이 붙으면 번호를 덮어씀</text>
-      <g class="pkt" style="--tx:210px;--ty:110px;--d:0.8s"><circle cx="470" cy="120" r="26" fill="#F09D6B"/><text x="470" y="130" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">3</text></g>
-      <g class="pkt" style="--tx:210px;--ty:-110px;--d:2.5s"><circle cx="470" cy="350" r="26" fill="#5B67E8"/><text x="470" y="360" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">4</text></g>
-      <g class="pkt" style="--tx:210px;--ty:110px;--d:4.2s"><circle cx="470" cy="120" r="26" fill="#F09D6B"/><text x="470" y="130" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">3</text></g>
-      <g class="pkt" style="--tx:210px;--ty:-110px;--d:5.6s"><circle cx="470" cy="350" r="26" fill="#5B67E8"/><text x="470" y="360" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">4</text></g>
-      <path d="M980 230 C1080 220 1110 120 1200 120" stroke="#F09D6B" stroke-width="3" fill="none" data-draw style="--len:280;--d:5s"/>
-      <path d="M980 250 C1080 260 1110 350 1200 350" stroke="#5B67E8" stroke-width="3" fill="none" data-draw style="--len:280;--d:6.4s"/>
+      <g data-a="pop" style="--d:1.6s"><text class="gone" style="--d:3.3s" x="830" y="384" font-size="80" font-weight="800" fill="#F09D6B" text-anchor="middle">3</text></g>
+      <g data-a="pop" style="--d:3.4s"><text x="830" y="384" font-size="80" font-weight="800" fill="#98A4FF" text-anchor="middle">4</text></g>
+      <text x="830" y="560" font-size="29" font-weight="800" fill="#5B67E8" text-anchor="middle" data-a="fu" style="--d:3.6s">새 탭이 붙으면 번호를 덮어씀</text>
+      <g class="pkt" style="--tx:210px;--ty:170px;--d:0.8s"><circle cx="470" cy="120" r="26" fill="#F09D6B"/><text x="470" y="130" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">3</text></g>
+      <g class="pkt" style="--tx:210px;--ty:-160px;--d:2.5s"><circle cx="470" cy="470" r="26" fill="#5B67E8"/><text x="470" y="480" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">4</text></g>
+      <g class="pkt" style="--tx:210px;--ty:170px;--d:4.2s"><circle cx="470" cy="120" r="26" fill="#F09D6B"/><text x="470" y="130" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">3</text></g>
+      <g class="pkt" style="--tx:210px;--ty:-160px;--d:5.6s"><circle cx="470" cy="470" r="26" fill="#5B67E8"/><text x="470" y="480" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">4</text></g>
+      <path d="M980 290 C1080 280 1110 120 1200 120" stroke="#F09D6B" stroke-width="3" fill="none" data-draw style="--len:280;--d:5s"/>
+      <path d="M980 310 C1080 320 1110 470 1200 470" stroke="#5B67E8" stroke-width="3" fill="none" data-draw style="--len:280;--d:6.4s"/>
       <g data-a="pop" style="--d:5.3s"><rect x="1200" y="30" width="420" height="180" rx="20" fill="#FEF3EA" stroke="#B5612B" stroke-width="2.5"/>
         <text x="1410" y="112" font-size="44" font-weight="800" fill="#B5612B" text-anchor="middle">3 ≠ 4</text>
         <text x="1410" y="170" font-size="44" font-weight="800" fill="#B5612B" text-anchor="middle">✕ 무시</text></g>
-      <g data-a="pop" style="--d:6.7s"><rect x="1200" y="260" width="420" height="180" rx="20" fill="#F0F2FF" stroke="#5B67E8" stroke-width="2.5"/>
-        <text x="1410" y="342" font-size="44" font-weight="800" fill="#5B67E8" text-anchor="middle">4 = 4</text>
-        <text x="1410" y="400" font-size="44" font-weight="800" fill="#5B67E8" text-anchor="middle">✓ 처리</text></g>
+      <g data-a="pop" style="--d:6.7s"><rect x="1200" y="380" width="420" height="180" rx="20" fill="#F0F2FF" stroke="#5B67E8" stroke-width="2.5"/>
+        <text x="1410" y="462" font-size="44" font-weight="800" fill="#5B67E8" text-anchor="middle">4 = 4</text>
+        <text x="1410" y="520" font-size="44" font-weight="800" fill="#5B67E8" text-anchor="middle">✓ 처리</text></g>
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:7.3s">크고 작음이 아니라 같은지만 비교하고, 다시 붙을 때마다 새 번호로 덮어쓰는 방식</div>
-  <div class="pnum">30</div>
+  <div class="pnum">35</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 전체 구조와 확장성은 어떤가요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">전체 흐름: <span class="acc">필요한 사람</span>에게만</h2>
   </div>
   <div class="steps" style="margin-top:78px;grid-template-columns:repeat(5,1fr)">
@@ -1108,12 +1208,12 @@
     상태는 Redis(메모리) · 여러 값을 한 번에 바꾸는 스크립트 13개로 반쪽 갱신 방지 · 만남 · 재생 기록만 DB
   </div>
   <div class="concl" data-a="fu">곡을 틀면 칸을 찾고 화면을 확인해서, 관련 있는 사람에게만 전달하는 흐름</div>
-  <div class="pnum">31</div>
+  <div class="pnum">36</div>
 </section>
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 따라가기</div>
+    <div class="eyebrow" data-a="fd">Q. 전체 구조와 확장성은 어떤가요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">지금은 <span class="acc">서버 1대</span> 기준으로 설계</h2>
   </div>
   <div class="row r-1-1" style="margin-top:34px">
@@ -1146,7 +1246,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:3.8s">실시간 동시 접속 부하는 아직 못 쟀고, 부하 테스트는 HTTP까지만 진행한 상태</div>
-  <div class="pnum">32</div>
+  <div class="pnum">37</div>
 </section>
 
 </div>
@@ -1154,7 +1254,7 @@
 
 <div class="nav">
   <button data-prev aria-label="이전">←</button>
-  <span class="counter">1 / 32</span>
+  <span class="counter">1 / 37</span>
   <button data-next aria-label="다음">→</button>
 </div>
 

@@ -62,6 +62,10 @@
 
   .qsect{font-size:22px;font-weight:800;letter-spacing:.16em;color:var(--teal-s);margin:24px 0 6px;padding-left:4px}
   .qsect:first-child{margin-top:0}
+  .qtags{display:flex;gap:10px;flex-wrap:wrap;margin:-12px 0 18px}
+  .qtag{background:#23264A;color:var(--dink2);border:1px solid #2E3360;border-radius:999px;padding:8px 20px;font-size:21px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s,color .2s}
+  .qtag:hover{border-color:var(--teal-s)}
+  .qtag.on{background:var(--teal-s);border-color:var(--teal-s);color:#14162A}
 
   .fadein{animation:fu .5s var(--ease) both}
 
@@ -94,8 +98,8 @@
 
           <nav class="cats" data-a="fu" style="--d:.38s">
             <button class="cat" data-cat="planning"><span class="num">01</span><span class="nm">기획</span><span class="cnt">5문항</span></button>
-            <button class="cat" data-cat="feature"><span class="num">02</span><span class="nm">기능</span><span class="cnt">12문항</span></button>
-            <button class="cat" data-cat="domain"><span class="num">03</span><span class="nm">도메인</span><span class="cnt">18문항</span></button>
+            <button class="cat" data-cat="feature"><span class="num">02</span><span class="nm">기능</span><span class="cnt">13문항</span></button>
+            <button class="cat" data-cat="domain"><span class="num">03</span><span class="nm">도메인</span><span class="cnt">16문항</span></button>
             <button class="cat" data-cat="ai"><span class="num">04</span><span class="nm">AI</span><span class="cnt">3문항</span></button>
             <button class="cat" data-cat="reserve"><span class="num">05</span><span class="nm">예비</span><span class="cnt">3문항</span></button>
           </nav>
@@ -113,6 +117,7 @@
             <div id="qpanel" style="display:none;flex-direction:column;flex:1;min-height:0">
               <div class="qhead" id="qhead"></div>
               <div class="qsub" id="qsub"></div>
+              <div class="qtags" id="qtags"></div>
               <div class="qlist" id="qlist"></div>
             </div>
           </div>
@@ -145,19 +150,20 @@ const DATA = {
     items: [
       {sect:'주변 탐색'},
       {n:'Q1', t:'469만 곡을 전부 비교하면 느리지 않나', s:1},
-      {n:'Q2', t:'규칙 숫자(1.66 · 3곡 · 4.9)는 어떻게 정했나', s:3},
+      {n:'Q2', t:'주변곡 거를 때 규칙 어떻게 정했나', s:3},
       {n:'Q3', t:'화면에서 바로 옆인데 주변 목록에 없는 이유는', s:4},
       {n:'Q4', t:'비슷한 곡이 정말 가까이 있다는 근거는', s:6},
       {sect:'여정'},
       {n:'Q5', t:'최단 경로는 왜 버렸나', s:7},
-      {n:'Q6', t:'겹마다 별자리 모양이 바뀌지 않나', s:15},
+      {n:'Q6', t:'왜 비터비 알고리즘이라고 부르나', s:15},
+      {n:'Q7', t:'겹마다 별자리 모양이 바뀌지 않나', s:20},
       {sect:'따라가기'},
-      {n:'Q7', t:'누가 움직이면 누구에게 어떻게 알리나', s:17},
-      {n:'Q8', t:'사람이 많아져도 알림을 감당할 수 있나', s:21},
-      {n:'Q9', t:'주변 사람 패널은 어떤 기준인가', s:23},
-      {n:'Q10', t:'따라가기는 어떻게 동작하고 어떻게 끝나나', s:24},
-      {n:'Q11', t:'연결이 끊기거나 탭을 두 개 열면 어떻게 되나', s:29},
-      {n:'Q12', t:'전체 흐름과 서버를 늘릴 때는', s:31}
+      {n:'Q8', t:'누가 움직이면 누구에게 어떻게 알리나', s:22},
+      {n:'Q9', t:'사람이 많아져도 알림을 감당할 수 있나', s:26},
+      {n:'Q10', t:'주변 사람 패널은 어떤 기준인가', s:28},
+      {n:'Q11', t:'따라가기는 어떻게 동작하고 어떻게 끝나나', s:29},
+      {n:'Q12', t:'연결이 끊기거나 탭을 두 개 열면 어떻게 되나', s:34},
+      {n:'Q13', t:'전체 흐름과 서버를 늘릴 때는', s:36}
     ]
   },
   domain: {
@@ -179,15 +185,13 @@ const DATA = {
       {sect:'파이프라인'},
       {n:'Q10', t:'첫 화면 7,204곡은 어떻게 뽑았나', s:23},
       {n:'Q11', t:'원본에서 DB까지 파이프라인은 어떻게 구성되나', s:26},
-      {n:'Q12', t:'Spark를 실제로 끝까지 돌렸나', s:27},
-      {n:'Q13', t:'분산 결과가 한 대 결과와 같다는 근거는', s:28},
+      {n:'Q12', t:'Spark로 끝까지 돌려 봤고 결과는 맞나', s:27},
       {sect:'검증'},
-      {n:'Q14', t:'지도가 좋아졌다는 걸 어떻게 채점했나', s:29},
-      {n:'Q15', t:'합격선은 어떻게 정했나', s:30},
+      {n:'Q13', t:'지도가 좋아졌다는 걸 어떻게 채점하고 판정했나', s:29},
       {sect:'운영'},
-      {n:'Q16', t:'신곡은 어떻게 추가하나', s:31},
-      {n:'Q17', t:'저장소를 둘로 나눈 이유는', s:32},
-      {n:'Q18', t:'pgvector를 고른 이유는', s:33}
+      {n:'Q14', t:'신곡은 어떻게 추가하나', s:31},
+      {n:'Q15', t:'저장소를 둘로 나눈 이유는', s:32},
+      {n:'Q16', t:'pgvector를 고른 이유는', s:33}
     ]
   },
   ai: {
@@ -217,6 +221,29 @@ const qpanel = document.getElementById('qpanel');
 const qhead  = document.getElementById('qhead');
 const qsub   = document.getElementById('qsub');
 const qlist  = document.getElementById('qlist');
+const qtags  = document.getElementById('qtags');
+
+// 섹션 태그: 질문이 많은 덱에서 누르면 그 섹션으로 바로 스크롤
+function buildTags(){
+  const sects = [...qlist.querySelectorAll('.qsect')];
+  qtags.innerHTML = '';
+  qtags.style.display = sects.length > 1 ? '' : 'none';
+  sects.forEach(el => {
+    const b = document.createElement('button');
+    b.className = 'qtag'; b.textContent = el.textContent;
+    b.addEventListener('click', () => qlist.scrollTo({top: el.offsetTop - qlist.offsetTop, behavior: 'smooth'}));
+    qtags.appendChild(b);
+  });
+  markTag();
+}
+function markTag(){
+  const sects = [...qlist.querySelectorAll('.qsect')], tags = [...qtags.children];
+  let k = 0;
+  sects.forEach((el, i) => { if (el.offsetTop - qlist.offsetTop <= qlist.scrollTop + 8) k = i; });
+  if (qlist.scrollTop + qlist.clientHeight >= qlist.scrollHeight - 4) k = sects.length - 1;   // 끝까지 내리면 마지막 섹션
+  tags.forEach((t, i) => t.classList.toggle('on', i === k));
+}
+qlist.addEventListener('scroll', markTag);
 var curCat = null;
 
 // 질문 하나가 차지하는 장 범위 "시작-끝" (다음 질문 바로 앞까지, 마지막 질문은 덱 끝까지)
@@ -236,6 +263,7 @@ function openCat(key){
   qhead.textContent = d.label;
   qsub.textContent = d.sub;
   qlist.innerHTML = '';
+  qtags.style.display = 'none';
   d.items.forEach((it, idx) => {
     if(it.sect){
       const h = document.createElement('div');
@@ -250,6 +278,8 @@ function openCat(key){
     a.classList.add('fadein');
     qlist.appendChild(a);
   });
+  qlist.scrollTop = 0;
+  buildTags();
   history.replaceState(null,'','#'+key);
 }
 
@@ -309,6 +339,7 @@ function runSearch(raw){
   if(!terms.length){
     if(curCat) openCat(curCat);
     else { qpanel.style.display = 'none'; qempty.style.display = ''; }
+    qtags.style.display = 'none';
     return;
   }
   const has = t => { t = t.toLowerCase(); return terms.every(w => t.includes(w)); };
@@ -343,6 +374,7 @@ function runSearch(raw){
   qempty.style.display = 'none';
   qpanel.style.display = 'flex';
   qhead.textContent = 'SEARCH';
+  qtags.style.display = 'none';
   qsub.textContent = '“' + raw.trim() + '” · ' + (titleHits.length + bodyHits.length) + '건';
   qlist.innerHTML = '';
   const sect = (label, arr) => {

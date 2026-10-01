@@ -50,7 +50,7 @@ body{
 .slide.dark .pnum{color:#7C82B4}
 
 /* ---------- 타이포 ---------- */
-.eyebrow{font-size:28px;font-weight:800;letter-spacing:.2em;color:var(--indigo);margin-bottom:18px}
+.eyebrow{font-size:30px;font-weight:800;letter-spacing:-.01em;color:var(--indigo);margin-bottom:16px}
 .slide.dark .eyebrow{color:var(--dink3)}
 .title{font-size:65px;font-weight:800;line-height:1.2;letter-spacing:-.02em;color:var(--ink)}
 .title.sm{font-size:56px}
@@ -179,18 +179,6 @@ body{
 .nav button:disabled{opacity:.28;cursor:default}
 .nav .counter{color:#fff;font-size:20px;font-weight:600;letter-spacing:.06em;min-width:92px;text-align:center;opacity:.8}
 
-/* 좌상단 숨은 뒤로가기 · 아이콘만 */
-.backbtn{
-  position:fixed;top:18px;left:22px;z-index:50;
-  width:56px;height:56px;padding:0;border:0;background:none;cursor:pointer;
-  display:grid;place-items:center;
-  color:#9A9FB5;
-  opacity:0;transform:translateX(-6px);
-  transition:opacity .22s var(--ease),transform .22s var(--ease),color .2s;
-}
-.backbtn::before{content:'';position:fixed;top:0;left:0;width:210px;height:120px}
-.backbtn:hover,.backbtn:focus-visible,body.show-ui .backbtn{opacity:.3;transform:none}
-.backbtn:hover{opacity:.55}
 
 /* 진행 바 */
 .prog{position:fixed;top:0;left:0;height:3px;background:var(--indigo);z-index:60;transition:width .3s var(--ease)}

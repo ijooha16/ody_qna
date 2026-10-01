@@ -57,10 +57,16 @@
   .lim .t::before{content:'';width:13px;height:13px;border-radius:50%;background:var(--orange);flex:none}
   .lim .s{font-size:28px;font-weight:600;color:var(--ink2);margin:16px 0 22px}
   .lim .nx{background:#E9ECFF;color:var(--indigo);border-radius:12px;padding:14px 20px;font-size:28px;font-weight:700}
+  .steps.big{margin-top:96px !important}
+  .steps.big .dot-n{width:140px;height:140px;font-size:60px}
+  .steps.big .arr{top:70px}
+  .steps.big .lbl{font-size:33px;margin-top:30px}
+  .steps.big .box{padding:58px 10px;margin-top:36px;font-size:31px}
+  .steps.big .tag{margin-top:28px;font-size:26px;padding:12px 24px}
+  .fl.big .bx{min-height:150px;font-size:31px}
 </style>
 </head>
 <body>
-<button class="backbtn" title="질문 목록으로 (Esc)" aria-label="질문 목록"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4l-8 8 8 8"/></svg></button>
 <div class="prog"></div>
 
 <div class="stage">
@@ -69,7 +75,7 @@
 <!-- ================= S1 ================= -->
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 기획</div>
+    <div class="eyebrow" data-a="fd">Q. 왜 장르가 아니라 소리로 지도를 만들었나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">장르가 아니라 <span class="acc">소리</span>로 놓은 지도</h2>
   </div>
 
@@ -135,11 +141,11 @@
 <!-- ================= S2 ================= -->
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 기획</div>
+    <div class="eyebrow" data-a="fd">Q. 사용자는 서비스를 어떻게 쓰게 되나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">사용자 한 명의 <span class="acc">5분</span></h2>
   </div>
 
-  <div class="steps" style="margin-top:56px">
+  <div class="steps big" style="margin-top:56px">
     <div class="step" data-a="fu" style="--d:.25s"><div class="dot-n gray">1</div><div class="arr"></div><div class="lbl">구글 로그인</div><div class="box">토큰 발급</div><div><span class="tag chip gry">계정</span></div></div>
     <div class="step" data-a="fu" style="--d:.35s"><div class="dot-n">2</div><div class="arr"></div><div class="lbl">지도 첫 화면</div><div class="box">표본 7,204곡</div><div><span class="tag chip ind">지도</span></div></div>
     <div class="step" data-a="fu" style="--d:.45s"><div class="dot-n">3</div><div class="arr"></div><div class="lbl">별 클릭 · 재생</div><div class="box">내 위치 = 그 곡</div><div><span class="tag chip ind">지도 · 실시간</span></div></div>
@@ -155,7 +161,7 @@
 <!-- ================= S3 ================= -->
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 기획</div>
+    <div class="eyebrow" data-a="fd">Q. 개발하면서 바뀐 결정이 있나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">실측으로 바꾼 결정 <span class="acc">여섯 가지</span></h2>
   </div>
 
@@ -173,12 +179,12 @@
 <!-- ================= S4 ================= -->
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 기획</div>
+    <div class="eyebrow" data-a="fd">Q. 음원 저작권 문제는 없나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">음원은 <span class="acc">한 곡도</span> 저장하지 않는다</h2>
   </div>
 
   <div class="fill-lg" style="margin-top:20px;display:grid;align-content:center">
-    <div class="fl">
+    <div class="fl big">
       <div class="bx" data-a="fu" style="position:relative; --d:.24s">음원 파일<span class="xmark">✕</span></div>
       <div class="ar" data-a="fi" style="--d:.3s"></div>
       <div class="bx ind" data-a="fu" style="--d:.34s">소리 분석 숫자<br>2,900개</div>
@@ -187,7 +193,7 @@
       <div></div>
       <div class="side" data-a="fi" style="--d:.5s">지도 만들기</div>
     </div>
-    <div class="fl" style="margin-bottom:12px">
+    <div class="fl big" style="margin-bottom:12px">
       <div class="bx" data-a="fu" style="--d:.54s">곡 이름</div>
       <div class="ar" data-a="fi" style="--d:.6s"></div>
       <div class="bx" data-a="fu" style="--d:.64s">YouTube 검색<br>+ 재생 가능 확인</div>
@@ -197,7 +203,7 @@
       <div class="bx dk" data-a="fu" style="--d:.84s">공식<br>플레이어</div>
     </div>
 
-    <div class="nums" style="margin-top:44px">
+    <div class="nums" style="margin-top:70px">
       <div data-a="fu" style="--d:.95s"><div class="big acc">0 곡</div><div class="big-cap">음원 저장</div></div>
       <div data-a="fu" style="--d:1.05s"><div class="big acc-o">564 곡</div><div class="big-cap">재생 불가 → 지도에서 뺌</div></div>
       <div data-a="fu" style="--d:1.15s"><div class="big acc">72 / 84</div><div class="big-cap">신곡 영상 확보</div></div>
@@ -209,7 +215,7 @@
 <!-- ================= S5 ================= -->
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 기획</div>
+    <div class="eyebrow" data-a="fd">Q. 한계와 앞으로의 계획은 무엇인가요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">알고 있는 <span class="acc">한계</span>와 다음 단계</h2>
   </div>
 

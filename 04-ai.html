@@ -25,10 +25,13 @@
   .under .warm{display:flex;flex-direction:column;gap:12px;align-items:center}
   .under .warm span{background:#FDEBDD;color:#B5612B;border-radius:999px;padding:12px 26px;font-size:25px;font-weight:700}
   .under .gry{background:#EDEEF4;color:var(--ink2);border-radius:14px;padding:22px 20px;font-size:22px;font-weight:700;text-align:center;white-space:nowrap}
+  .grow .hflow .bx{min-height:210px;font-size:31px}
+  .grow .under{margin-top:56px}
+  .grow .under .card{padding:40px 28px}
+  .grow .under .gry{padding:34px 20px}
 </style>
 </head>
 <body>
-<button class="backbtn" title="질문 목록으로 (Esc)" aria-label="질문 목록"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4l-8 8 8 8"/></svg></button>
 <div class="prog"></div>
 
 <div class="stage">
@@ -37,7 +40,7 @@
 <!-- ================= S1 ================= -->
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · AI</div>
+    <div class="eyebrow" data-a="fd">Q. LLM은 어디에 쓰나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">핵심은 <span class="acc">통계</span>, LLM은 보조 두 곳에만</h2>
   </div>
   <div class="split2">
@@ -61,10 +64,10 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · AI</div>
+    <div class="eyebrow" data-a="fd">Q. 작품 채점은 어떻게 하나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">별자리 작품 채점 — <span class="acc">사람 표</span>와 합산</h2>
   </div>
-  <div class="fill" style="display:grid">
+  <div class="fill grow" style="display:grid">
   <div class="hflow" style="grid-template-columns:1fr 56px 1fr 56px 1fr 56px 1fr 56px 1fr">
     <div class="bx" data-a="fu" style="--d:.22s">작품 제출</div>
     <div class="ar" data-a="fi" style="--d:.28s"></div>
@@ -89,10 +92,10 @@
 <!-- ================= S4 ================= -->
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · AI</div>
+    <div class="eyebrow" data-a="fd">Q. 취향 분석은 어떻게 만드나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">취향 분석 — 내용은 <span class="acc">규칙</span>이, 문장만 LLM이</h2>
   </div>
-  <div class="fill" style="display:grid">
+  <div class="fill grow" style="display:grid">
   <div class="hflow" style="grid-template-columns:1fr 60px 1fr 60px 1fr 60px 1fr">
     <div class="bx" data-a="fu" style="--d:.22s">좋아요한 곡들</div>
     <div class="ar" data-a="fi" style="--d:.28s"></div>

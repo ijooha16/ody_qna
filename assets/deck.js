@@ -126,7 +126,7 @@
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(i - 1); }
       else if (e.key === 'Home') show(lo);
       else if (e.key === 'End') show(hi);
-      else if (e.key === 'Escape') { const b = document.querySelector('.backbtn'); if (b) b.click(); }
+      else if (e.key === 'Escape' && opts && opts.backHref) location.href = opts.backHref;
       else if (e.key === 'f' || e.key === 'F') {
         if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen();
       }
@@ -148,12 +148,6 @@
       const n = fromHash();
       if (n !== i) show(n);
     });
-
-    // 뒤로가기 버튼
-    const back = document.querySelector('.backbtn');
-    if (back && opts && opts.backHref) {
-      back.addEventListener('click', function () { location.href = opts.backHref; });
-    }
 
     // 마우스 움직이면 잠깐 UI 노출
     let t;
