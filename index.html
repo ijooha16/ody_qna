@@ -98,8 +98,8 @@
 
           <nav class="cats" data-a="fu" style="--d:.38s">
             <button class="cat" data-cat="planning"><span class="num">01</span><span class="nm">기획</span><span class="cnt">5문항</span></button>
-            <button class="cat" data-cat="feature"><span class="num">02</span><span class="nm">기능</span><span class="cnt">13문항</span></button>
-            <button class="cat" data-cat="domain"><span class="num">03</span><span class="nm">도메인</span><span class="cnt">16문항</span></button>
+            <button class="cat" data-cat="feature"><span class="num">02</span><span class="nm">기능</span><span class="cnt">11문항</span></button>
+            <button class="cat" data-cat="domain"><span class="num">03</span><span class="nm">도메인</span><span class="cnt">7문항</span></button>
             <button class="cat" data-cat="ai"><span class="num">04</span><span class="nm">AI</span><span class="cnt">3문항</span></button>
             <button class="cat" data-cat="reserve"><span class="num">05</span><span class="nm">예비</span><span class="cnt">3문항</span></button>
           </nav>
@@ -160,38 +160,25 @@ const DATA = {
       {sect:'따라가기'},
       {n:'Q8', t:'누가 움직이면 누구에게 어떻게 알리나', s:22},
       {n:'Q9', t:'사람이 많아져도 알림을 감당할 수 있나', s:26},
-      {n:'Q10', t:'주변 사람 패널은 어떤 기준인가', s:28},
-      {n:'Q11', t:'따라가기는 어떻게 동작하고 어떻게 끝나나', s:29},
-      {n:'Q12', t:'연결이 끊기거나 탭을 두 개 열면 어떻게 되나', s:34},
-      {n:'Q13', t:'전체 흐름과 서버를 늘릴 때는', s:36}
+      {n:'Q10', t:'따라가기는 어떻게 동작하고 어떻게 끝나나', s:28},
+      {n:'Q11', t:'연결이 끊기거나 탭을 두 개 열면 어떻게 되나', s:33}
     ]
   },
   domain: {
     label: '03 · 도메인',
-    sub: '데이터 정제 · 소리 좌표 · 파이프라인 · 검증 · 운영',
+    sub: '소리 좌표 · 첫 화면 · 운영',
     file: '03-domain.html',
     items: [
-      {sect:'데이터 정제'},
-      {n:'Q1', t:'2,946만 제출본을 469만 곡으로 어떻게 줄였나', s:1},
-      {n:'Q2', t:'제외 규칙 16개는 무엇인가', s:2},
-      {n:'Q3', t:'곡 길이 상한을 왜 6분으로 정했나', s:3},
       {sect:'소리 좌표'},
-      {n:'Q4', t:'곡 하나는 어떤 숫자로 표현되나', s:4},
-      {n:'Q5', t:'단위가 다른 숫자를 어떻게 같은 자로 맞췄나', s:7},
-      {n:'Q6', t:'왜 다른 방법이 아니라 PCA를 썼나', s:10},
-      {n:'Q7', t:'270개를 16개로 줄여도 정보가 남나', s:14},
-      {n:'Q8', t:'축마다 뜻이 있다는 게 무슨 말인가', s:18},
-      {n:'Q9', t:'겹(레이어)을 내려가면 무엇이 달라지나', s:21},
+      {n:'Q1', t:'곡 하나는 어떤 숫자로 표현되나', s:1},
+      {n:'Q2', t:'단위가 다른 숫자를 어떻게 같은 자로 맞췄나', s:4},
+      {n:'Q3', t:'왜 다른 방법이 아니라 PCA를 썼나', s:7},
+      {n:'Q4', t:'270개를 16개로 줄여도 정보가 남나', s:11},
+      {n:'Q5', t:'축마다 뜻이 있다는 게 무슨 말인가', s:15},
       {sect:'파이프라인'},
-      {n:'Q10', t:'첫 화면 7,204곡은 어떻게 뽑았나', s:23},
-      {n:'Q11', t:'원본에서 DB까지 파이프라인은 어떻게 구성되나', s:26},
-      {n:'Q12', t:'Spark로 끝까지 돌려 봤고 결과는 맞나', s:27},
-      {sect:'검증'},
-      {n:'Q13', t:'지도가 좋아졌다는 걸 어떻게 채점하고 판정했나', s:29},
+      {n:'Q6', t:'첫 화면 7,204곡은 어떻게 뽑았나', s:18},
       {sect:'운영'},
-      {n:'Q14', t:'신곡은 어떻게 추가하나', s:31},
-      {n:'Q15', t:'저장소를 둘로 나눈 이유는', s:32},
-      {n:'Q16', t:'pgvector를 고른 이유는', s:33}
+      {n:'Q7', t:'pgvector를 고른 이유는', s:21}
     ]
   },
   ai: {

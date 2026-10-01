@@ -36,11 +36,11 @@
 
   /* 통계 카드 */
   .st4{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
-  .st4 .card{text-align:center;padding:38px 26px}
-  .st4 .n{font-size:75px;font-weight:800;color:var(--indigo);letter-spacing:-.03em}
-  .st4 .l{font-size:30px;font-weight:700;margin-top:14px}
-  .st4 .hr{height:1px;background:var(--border);margin:24px 0}
-  .st4 .d{font-size:25px;font-weight:600;color:var(--ink2);line-height:1.5}
+  .st4 .card{text-align:center;padding:44px 26px}
+  .st4 .n{font-size:88px;font-weight:800;color:var(--indigo);letter-spacing:-.03em}
+  .st4 .l{font-size:33px;font-weight:700;margin-top:16px}
+  .st4 .hr{height:1px;background:var(--border);margin:34px 0}
+  .st4 .d{font-size:28px;font-weight:600;color:var(--ink2);line-height:1.5}
 
   /* 막대 */
   .bars{display:grid;grid-template-columns:260px 1fr;row-gap:30px;align-items:center}
@@ -225,7 +225,7 @@
   @keyframes arrive{0%{box-shadow:0 0 0 0 var(--c)}100%{box-shadow:0 0 0 22px transparent}}
   .slide.is-active .mvdot .ring{animation:arrive .7s ease-out var(--d2,0s) both}
   /* S6 픽토그램 */
-  .st4 .pic{width:300px;height:135px;display:block;margin:0 auto 22px}
+  .st4 .pic{width:100%;height:210px;display:block;margin:0 auto 30px}
 </style>
 </head>
 <body>
@@ -248,7 +248,7 @@
       </svg>
     </div>
     <div class="card stagebox" data-a="fr" style="height:690px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center; --d:.5s">
-      <div style="font-size:31px;font-weight:700;color:var(--ink2)">처음부터 끝까지 비교</div>
+      <div style="font-size:31px;font-weight:700;color:var(--ink2)">풀 테이블 스캔 (전부 비교)</div>
       <div class="big acc-o" style="margin-top:34px">469만 번</div>
       <div class="big acc-o" style="margin-top:34px">95ms</div>
       <div class="big-cap">한 번 조회에</div>
@@ -260,18 +260,18 @@
 <section class="slide" id="sl-filter">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q. 비슷한 곡은 어떻게 빠르게 찾나요?</div>
-    <h2 class="title" data-a="fu" style="--d:.1s">앞 좌표 4개 목차로 찾고, <span class="acc">10곡</span>이 차면 멈춘다</h2>
+    <h2 class="title" data-a="fu" style="--d:.1s">앞 좌표 4개로 인덱스를 걸어 <span class="acc">풀 테이블 스캔이 필요 없다</span></h2>
   </div>
   <div class="nb3">
     <div data-a="sc" style="--d:.2s">
       <svg viewBox="0 0 560 470" style="width:100%;height:auto;display:block;overflow:visible">
         <rect x="0" y="0" width="560" height="470" rx="24" fill="#fff" stroke="#E3E5EF" stroke-width="2"/>
-        <rect x="28" y="22" width="24" height="30" rx="5" fill="#5B67E8" data-a="pop" style="--d:0.30s"/><rect x="58" y="22" width="24" height="30" rx="5" fill="#5B67E8" data-a="pop" style="--d:0.33s"/><rect x="88" y="22" width="24" height="30" rx="5" fill="#5B67E8" data-a="pop" style="--d:0.36s"/><rect x="118" y="22" width="24" height="30" rx="5" fill="#5B67E8" data-a="pop" style="--d:0.39s"/><rect x="148" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.42s"/><rect x="178" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.45s"/><rect x="208" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.48s"/><rect x="238" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.51s"/><rect x="268" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.54s"/><rect x="298" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.57s"/><rect x="328" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.60s"/><rect x="358" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.63s"/><rect x="388" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.66s"/><rect x="418" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.69s"/><rect x="448" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.72s"/><rect x="478" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.75s"/><text x="28" y="84" font-size="24" font-weight="800" fill="#5B67E8" data-a="fi" style="--d:.8s">좌표 16개 중 앞 4개만 정렬된 목차</text>
+        <rect x="28" y="22" width="24" height="30" rx="5" fill="#5B67E8" data-a="pop" style="--d:0.30s"/><rect x="58" y="22" width="24" height="30" rx="5" fill="#5B67E8" data-a="pop" style="--d:0.33s"/><rect x="88" y="22" width="24" height="30" rx="5" fill="#5B67E8" data-a="pop" style="--d:0.36s"/><rect x="118" y="22" width="24" height="30" rx="5" fill="#5B67E8" data-a="pop" style="--d:0.39s"/><rect x="148" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.42s"/><rect x="178" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.45s"/><rect x="208" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.48s"/><rect x="238" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.51s"/><rect x="268" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.54s"/><rect x="298" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.57s"/><rect x="328" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.60s"/><rect x="358" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.63s"/><rect x="388" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.66s"/><rect x="418" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.69s"/><rect x="448" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.72s"/><rect x="478" y="22" width="24" height="30" rx="5" fill="#D9DBE4" data-a="pop" style="--d:0.75s"/><text x="28" y="84" font-size="24" font-weight="800" fill="#5B67E8" data-a="fi" style="--d:.8s">좌표 16개 중 앞 4개로 건 인덱스</text>
         <g id="s4-dots"></g>
         <circle class="ring" cx="280" cy="270" r="120" fill="rgba(91,103,232,.08)" stroke="#5B67E8" stroke-width="4" stroke-dasharray="10 8" style="--d:1.2s"/>
         <g data-a="pop" style="--d:.9s"><circle cx="280" cy="270" r="16" fill="#2AA38B"/><circle cx="280" cy="270" r="28" fill="none" stroke="#2AA38B" stroke-width="3" opacity=".5"/></g>
         <g data-a="fi" style="--d:1s"><rect x="236" y="208" width="88" height="36" rx="18" fill="#fff" stroke="#2AA38B" stroke-width="2"/><text x="280" y="234" font-size="24" font-weight="800" fill="#2AA38B" text-anchor="middle">내 곡</text></g>
-        <g data-a="pop" style="--d:2.4s"><rect x="160" y="404" width="240" height="50" rx="25" fill="#5B67E8"/><text x="280" y="438" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">목차로 찾은 근처</text></g>
+        <g data-a="pop" style="--d:2.4s"><rect x="160" y="404" width="240" height="50" rx="25" fill="#5B67E8"/><text x="280" y="438" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">인덱스로 찾은 근처</text></g>
       </svg>
     </div>
     <div class="gate" data-a="fi" style="--d:2.6s"><div class="gate-ar"></div></div>
@@ -285,7 +285,7 @@
       <div class="sq-n"><b id="sq-cnt">0</b>/ 10곡</div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:7s">469만 곡을 다 보지 않고 목차로 근처만 훑어도, 정답 10곡 중 놓치는 비율은 <b>0.05%</b></div>
+  <div class="concl" data-a="fu" style="--d:7s">앞 4개 좌표 인덱스로 근처만 찾기 때문에, 469만 곡 전체를 훑을 필요가 없는 구조</div>
   <div class="pnum">2</div>
 </section>
 
@@ -300,7 +300,6 @@
     <div class="card" data-a="fu" style="--d:.46s"><svg class="pic" viewBox="0 0 200 90"><g fill="#98A4FF"><circle cx="62" cy="30" r="6"/><circle cx="48" cy="52" r="6"/><circle cx="70" cy="66" r="6"/><circle cx="92" cy="26" r="6"/><circle cx="100" cy="60" r="6"/><circle cx="84" cy="50" r="6"/><circle cx="56" cy="40" r="6"/><circle cx="104" cy="42" r="6"/><circle cx="76" cy="20" r="6"/></g><circle cx="76" cy="45" r="9" fill="#5B67E8"/><path d="M85 45h72" stroke="#DD7A3B" stroke-width="2.5" stroke-dasharray="6 5"/><circle cx="166" cy="45" r="7" fill="#DD7A3B"/></svg><div class="n">4.9</div><div class="l">&ldquo;유사도 낮음&rdquo; 표시</div><div class="hr"></div><div class="d">10번째 이웃 거리<br>90% 지점</div></div>
     <div class="card" data-a="fu" style="--d:.56s"><svg class="pic" viewBox="0 0 200 90"><rect x="20" y="38" width="160" height="14" rx="7" fill="#D9DBE4"/><rect x="52" y="38" width="96" height="14" rx="7" fill="#5B67E8"/><path d="M52 26v38M148 26v38" stroke="#DD7A3B" stroke-width="2.5"/><rect x="20" y="66" width="18" height="6" rx="3" fill="#8F94AA"/><rect x="160" y="66" width="20" height="6" rx="3" fill="#8F94AA"/></svg><div class="n">30초~20분</div><div class="l">길이 범위</div><div class="hr"></div><div class="d">짧은 곡 · 긴 곡<br>과다 등장 방지</div></div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">2만 곡에서 이웃을 50개씩 뽑아 분포로 정하고, 근거까지 규칙 파일에 남겨 둔 숫자</div>
   <div class="pnum">3</div>
 </section>
 
@@ -891,18 +890,6 @@
 
 <section class="slide">
   <div class="head">
-    <div class="eyebrow" data-a="fd">Q. 주변 사람 목록은 어떻게 정하나요?</div>
-    <h2 class="title" data-a="fu" style="--d:.1s">주변 사람 패널 = 같은 겹, <span class="acc-t">가까운 12명</span></h2>
-  </div>
-  <div class="sky stagebox" data-seed="181" data-a="sc" style="--d:.28s;margin-top:20px">
-    <svg class="sky-in" viewBox="0 0 1660 560"><g id="s35-people"></g></svg>
-  </div>
-  <div class="concl" data-a="fu" style="--d:2.1s">서버가 가까운 순으로 12명만 잘라 주고, 만남 횟수도 함께 보여 주는 방식</div>
-  <div class="pnum">28</div>
-</section>
-
-<section class="slide">
-  <div class="head">
     <div class="eyebrow" data-a="fd">Q. 따라가기는 어떻게 동작하나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">따라가기 = 인솔자의 <span class="acc">우주선</span>에 탄다</h2>
   </div>
@@ -937,7 +924,7 @@
     <span data-a="fl" style="font-size:24px;font-weight:600;color:var(--ink2);margin-left:10px; --d:3.95s">← 탈 때 한 번에 검사</span>
   </div>
   <div class="concl" data-a="fu">따라가기는 인솔자의 우주선에 타는 것, 탈 때 조건을 한 번에 검사하는 구조</div>
-  <div class="pnum">29</div>
+  <div class="pnum">28</div>
 </section>
 
 <section class="slide">
@@ -994,7 +981,7 @@
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:3.3s">인솔자 화면을 한 번만 만들어 동승자 전원에게 보내고, 주변 사람과 랭킹 패널은 공유하지 않는 방식</div>
-  <div class="pnum">30</div>
+  <div class="pnum">29</div>
 </section>
 
 <section class="slide">
@@ -1022,7 +1009,7 @@
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:2.8s">인솔자가 곡을 바꿔도 지도 알림은 사람 수와 상관없이 <b>1건</b></div>
-  <div class="pnum">31</div>
+  <div class="pnum">30</div>
 </section>
 
 <section class="slide">
@@ -1049,7 +1036,7 @@
     <div style="font-size:54px;font-weight:800;color:var(--indigo)">시작 지점 = 지금 − 저장 시각 + 저장 위치</div>
   </div>
   <div class="concl" data-a="fu" style="--d:3.1s">따라오는 사람이 없어도 인솔자가 재생, 정지, 구간 이동 때마다 위치를 저장하는 구조</div>
-  <div class="pnum">32</div>
+  <div class="pnum">31</div>
 </section>
 
 <section class="slide">
@@ -1094,7 +1081,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu" style="--d:3.9s">내린 사람은 그 자리 곡 위로 돌아오고, 하차는 언제든 가능한 구조</div>
-  <div class="pnum">33</div>
+  <div class="pnum">32</div>
 </section>
 
 <section class="slide">
@@ -1137,7 +1124,7 @@
     </div>
   </div>
   <div class="concl" data-a="fu">15초마다 신호를 보내고, 120초 동안 신호가 없으면 퇴장 처리하는 방식</div>
-  <div class="pnum">34</div>
+  <div class="pnum">33</div>
 </section>
 
 <section class="slide">
@@ -1189,64 +1176,7 @@
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:7.3s">크고 작음이 아니라 같은지만 비교하고, 다시 붙을 때마다 새 번호로 덮어쓰는 방식</div>
-  <div class="pnum">35</div>
-</section>
-
-<section class="slide">
-  <div class="head">
-    <div class="eyebrow" data-a="fd">Q. 전체 구조와 확장성은 어떤가요?</div>
-    <h2 class="title" data-a="fu" style="--d:.1s">전체 흐름: <span class="acc">필요한 사람</span>에게만</h2>
-  </div>
-  <div class="steps" style="margin-top:78px;grid-template-columns:repeat(5,1fr)">
-    <div class="step" data-a="fu" style="--d:0.30s"><div class="dot-n dk">1</div><div class="arr"></div><div class="lbl">곡 재생</div><div class="card-s" style="margin-top:12px">내 위치 이동</div></div>
-    <div class="step" data-a="fu" style="--d:0.80s"><div class="dot-n dk">2</div><div class="arr"></div><div class="lbl">칸 찾기</div><div class="card-s" style="margin-top:12px">옛 칸 · 새 칸</div></div>
-    <div class="step" data-a="fu" style="--d:1.30s"><div class="dot-n dk">3</div><div class="arr"></div><div class="lbl">화면 확인</div><div class="card-s" style="margin-top:12px">실제 좌표로 거름</div></div>
-    <div class="step" data-a="fu" style="--d:1.80s"><div class="dot-n dk">4</div><div class="arr"></div><div class="lbl">인솔자면</div><div class="card-s" style="margin-top:12px">동승자에게 중계</div></div>
-    <div class="step" data-a="fu" style="--d:2.30s"><div class="dot-n teal">5</div><div class="lbl">전달</div><div class="card-s" style="margin-top:12px">관련 있는 사람만</div></div>
-  </div>
-  <div class="card" data-a="fu" style="margin-top:64px;padding:34px 44px;font-size:31px;font-weight:700; --d:3s">
-    상태는 Redis(메모리) · 여러 값을 한 번에 바꾸는 스크립트 13개로 반쪽 갱신 방지 · 만남 · 재생 기록만 DB
-  </div>
-  <div class="concl" data-a="fu">곡을 틀면 칸을 찾고 화면을 확인해서, 관련 있는 사람에게만 전달하는 흐름</div>
-  <div class="pnum">36</div>
-</section>
-
-<section class="slide">
-  <div class="head">
-    <div class="eyebrow" data-a="fd">Q. 전체 구조와 확장성은 어떤가요?</div>
-    <h2 class="title" data-a="fu" style="--d:.1s">지금은 <span class="acc">서버 1대</span> 기준으로 설계</h2>
-  </div>
-  <div class="row r-1-1" style="margin-top:34px">
-    <div class="card" data-a="fl" style="padding:34px 40px 44px; --d:.28s">
-      <div style="font-size:33px;font-weight:800;color:var(--indigo);margin-bottom:28px">지금</div>
-      <svg viewBox="0 0 640 310" style="width:100%">
-        <rect x="30" y="20" width="270" height="270" rx="20" fill="#14162A" data-a="sc" style="--d:.5s"/>
-        <text x="165" y="66" font-size="27" font-weight="800" fill="#fff" text-anchor="middle" data-a="fi" style="--d:.6s">서버</text>
-        <g data-a="pop" style="--d:0.85s"><rect x="58" y="92" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="126" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">연결 번호표</text></g>
-        <g data-a="pop" style="--d:1.03s"><rect x="58" y="158" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="192" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">메시지 순번</text></g>
-        <g data-a="pop" style="--d:1.21s"><rect x="58" y="224" width="214" height="52" rx="12" fill="#FBE3D2"/><text x="165" y="258" font-size="22" font-weight="700" fill="#B5612B" text-anchor="middle">이벤트 전달</text></g>
-        <g data-a="fi" style="--d:1.5s"><path d="M312 155h72" stroke="#8F94AA" stroke-width="2.4"/><path d="M382 149l12 6-12 6z" fill="#8F94AA"/><path d="M320 161l-12-6 12-6z" fill="#8F94AA"/></g>
-        <g data-a="fr" style="--d:1.6s"><rect x="400" y="100" width="210" height="110" rx="18" fill="#EDE8FB"/>
-        <text x="505" y="164" font-size="30" font-weight="800" fill="#8A5FE0" text-anchor="middle">Redis</text></g>
-      </svg>
-      <div data-a="fu" style="font-size:28px;font-weight:700;color:var(--orange);margin-top:14px; --d:1.9s">주황 = 서버 메모리에만 있음</div>
-    </div>
-    <div class="card" data-a="fr" style="padding:34px 40px 44px; --d:2.3s">
-      <div style="font-size:33px;font-weight:800;color:var(--ink2);margin-bottom:28px">늘린다면</div>
-      <svg viewBox="0 0 640 310" style="width:100%">
-        <g data-a="fl" style="--d:2.6s"><rect x="30" y="50" width="230" height="86" rx="18" fill="#14162A"/><text x="145" y="103" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">서버 A</text></g>
-        <g data-a="fl" style="--d:2.75s"><rect x="30" y="176" width="230" height="86" rx="18" fill="#14162A"/><text x="145" y="229" font-size="27" font-weight="800" fill="#fff" text-anchor="middle">서버 B</text></g>
-        <g data-a="pop" style="--d:3.3s"><rect x="360" y="98" width="250" height="116" rx="18" fill="#EEF0FF" stroke="#5B67E8" stroke-width="2" stroke-dasharray="9 7"/>
-        <text x="485" y="148" font-size="24" font-weight="800" fill="#5B67E8" text-anchor="middle">메시지 브로커</text>
-        <text x="485" y="180" font-size="24" font-weight="800" fill="#5B67E8" text-anchor="middle">(Redis Pub/Sub 등)</text></g>
-        <path d="M268 100 L352 136" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a45)" data-a="fl" style="--d:3.05s"/>
-        <path d="M268 212 L352 176" stroke="#5B67E8" stroke-width="2.6" marker-end="url(#a45)" data-a="fl" style="--d:3.05s"/>
-        <defs><marker id="a45" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#5B67E8"/></marker></defs>
-      </svg>
-    </div>
-  </div>
-  <div class="concl" data-a="fu" style="--d:3.8s">실시간 동시 접속 부하는 아직 못 쟀고, 부하 테스트는 HTTP까지만 진행한 상태</div>
-  <div class="pnum">37</div>
+  <div class="pnum">34</div>
 </section>
 
 </div>
@@ -1254,7 +1184,7 @@
 
 <div class="nav">
   <button data-prev aria-label="이전">←</button>
-  <span class="counter">1 / 37</span>
+  <span class="counter">1 / 34</span>
   <button data-next aria-label="다음">→</button>
 </div>
 
