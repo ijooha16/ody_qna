@@ -6,173 +6,226 @@
 <title>ODY Q&amp;A · 03 도메인</title>
 <link rel="stylesheet" href="assets/base.css">
 <style>
-  /* ===== S1 : 깔때기 ===== */
-  .fun{display:flex;flex-direction:column;gap:26px;justify-content:center;height:560px}
-  .frow{display:flex;align-items:center;gap:30px;height:88px}
-  .fbar{height:100%;border-radius:16px;display:flex;align-items:center;padding:0 30px;font-size:27px;font-weight:700;color:#fff;flex:none}
-  .fnum{font-size:49px;font-weight:800;letter-spacing:-.03em;flex:none;min-width:190px}
-  .fdesc{font-size:28px;font-weight:600;color:var(--ink2)}
-  .fchips{display:flex;gap:18px;margin-top:6px}
+  /* ===== 공용 움직임 ===== */
+  svg [data-a]{transform-box:fill-box;transform-origin:center}
+  @keyframes growx{from{transform:scaleX(0)}}
+  @keyframes growy{from{transform:scaleY(0)}}
+  @keyframes gone{to{opacity:0}}
+  @keyframes mvx{from{transform:translateX(var(--fx,0))}}
+  @keyframes stamp{0%{opacity:0;transform:scale(2.4) rotate(-12deg)}70%{opacity:1;transform:scale(.92) rotate(-4deg)}100%{opacity:1;transform:rotate(-4deg)}}
+  @keyframes run{from{left:0}to{left:100%}}
+  @keyframes ttl{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+  @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+  .slide.is-active .growx{transform-box:fill-box;transform-origin:left center;animation:growx var(--dur,1s) var(--ease) var(--d,0s) both}
+  .slide.is-active .growy{transform-box:fill-box;transform-origin:center bottom;animation:growy var(--dur,.8s) var(--ease) var(--d,0s) both}
+  .slide.is-active .gone{animation:gone .35s ease var(--d,0s) forwards}
+  .slide.is-active .mv{animation:mvx var(--dur,1.2s) cubic-bezier(.5,0,.25,1) var(--d,0s) both}
+  .slide.is-active [data-a="stamp"]{animation-name:stamp;animation-duration:.5s}
+  .slide.is-active .pulse{animation:pulse 1.6s ease-in-out var(--d,0s) infinite}
+  .lbl-s{font-size:26px;font-weight:700;color:var(--ink2)}
 
-  /* ===== S2 : 규칙 16개 ===== */
-  .rules{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:10px}
-  .rule{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:20px 24px 22px;min-height:124px}
-  .rule .top{display:flex;justify-content:space-between;align-items:baseline}
-  .rule .id{font-size:25px;font-weight:800;color:var(--ink3);letter-spacing:.04em}
-  .rule .n{font-size:39px;font-weight:800;letter-spacing:-.02em}
-  .rule .l{font-size:29px;font-weight:600;color:var(--ink2);margin-top:12px}
-  .rule.hi{border-color:var(--indigo);background:#F0F2FF}
-  .rule.hi .id,.rule.hi .n{color:var(--indigo)}
-  .rule.hi .l{color:var(--ink)}
+  /* ===== S1 : 줄어드는 막대 ===== */
+  .s1{margin-top:30px}
+  .s1-cap{font-size:31px;font-weight:700;color:var(--ink2);margin-bottom:16px}
+  .s1-cap b{font-size:48px;font-weight:800;color:var(--ink);margin-right:14px;letter-spacing:-.02em}
+  .s1-bar{position:relative;height:88px;border-radius:18px;background:repeating-linear-gradient(135deg,#E3E5EE 0 14px,#EEF0F5 14px 28px)}
+  .s1-bar.b{background:#EDEEF4}
+  .s1-fill{position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:18px}
+  .s1-fill.a{background:#C8CBD8}
+  .s1-fill.b{background:var(--indigo)}
+  .slide.is-active .s1-fill.a{animation:s1a 1.2s var(--ease) 1.1s both}
+  .slide.is-active .s1-fill.b{animation:s1b 3.6s ease 3.2s both}
+  @keyframes s1a{from{width:100%;background:#C8CBD8}to{width:25.1%;background:#98A4FF}}
+  @keyframes s1b{0%,8%{width:100%}30%,62%{width:89.5%}84%,100%{width:63.4%}}
+  .s1-seg{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,#FBE0CC 0 12px,#FDF0E6 12px 24px);border-radius:0 18px 18px 0}
+  .s1-in{position:absolute;left:32px;top:14px;line-height:60px;font-size:48px;font-weight:800;color:#fff;letter-spacing:-.02em}
+  .s1-in small{font-size:28px;font-weight:700;opacity:.85;margin-left:10px}
+  .s1-side{position:absolute;left:calc(25.1% + 28px);top:14px;line-height:60px;font-size:30px;font-weight:700;color:var(--ink2);white-space:nowrap}
+  .s1-side b{font-size:44px;font-weight:800;color:var(--indigo);margin-right:14px}
+  .s1-top{position:absolute;bottom:calc(100% + 12px);font-size:30px;font-weight:800;color:#DD7A3B;white-space:nowrap;translate:-50% 0}
+  .s1-stop{position:absolute;left:60%;top:-26px;bottom:-26px;border-left:5px dashed #E06A4A}
+  .s1-low{position:absolute;top:calc(100% + 34px);font-size:27px;font-weight:700;white-space:nowrap}
 
-  /* ===== S3 : 6분 ===== */
-  .cut .card{text-align:center;padding:46px 30px 40px;position:relative}
-  .cut .t{font-size:33px;font-weight:700;color:var(--ink2)}
-  .cut .v{font-size:100px;font-weight:800;letter-spacing:-.03em;margin:26px 0}
-  .cut .v.word{font-size:72px}
-  .cut .s{font-size:30px;font-weight:600;color:var(--ink2)}
-  .cut .pick{border-color:var(--indigo);border-width:2px}
+  /* ===== S2 : 규칙 막대 ===== */
+  .rb{display:grid;grid-template-columns:1fr 1fr;column-gap:70px;margin-top:4px}
+  .rr{display:grid;grid-template-columns:76px 290px 1fr 120px;align-items:center;column-gap:14px;height:62px}
+  .rr .id{font-size:24px;font-weight:800;color:var(--ink3)}
+  .rr .l{font-size:27px;font-weight:700}
+  .rr .t{height:26px;border-radius:13px;background:#ECEDF3;overflow:hidden}
+  .rr .t i{display:block;height:100%;border-radius:13px;background:var(--peri)}
+  .rr .n{font-size:28px;font-weight:800;text-align:right}
+  .rr.hi .id,.rr.hi .n{color:var(--indigo)}
+  .rr.hi .t i{background:var(--indigo)}
+  .rb-note{font-size:24px;font-weight:600;color:var(--ink3);margin-top:16px}
 
-  /* ===== S4 : 수직선 ===== */
-  .nl{width:100%;height:230px;display:block}
-  .ver{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:10px}
-  .ver .card{padding:30px 36px}
-  .ver .a{font-size:29px;font-weight:700;color:var(--ink2)}
-  .ver .b{font-size:60px;font-weight:800;letter-spacing:-.02em;margin:14px 0 12px}
+  /* ===== S4 ===== */
+  .ver{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:6px}
+  .ver .card{padding:24px 34px;text-align:center}
+  .ver svg{width:100%;height:110px;display:block;margin-bottom:6px}
+  .ver .a{font-size:30px;font-weight:700;color:var(--ink2)}
+  .ver .b{font-size:52px;font-weight:800;letter-spacing:-.02em;margin:8px 0 6px}
   .ver .c{font-size:29px;font-weight:600;color:var(--ink2)}
 
-  /* ===== S5 : 270개 ===== */
-  .chain{display:flex;align-items:center;gap:16px;margin-bottom:28px}
-  .chain .ca{color:#9A9FB5;font-size:29px}
-  .feat{display:grid;grid-template-columns:1fr 520px;gap:30px}
-  .fbars{display:grid;grid-template-columns:200px 1fr;row-gap:20px;align-items:center}
+  /* ===== S5 ===== */
+  .feat{display:grid;grid-template-columns:1fr 600px;gap:30px;margin-top:8px}
+  .fbars{display:grid;grid-template-columns:230px 1fr;row-gap:18px;align-items:center}
   .fbars .k{font-size:31px;font-weight:700}
-  .fbars .b{height:22px;background:#E7E9F0;border-radius:11px;overflow:hidden}
-  .fbars .b i{display:block;height:100%;background:var(--indigo);border-radius:11px}
-  .fbars .more{grid-column:1/-1;font-size:28px;font-weight:600;color:var(--ink2);margin-top:4px}
-  .notin .h{font-size:31px;font-weight:700;color:var(--ink2);margin-bottom:22px}
-  .notin .x{display:flex;align-items:center;gap:16px;background:#FDEBDD;color:#B5612B;border-radius:14px;padding:20px 26px;font-size:28px;font-weight:700;margin-bottom:16px}
-  .notin .x b{font-size:29px}
+  .fbars .b{height:24px;background:#E7E9F0;border-radius:12px;overflow:hidden}
+  .fbars .b i{display:block;height:100%;background:var(--indigo);border-radius:12px}
+  .fbars .more{grid-column:1/-1;font-size:28px;font-weight:700;color:var(--ink2);margin-top:2px}
+  .noin .h{font-size:31px;font-weight:800;color:var(--ink2);margin-bottom:18px}
+  .noin .g{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .noin .it{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:22px 10px 18px;text-align:center;position:relative}
+  .noin .it svg{width:84px;height:84px;display:block;margin:0 auto 10px}
+  .noin .it span{font-size:28px;font-weight:700;color:var(--ink2)}
+  .noin .x{position:absolute;right:16px;top:14px;width:52px;height:52px;border-radius:50%;background:#F09D6B;color:#fff;display:grid;place-items:center;font-size:30px;font-weight:800}
 
-  /* ===== S6 : 6단계 ===== */
-  .st6 .steps{grid-template-columns:repeat(6,1fr)}
-  .st6 .dot-n{width:96px;height:96px;font-size:43px}
-  .st6 .step .arr{top:48px}
-  .st6 .step .lbl{font-size:28px}
-  .st6 .step .box{color:var(--indigo);font-weight:800;margin:20px 10px 0}
-  .why2{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px}
-  .why2 .card{padding:28px 36px}
-  .why2 .t{font-size:31px;font-weight:800;margin-bottom:14px}
-  .why2 .s{font-size:29px;font-weight:600;color:var(--ink2);line-height:1.6}
+  /* ===== S6 ===== */
+  .st6{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-top:6px}
+  .st6 .s{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:20px 12px 18px;text-align:center}
+  .st6 .no{width:52px;height:52px;border-radius:50%;background:var(--indigo);color:#fff;display:grid;place-items:center;margin:0 auto;font-size:27px;font-weight:800}
+  .st6 .nm{font-size:29px;font-weight:800;margin:12px 0 6px}
+  .st6 svg{width:100%;height:100px;display:block}
+  .st6 .bx{font-size:25px;font-weight:700;color:var(--indigo)}
+  .why2{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:26px}
+  .why2 .card{padding:26px 34px}
+  .why2 .t{font-size:32px;font-weight:800;margin-bottom:14px}
+  .sc2{display:grid;grid-template-columns:90px 1fr 120px;row-gap:12px;align-items:center;column-gap:14px}
+  .sc2 .k{font-size:26px;font-weight:700;color:var(--ink2)}
+  .sc2 .tr{height:26px;border-radius:13px;background:#ECEDF3;position:relative}
+  .sc2 .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:13px}
+  .sc2 .v{font-size:25px;font-weight:700;color:var(--ink3)}
+  .sc2 .sep{grid-column:1/-1;font-size:25px;font-weight:800;margin-top:6px}
+  .frz{display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:center}
+  .frz .tg{display:flex;gap:12px;margin-top:16px}
 
-  /* ===== S7 : 막대 ===== */
-  .pcl{display:grid;grid-template-columns:1fr 440px;gap:30px}
-  .pcl .card{padding:30px 34px}
-  .pcl .ct{font-size:29px;font-weight:600;color:var(--ink2);text-align:center;margin-bottom:6px}
+  /* ===== S7 ===== */
+  .pcl{display:grid;grid-template-columns:1fr 400px;gap:30px}
+  .pcl .card{padding:26px 30px}
   .pcl svg{width:100%;display:block}
-  .pcs{display:grid;gap:22px}
+  .pcs{display:grid;gap:20px}
+  .pcs .stat{padding:26px 24px}
 
-  /* ===== S8 : 축 ===== */
-  .ax{display:grid;grid-template-columns:1fr 600px;gap:30px}
+  /* ===== S8 ===== */
+  .ax{display:grid;grid-template-columns:1fr 640px;gap:30px}
   .ax svg{width:100%;height:600px;display:block}
-  .deep .h{font-size:31px;font-weight:700;color:var(--ink2);margin-bottom:22px}
-  .deep .r{display:grid;grid-template-columns:150px 1fr 80px;align-items:center;gap:16px;padding:18px 0;border-top:1px solid var(--border)}
+  .deep .h{font-size:31px;font-weight:700;color:var(--ink2);margin-bottom:18px}
+  .deep .r{display:grid;grid-template-columns:160px 1fr 80px;align-items:center;gap:16px;padding:18px 0;border-top:1px solid var(--border)}
   .deep .r:last-child{border-bottom:1px solid var(--border)}
-  .deep .id{font-size:29px;font-weight:800;color:var(--indigo)}
+  .deep .id{font-size:30px;font-weight:800;color:var(--indigo)}
   .deep .lb{font-size:30px;font-weight:600}
   .deep .lb.none{color:var(--ink3)}
-  .deep .v{font-size:30px;font-weight:800;text-align:right}
+  .deep .v{font-size:31px;font-weight:800;text-align:right}
 
-  /* ===== S9 : 겹 ===== */
+  /* ===== S9 ===== */
   .layers{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;align-items:center}
-  .layers .card{padding:26px 28px;height:520px;display:flex;flex-direction:column}
-  .layers .lh{display:flex;justify-content:space-between;font-size:31px;font-weight:800}
-  .layers .lh span:last-child{color:var(--ink2);font-weight:700}
+  .layers .card{padding:24px 26px;height:480px;display:flex;flex-direction:column}
+  .layers .lh{display:flex;justify-content:space-between;font-size:33px;font-weight:800}
+  .layers .lh span:last-child{color:var(--ink2);font-weight:700;font-size:28px}
   .layers svg{flex:1;width:100%}
   .layers .la{display:grid;place-items:center}
-  .lcap{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;margin-top:22px;font-size:25px;font-weight:600;color:var(--ink2);text-align:center}
+  .lcap{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;margin-top:20px;font-size:29px;font-weight:800;color:var(--ink2);text-align:center}
 
-  /* ===== S10 : 표본 ===== */
+  /* ===== S10 ===== */
   .smp{display:grid;grid-template-columns:1fr 760px;gap:30px}
-  .smp .card{padding:30px 34px}
-  .smp .ct{font-size:29px;font-weight:600;color:var(--ink2);margin-bottom:22px}
+  .smp .card{padding:26px 30px}
+  .smp .ct{font-size:29px;font-weight:700;color:var(--ink2);margin-bottom:18px}
   .gmap{display:grid;grid-template-columns:repeat(12,1fr);gap:8px}
   .gmap .c{aspect-ratio:1;border-radius:8px;background:var(--white);border:1px solid var(--border);position:relative}
   .gmap .c.dense{background:#E9ECFF;border-color:#C3CAFF}
-  .gmap .c i{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--dark)}
+  .gmap .c i{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--dark)}
   .smp-r{display:grid;align-content:start;gap:26px}
-  .smp2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
-  .cmp2{display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center;padding:36px 30px 30px}
-  .cmp2 .k{font-size:29px;font-weight:700;color:var(--ink2)}
-  .cmp2 .n{font-size:83px;font-weight:800;letter-spacing:-.03em;margin-top:14px}
-  .cmp2 .foot{grid-column:1/-1;font-size:28px;font-weight:600;color:var(--ink2);margin-top:8px}
+  .race{display:grid;grid-template-columns:200px 1fr;row-gap:20px;align-items:center;column-gap:18px}
+  .race .k{font-size:28px;font-weight:700;color:var(--ink2)}
+  .race .tr{position:relative;height:54px}
+  .race .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:12px}
+  .race .tr b{position:absolute;top:50%;translate:0 -50%;font-size:34px;font-weight:800;white-space:nowrap}
+  .mg2{display:grid;grid-template-columns:1fr 1fr;gap:26px;text-align:center}
+  .mg2 svg{width:100%;height:170px;display:block}
+  .mg2 .n{font-size:58px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+  .mg2 .k{font-size:26px;font-weight:700;color:var(--ink2);margin-top:4px}
 
-  /* ===== S11 : 7단계 ===== */
-  .pipe{display:grid;grid-template-columns:repeat(8,1fr);gap:16px}
-  .pipe .pb{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px 12px;text-align:center;min-height:190px;display:flex;flex-direction:column;justify-content:space-between}
+  /* ===== S11 ===== */
+  .pipe{display:grid;grid-template-columns:repeat(8,1fr);gap:16px;position:relative}
+  .pipe .pb{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:22px 10px;text-align:center;min-height:200px;display:flex;flex-direction:column;justify-content:space-between}
   .pipe .pb .id{font-size:28px;font-weight:800;color:var(--indigo)}
-  .pipe .pb .nm{font-size:28px;font-weight:800}
-  .pipe .pb .v{font-size:25px;font-weight:600;color:var(--ink2)}
+  .pipe .pb .nm{font-size:30px;font-weight:800}
+  .pipe .pb .v{font-size:25px;font-weight:700;color:var(--ink2)}
   .pipe .pb.hi{background:#F0F2FF;border-color:var(--indigo)}
   .pipe .pb.hi .nm{color:var(--indigo)}
-  .pipe-con{display:grid;grid-template-columns:repeat(8,1fr);gap:16px;text-align:center;color:#9A9FB5;font-size:34px;height:56px;align-items:center}
-  .hdfs{background:var(--dark);color:var(--dink);border-radius:18px;padding:26px 40px;font-size:29px;font-weight:700;text-align:center}
-  .pipe-note{font-size:25px;font-weight:600;color:var(--ink2);margin-top:22px}
+  .ptrack{position:relative;height:40px;margin-bottom:10px}
+  .ptrack::before{content:'';position:absolute;left:0;right:0;top:18px;border-top:4px dotted #C8CCDA}
+  .ptrack .dot{position:absolute;top:6px;width:28px;height:28px;margin-left:-14px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 8px rgba(91,103,232,.18)}
+  .slide.is-active .ptrack .dot{animation:run 4.5s linear var(--d,0s) infinite}
+  .pipe-con{display:grid;grid-template-columns:repeat(8,1fr);gap:16px;height:70px;align-items:center;justify-items:center}
+  .pipe-con svg{width:26px;height:56px}
+  .hdfs{background:var(--dark);color:var(--dink);border-radius:18px;padding:28px 40px;font-size:31px;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;gap:22px}
 
-  /* ===== S12 : YARN ===== */
-  .yarn{display:grid;grid-template-columns:640px 1fr;gap:30px}
+  /* ===== S12 ===== */
+  .yarn{display:grid;grid-template-columns:600px 1fr;gap:30px}
   .nodes{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-  .node{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:26px 24px}
-  .node .t{font-size:33px;font-weight:800;color:var(--indigo)}
-  .node .s{font-size:24px;font-weight:600;color:var(--ink2);margin:4px 0 18px}
-  .node .it{background:#EDEEF4;border-radius:10px;padding:12px 16px;font-size:28px;font-weight:700;text-align:center;margin-top:10px}
-  .exe{margin-top:22px;background:#E9ECFF;color:var(--indigo);border-radius:12px;padding:16px;font-size:25px;font-weight:700;text-align:center}
-  .rt{display:grid;grid-template-columns:1fr 170px 130px 170px;row-gap:0;column-gap:14px;align-items:center}
-  .rt>div{padding:17px 8px;font-size:25px;font-weight:700;border-bottom:1px solid var(--border)}
-  .rt .h{font-size:25px;font-weight:700;color:var(--ink2);padding-top:0}
-  .rt .n{text-align:center}
-  .rt .ind{color:var(--indigo);text-align:center}
+  .node{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:22px 22px 24px}
+  .node svg{width:64px;height:64px;display:block;margin-bottom:8px}
+  .node .t{font-size:32px;font-weight:800;color:var(--indigo)}
+  .node .s{font-size:25px;font-weight:600;color:var(--ink2);margin:4px 0 14px}
+  .node .it{background:#EDEEF4;border-radius:10px;padding:11px 14px;font-size:27px;font-weight:700;text-align:center;margin-top:10px}
+  .exe{margin-top:20px;background:#E9ECFF;color:var(--indigo);border-radius:12px;padding:16px;font-size:27px;font-weight:700;text-align:center}
+  .tb{padding:28px 32px}
+  .tb .h{font-size:28px;font-weight:700;color:var(--ink2);margin-bottom:10px}
+  .tr5{display:grid;grid-template-columns:270px 1fr 130px 190px;align-items:center;column-gap:16px;padding:16px 0;border-top:1px solid var(--border)}
+  .tr5 .l{font-size:27px;font-weight:800}
+  .tr5 .l small{display:block;font-size:23px;font-weight:600;color:var(--ink2)}
+  .tr5 .t{height:26px;border-radius:13px;background:#ECEDF3;overflow:hidden}
+  .tr5 .t i{display:block;height:100%;min-width:12px;border-radius:13px;background:var(--indigo)}
+  .tr5 .s{font-size:29px;font-weight:800;text-align:right}
+  .tr5 .p{font-size:25px;font-weight:800;color:#1E7C69;text-align:right}
 
-  /* ===== S13 : 분산 = 한 대 ===== */
-  .par{display:grid;grid-template-columns:1fr 90px 300px 90px 1fr;align-items:center}
-  .par .card{text-align:center;padding:52px 30px;font-size:37px;font-weight:800;line-height:1.5}
-  .par .card small{display:block;font-size:31px;font-weight:600;color:var(--ink2)}
-  .par .ln{height:2px;background:#C8CCDA}
-  .par .ell{background:var(--dark);color:#fff;border-radius:50%;height:170px;display:grid;place-items:center;font-size:36px;font-weight:800}
+  /* ===== S13 ===== */
+  .par3{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:10px}
 
-  /* ===== S14 : AUC ===== */
-  .auc{display:grid;grid-template-columns:1fr 560px;gap:30px}
-  .auc .card{padding:30px 34px}
-  .auc .lg{display:flex;gap:14px;margin-bottom:18px}
-  .auc .def{font-size:30px;font-weight:700;margin-bottom:12px}
+  /* ===== S14 ===== */
+  .auc{display:grid;grid-template-columns:1fr 600px;gap:30px}
+  .auc .card{padding:26px 32px}
+  .auc .lg{display:flex;gap:14px;margin-bottom:12px}
   .auc svg{width:100%;display:block}
-  .auc .xl{font-size:25px;font-weight:600;color:var(--ink2);margin-top:4px}
-  .auc-r .k{font-size:30px;font-weight:700;color:var(--ink2)}
-  .auc-r .n{font-size:85px;font-weight:800;letter-spacing:-.03em;margin:6px 0 30px}
-  .auc-r .ci{background:#E9ECFF;color:var(--indigo);border-radius:12px;padding:16px 22px;font-size:29px;font-weight:700;text-align:center;margin-top:6px}
-  .auc-r .ft{font-size:28px;font-weight:600;color:var(--ink2);margin-top:22px}
+  .auc .xl{font-size:26px;font-weight:700;color:var(--ink2);margin-top:4px}
 
-  /* ===== S15 : 합격선 ===== */
-  .gate{display:grid;grid-template-columns:180px 1fr 240px 300px 160px;row-gap:14px;column-gap:20px;align-items:center}
-  .gate>div{background:var(--white);border:1px solid var(--border);padding:20px 26px;font-size:27px;font-weight:700}
+  /* ===== S15 ===== */
+  .tl3{display:grid;grid-template-columns:1fr 1fr 1fr;margin-bottom:16px;position:relative}
+  .tl3 .st{text-align:center;position:relative;z-index:1}
+  .tl3 .st svg{width:60px;height:60px;display:block;margin:0 auto 8px}
+  .tl3 .st span{font-size:28px;font-weight:800}
+  .tl3 .ln{position:absolute;top:29px;left:16.6%;right:16.6%;border-top:4px dashed #C8CCDA}
+  .gate{display:grid;grid-template-columns:170px 1fr 220px 280px 170px;row-gap:8px;column-gap:20px;align-items:center}
+  .gate>div{background:var(--white);border:1px solid var(--border);padding:12px 24px;font-size:28px;font-weight:700}
   .gate .g1{border-radius:14px 0 0 14px;color:var(--indigo);font-weight:800;border-right:0}
   .gate .g1.o{color:var(--orange)}
   .gate .g2{border-left:0;border-right:0;font-weight:600}
   .gate .g3{border-left:0;border-right:0;text-align:center;font-weight:800}
   .gate .g4{border-left:0;border-right:0;text-align:center;color:var(--ink2);font-weight:600}
-  .gate .g5{border-radius:0 14px 14px 0;border-left:0;display:grid;place-items:center;padding:14px}
-  .badge{border-radius:999px;padding:8px 26px;font-size:21px;font-weight:800;color:#fff;letter-spacing:.06em}
-  .badge.pass{background:var(--indigo)}
-  .badge.fail{background:var(--orange)}
+  .gate .g5{border-radius:0 14px 14px 0;border-left:0;display:grid;place-items:center;padding:10px}
+  .badge{display:inline-block;border-radius:10px;padding:6px 20px;font-size:25px;font-weight:800;letter-spacing:.06em;border:3px solid}
+  .badge.pass{color:var(--indigo);border-color:var(--indigo)}
+  .badge.fail{color:#DD7A3B;border-color:#DD7A3B}
 
-  /* ===== S17 : 저장소 ===== */
-  .store .card{padding:34px 38px}
-  .store .t{font-size:41px;font-weight:800}
-  .store .s{font-size:29px;font-weight:600;color:var(--ink2);margin:8px 0 28px}
-  .store .its{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .store .it{border-radius:12px;padding:20px 16px;font-size:30px;font-weight:700;text-align:center}
+  /* ===== S16 ===== */
+  .dbs{display:flex;gap:6px;align-items:flex-end;margin-top:6px}
+  .dbs i{flex:none;width:34px;height:64px;border-radius:7px;background:#D4D7E2}
+  .dbs i.n{background:var(--indigo)}
+
+  /* ===== S17 ===== */
+  .store{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:16px}
+  .store .card{padding:30px 36px}
+  .store .hd{display:flex;align-items:center;gap:22px;margin-bottom:24px}
+  .store .hd svg{width:96px;height:96px;flex:none}
+  .store .t{font-size:40px;font-weight:800}
+  .store .s{font-size:27px;font-weight:600;color:var(--ink2);margin-top:4px}
+  .store .its{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .store .it{border-radius:12px;padding:30px 16px;font-size:30px;font-weight:700;text-align:center;position:relative;overflow:hidden}
   .store .pg .t{color:var(--indigo)} .store .pg .it{background:#E9ECFF;color:var(--indigo)}
   .store .rd .t{color:var(--purple)} .store .rd .it{background:#EFE8FC;color:var(--purple)}
+  .store .rd .it::after{content:'';position:absolute;left:0;right:0;bottom:0;height:6px;background:var(--purple);opacity:.55;transform-origin:left}
+  .slide.is-active .store .rd .it::after{animation:ttl var(--p,5s) linear infinite}
 </style>
 </head>
 <body>
@@ -182,438 +235,537 @@
 <div class="stage">
 <div class="deck">
 
-<!-- ================= S1 ================= -->
+<!-- ================= S1 : 2,946만 → 469만 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">2,946만 제출본에서 <span class="acc">469만 곡</span>으로</h2>
   </div>
-  <div class="fun">
-    <div class="frow" data-a="fl" style="--d:.25s"><div class="fbar" style="width:1120px;background:#C8CBD8">전 세계 사용자 제출본</div><div class="fnum">2,946만</div></div>
-    <div class="frow" data-a="fl" style="--d:.35s"><div class="fbar" style="width:300px;background:var(--peri)"></div><div class="fnum acc">740만</div><div class="fdesc">같은 곡 중복을 1행으로 접음</div></div>
-    <div class="frow" data-a="fl" style="--d:.45s"><div class="fbar" style="width:268px;background:var(--peri)"></div><div class="fnum acc">662만</div><div class="fdesc">제외 규칙 1차 (78만 곡)</div></div>
-    <div class="frow" data-a="fl" style="--d:.55s"><div class="fbar" style="width:190px;background:var(--indigo)"></div><div class="fnum acc">469만</div><div class="fdesc">제외 규칙 2차 (193만 곡 더) · <b class="acc">운영</b></div></div>
-    <div class="fchips" data-a="fu" style="--d:.7s">
-      <span class="chip org">누적 제외 36.6% · 40% 넘으면 자동 중단</span>
-      <span class="chip gry">행은 지우지 않고 "제외" 표시만 → 되돌릴 수 있음</span>
+  <div class="s1" data-nofill>
+    <div class="s1-cap" data-a="fu" style="--d:.3s"><b>2,946만</b>전 세계 사용자가 올린 분석 결과</div>
+    <div class="s1-bar" data-a="fi" style="--d:.35s">
+      <div class="s1-fill a"></div>
+      <div class="s1-side" data-a="fl" style="--d:2.1s"><b>740만</b>같은 곡 중복을 한 줄로 접음</div>
+    </div>
+    <svg viewBox="0 0 1660 90" style="width:100%;height:90px;display:block;overflow:visible">
+      <path d="M2 4V86M416 4L1658 86" stroke="#98A4FF" stroke-width="3" stroke-dasharray="8 9" fill="none" data-a="fi" style="--d:2.5s"/>
+      <text x="1100" y="40" font-size="26" font-weight="700" fill="#8F94AA" data-a="fi" style="--d:2.6s">740만을 크게 펼치면</text>
+    </svg>
+    <div class="s1-bar b" data-a="fi" style="--d:2.7s;margin-top:54px">
+      <div class="s1-seg" style="left:63.4%;right:0"></div>
+      <div class="s1-fill b"></div>
+      <div class="s1-top" style="right:0;translate:0 0"><span data-a="fu" style="--d:4.1s;display:block">−78만 · 규칙 1차</span></div>
+      <div class="s1-top" style="left:76.45%"><span data-a="fu" style="--d:5.9s;display:block">−193만 · 규칙 2차</span></div>
+      <div class="s1-in"><span data-a="pop" style="--d:2.9s;display:inline-block"><span class="gone" style="--d:4.1s;display:inline-block">740만</span></span></div>
+      <div class="s1-in"><span data-a="pop" style="--d:4.3s;display:inline-block"><span class="gone" style="--d:5.9s;display:inline-block">662만</span></span></div>
+      <div class="s1-in"><span data-a="pop" style="--d:6.1s;display:inline-block">469만<small>운영 지도</small></span></div>
+      <div class="s1-stop" data-a="fi" style="--d:5.0s"></div>
+      <div class="s1-low" style="right:40.6%;color:#E06A4A"><span data-a="fi" style="--d:5.1s;display:block">40% 넘게 빠지면 자동 중단 ▶</span></div>
+      <div class="s1-low" style="left:64.6%;color:#B5612B"><span data-a="fi" style="--d:6.6s;display:block">36.6% 제외 · 지우지 않고 표시만</span></div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.85s">손으로 고르지 않고 규칙으로만 · 규칙마다 근거 기록</div>
+  <div class="concl" data-a="fu" style="--d:7.2s">손으로 고르지 않고 규칙으로만 거르고, 규칙마다 근거를 남긴 결과</div>
   <div class="pnum">1</div>
 </section>
 
-<!-- ================= S2 ================= -->
+<!-- ================= S2 : 규칙 16개 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">"조금이라도 이상하면 자른다" 규칙 <span class="acc">16개</span></h2>
   </div>
-  <div class="rules">
-    <div class="rule hi" data-a="fu" style="--d:.22s"><div class="top"><span class="id">R1</span><span class="n">109.6만</span></div><div class="l">길이 60초~6분 밖</div></div>
-    <div class="rule" data-a="fu" style="--d:.26s"><div class="top"><span class="id">R2</span><span class="n">1.0만</span></div><div class="l">비음악 태그</div></div>
-    <div class="rule" data-a="fu" style="--d:.30s"><div class="top"><span class="id">R3</span><span class="n">1.1만</span></div><div class="l">제목 · 가수 둘 다 없음</div></div>
-    <div class="rule" data-a="fu" style="--d:.34s"><div class="top"><span class="id">R4</span><span class="n">0</span></div><div class="l">분석기 버전 밖</div></div>
-    <div class="rule hi" data-a="fu" style="--d:.38s"><div class="top"><span class="id">R5</span><span class="n">47.1만</span></div><div class="l">같은 녹음</div></div>
-    <div class="rule hi" data-a="fu" style="--d:.42s"><div class="top"><span class="id">R6</span><span class="n">39.2만</span></div><div class="l">같은 버전 (표기만 다름)</div></div>
-    <div class="rule" data-a="fu" style="--d:.46s"><div class="top"><span class="id">R7</span><span class="n">1.3만</span></div><div class="l">44.1kHz 미만</div></div>
-    <div class="rule" data-a="fu" style="--d:.50s"><div class="top"><span class="id">R8</span><span class="n">0.7만</span></div><div class="l">사실상 무음</div></div>
-    <div class="rule" data-a="fu" style="--d:.54s"><div class="top"><span class="id">R9</span><span class="n">0.4만</span></div><div class="l">깨진 파일</div></div>
-    <div class="rule" data-a="fu" style="--d:.58s"><div class="top"><span class="id">R10</span><span class="n">3.4만</span></div><div class="l">제목 잡음 (Track 1 등)</div></div>
-    <div class="rule" data-a="fu" style="--d:.62s"><div class="top"><span class="id">R11</span><span class="n">211</span></div><div class="l">테스트 톤</div></div>
-    <div class="rule" data-a="fu" style="--d:.66s"><div class="top"><span class="id">R12</span><span class="n">2.3만</span></div><div class="l">낭독 · 현장 녹음</div></div>
-    <div class="rule" data-a="fu" style="--d:.70s"><div class="top"><span class="id">R13</span><span class="n">0.9만</span></div><div class="l">오디오북</div></div>
-    <div class="rule" data-a="fu" style="--d:.74s"><div class="top"><span class="id">R15</span><span class="n">1.6만</span></div><div class="l">소리가 안 변함</div></div>
-    <div class="rule" data-a="fu" style="--d:.78s"><div class="top"><span class="id">R16</span><span class="n">7.4만</span></div><div class="l">제목 속 비음악 단어</div></div>
-    <div class="rule" data-a="fu" style="--d:.82s"><div class="top"><span class="id">R17</span><span class="n">6.2만</span></div><div class="l">가수 불명</div></div>
+  <div data-nofill>
+    <div class="rb" id="s2-rules"></div>
+    <div class="rb-note" data-a="fi" style="--d:1.6s">막대 = 걸린 곡 수 (제곱근 눈금) · 한 곡이 여러 규칙에 걸릴 수 있음</div>
   </div>
-  <div class="note" data-a="fi" style="--d:.95s">숫자 = 적중 곡 수 (한 곡이 여러 규칙에 걸릴 수 있음) · R14는 없음</div>
+  <div class="concl" data-a="fu" style="--d:1.9s">대부분이 길이, 같은 녹음, 같은 버전에서 걸린 결과</div>
   <div class="pnum">2</div>
 </section>
 
-<!-- ================= S3 ================= -->
+<!-- ================= S3 : 6분 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">긴 곡을 잃는 대가를 재고 <span class="acc">6분</span>으로 정했다</h2>
   </div>
-  <div class="cards c3 cut" style="margin-top:30px">
-    <div class="card" data-a="fu" style="--d:.24s"><div class="t">5분에서 자르면</div><div class="v acc-o">12.8%</div><div class="s">정답 데이터 손실</div></div>
-    <div class="card pick" data-a="fu" style="--d:.34s"><div class="t">6분에서 자르면</div><div class="v acc">4.9%</div><div class="s">정답 데이터 손실</div><div style="margin-top:24px"><span class="chip ind sm">채택</span></div></div>
-    <div class="card" data-a="fu" style="--d:.44s"><div class="t">안 자르면</div><div class="v word acc-o">비음악 노출</div><div class="s">오디오북 · 긴 믹스 · 전악장</div></div>
-  </div>
-  <div style="font-size:26px;font-weight:600;color:var(--ink2);margin-top:44px;--d:.6s" data-a="fi">6분 넘는 곡 중 제목으로 기악곡임을 알 수 있는 곡 <b class="acc">0.3%</b> → 제목으로는 못 거름</div>
-  <div class="concl" data-a="fu" style="--d:.75s">첫 클릭에 오디오북이 뜨면 신뢰가 깨진다</div>
+  <svg viewBox="0 0 1660 560" style="width:100%;height:560px;display:block;overflow:visible" data-nofill>
+    <defs><clipPath id="s3-tail"><rect x="830" y="0" width="830" height="440"/></clipPath>
+      <path id="s3-c" d="M80 430 C260 430 330 120 480 110 C600 102 640 250 760 320 C900 395 1150 418 1580 424 L1580 430Z"/></defs>
+    <g data-a="fi" style="--d:.3s">
+      <use href="#s3-c" fill="#E9ECFF" stroke="#5B67E8" stroke-width="3"/>
+      <use href="#s3-c" fill="#FBE0CC" stroke="#F09D6B" stroke-width="3" clip-path="url(#s3-tail)"/>
+      <line x1="60" y1="430" x2="1600" y2="430" stroke="#C8CCDA" stroke-width="3"/>
+      <g font-size="25" font-weight="600" fill="#5F6480" text-anchor="middle">
+        <text x="80" y="470">0</text><text x="330" y="470">2분</text><text x="580" y="470">4분</text><text x="830" y="470">6분</text><text x="1080" y="470">8분</text><text x="1330" y="470">10분</text><text x="1580" y="470">12분</text>
+      </g>
+      <text x="480" y="90" font-size="27" font-weight="700" fill="#5B67E8" text-anchor="middle">곡 길이 분포</text>
+    </g>
+    <g class="mv" style="--fx:-125px;--d:2.6s;--dur:1s">
+      <line x1="830" y1="150" x2="830" y2="436" stroke="#22243A" stroke-width="5"/>
+      <g data-a="fu" style="--d:.9s"><g class="gone" style="--d:2.4s">
+        <text x="830" y="70" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">5분에서 자르면</text>
+        <text x="830" y="128" font-size="52" font-weight="800" fill="#DD7A3B" text-anchor="middle">정답 12.8% 손실</text>
+      </g></g>
+    </g>
+    <g data-a="pop" style="--d:3.7s">
+      <text x="830" y="70" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">6분에서 자르면</text>
+      <text x="830" y="128" font-size="52" font-weight="800" fill="#5B67E8" text-anchor="middle">정답 4.9% 손실</text>
+    </g>
+    <g data-a="stamp" style="--d:4.2s"><rect x="852" y="190" width="120" height="50" rx="10" fill="none" stroke="#5B67E8" stroke-width="4"/><text x="912" y="225" font-size="27" font-weight="800" fill="#5B67E8" text-anchor="middle">채택</text></g>
+    <g data-a="pop" style="--d:4.7s">
+      <rect x="1036" y="200" width="56" height="72" rx="6" fill="#F09D6B"/><rect x="1048" y="200" width="6" height="72" fill="#fff" opacity=".6"/><path d="M1062 222h20M1062 236h20M1062 250h14" stroke="#fff" stroke-width="4"/>
+      <text x="1064" y="318" font-size="27" font-weight="800" fill="#B5612B" text-anchor="middle">오디오북</text>
+    </g>
+    <g data-a="pop" style="--d:4.85s">
+      <path d="M1222 252a42 42 0 0184 0" stroke="#F09D6B" stroke-width="8" fill="none"/><rect x="1214" y="244" width="20" height="34" rx="7" fill="#F09D6B"/><rect x="1294" y="244" width="20" height="34" rx="7" fill="#F09D6B"/>
+      <text x="1264" y="318" font-size="27" font-weight="800" fill="#B5612B" text-anchor="middle">긴 믹스</text>
+    </g>
+    <g data-a="pop" style="--d:5s">
+      <path d="M1424 214h76M1424 230h76M1424 246h76M1424 262h76" stroke="#F09D6B" stroke-width="3"/><circle cx="1448" cy="262" r="10" fill="#F09D6B"/><path d="M1457 262V206" stroke="#F09D6B" stroke-width="4"/><circle cx="1480" cy="246" r="10" fill="#F09D6B"/><path d="M1489 246V196" stroke="#F09D6B" stroke-width="4"/>
+      <text x="1462" y="318" font-size="27" font-weight="800" fill="#B5612B" text-anchor="middle">전악장</text>
+    </g>
+    <text x="1264" y="375" font-size="25" font-weight="700" fill="#8F94AA" text-anchor="middle" data-a="fi" style="--d:5.4s">제목으로 걸러낼 수 있는 건 0.3%뿐</text>
+  </svg>
+  <div class="concl" data-a="fu" style="--d:5.8s">첫 클릭에 오디오북이 뜨면 신뢰가 깨지기 때문에, 6분에서 자른 결정</div>
   <div class="pnum">3</div>
 </section>
 
-<!-- ================= S4 ================= -->
+<!-- ================= S4 : 같은 자 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">같은 <span class="acc">자</span>로 잰 곡만 쓴다</h2>
   </div>
-  <div class="fill" style="display:grid">
-  <div class="subtitle" data-a="fi" style="--d:.2s;margin-top:-40px">같은 음원을 분석기 버전별로 비교 · 좌표 거리</div>
-  <svg class="nl" viewBox="0 0 1660 230" data-a="fi" style="--d:.3s">
-    <line x1="40" y1="150" x2="1620" y2="150" stroke="#C8CCDA" stroke-width="3"/>
-    <g font-size="24" font-weight="600" fill="#5F6480" text-anchor="middle">
-      <text x="40" y="196">0</text><text x="566" y="196">1</text><text x="1093" y="196">2</text><text x="1620" y="196">3</text>
+  <div data-nofill>
+  <svg viewBox="0 0 1660 230" style="width:100%;height:230px;display:block;overflow:visible">
+    <text x="0" y="24" font-size="27" font-weight="700" fill="#5F6480" data-a="fi" style="--d:.2s">같은 음원을 분석기 버전별로 재서 비교한 거리</text>
+    <line x1="40" y1="160" x2="1620" y2="160" stroke="#C8CCDA" stroke-width="4" data-a="fi" style="--d:.3s"/>
+    <g font-size="26" font-weight="600" fill="#5F6480" text-anchor="middle" data-a="fi" style="--d:.3s">
+      <text x="40" y="208">0</text><text x="566" y="208">1</text><text x="1093" y="208">2</text><text x="1620" y="208">3</text>
     </g>
-    <line x1="915" y1="40" x2="915" y2="150" stroke="#F09D6B" stroke-width="3" stroke-dasharray="9 8"/>
-    <text x="915" y="26" text-anchor="middle" font-size="25" font-weight="700" fill="#F09D6B">"같은 녹음" 기준 1.66</text>
-    <circle cx="41" cy="150" r="17" fill="#5B67E8" data-a="pop" style="--d:.7s"/>
-    <text x="40" y="98" text-anchor="start" font-size="26" font-weight="700" fill="#5B67E8">beta2 9종끼리 0.0017</text>
-    <circle cx="1367" cy="150" r="17" fill="#F09D6B" data-a="pop" style="--d:.85s"/>
-    <text x="1367" y="98" text-anchor="middle" font-size="26" font-weight="700" fill="#F09D6B">beta6 ↔ beta2 2.52</text>
+    <line x1="915" y1="70" x2="915" y2="160" stroke="#F09D6B" stroke-width="4" stroke-dasharray="9 8" data-a="fi" style="--d:.6s"/>
+    <text x="915" y="58" text-anchor="middle" font-size="27" font-weight="800" fill="#F09D6B" data-a="fi" style="--d:.6s">"같은 녹음" 기준 1.66</text>
+    <g data-a="pop" style="--d:1s"><circle cx="34" cy="160" r="12" fill="#5B67E8" opacity=".5"/><circle cx="42" cy="160" r="12" fill="#5B67E8" opacity=".5"/><circle cx="48" cy="160" r="12" fill="#5B67E8" opacity=".7"/></g>
+    <text x="40" y="112" font-size="28" font-weight="800" fill="#5B67E8" data-a="fi" style="--d:1.1s">beta2 9종끼리 0.0017</text>
+    <circle class="mv" cx="1367" cy="160" r="18" fill="#DD7A3B" style="--fx:-1326px;--d:1.6s;--dur:1.6s"/>
+    <text x="1367" y="112" text-anchor="middle" font-size="28" font-weight="800" fill="#DD7A3B" data-a="fi" style="--d:3.1s">beta6 ↔ beta2  2.52</text>
   </svg>
   <div class="ver">
-    <div class="card" data-a="fu" style="--d:.5s"><div class="a">beta2 계열 9종</div><div class="b acc">합쳐 씀</div><div class="c">고유곡 98.2%를 덮음</div></div>
-    <div class="card" data-a="fu" style="--d:.6s"><div class="a">beta1</div><div class="b acc-o">제외</div><div class="c">4.07%가 크게 어긋남</div></div>
-    <div class="card" data-a="fu" style="--d:.7s"><div class="a">beta6 (시연 곡)</div><div class="b acc-o">별도 테이블</div><div class="c">운영 지도와 격리</div></div>
+    <div class="card" data-a="fu" style="--d:3.4s">
+      <svg viewBox="0 0 300 110"><g fill="#5B67E8"><circle cx="122" cy="55" r="22" opacity=".35"/><circle cx="136" cy="55" r="22" opacity=".45"/><circle cx="150" cy="55" r="22" opacity=".55"/><circle cx="164" cy="55" r="22" opacity=".65"/><circle cx="178" cy="55" r="22" opacity=".9"/></g></svg>
+      <div class="a">beta2 계열 9종</div><div class="b acc">합쳐 씀</div><div class="c">고유곡 98.2%</div></div>
+    <div class="card" data-a="fu" style="--d:3.6s">
+      <svg viewBox="0 0 300 110"><circle cx="110" cy="55" r="22" fill="#5B67E8"/><path d="M138 55h44" stroke="#F09D6B" stroke-width="4" stroke-dasharray="7 6"/><circle cx="206" cy="55" r="22" fill="#F09D6B"/><path d="M196 45l20 20M216 45l-20 20" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>
+      <div class="a">beta1</div><div class="b acc-o">제외</div><div class="c">4.07%가 크게 어긋남</div></div>
+    <div class="card" data-a="fu" style="--d:3.8s">
+      <svg viewBox="0 0 300 110"><rect x="40" y="18" width="110" height="74" rx="12" fill="#E9ECFF" stroke="#5B67E8" stroke-width="3"/><g fill="#5B67E8"><circle cx="72" cy="45" r="7"/><circle cx="98" cy="62" r="7"/><circle cx="120" cy="40" r="7"/></g><rect x="176" y="18" width="90" height="74" rx="12" fill="#FDEBDD" stroke="#F09D6B" stroke-width="3"/><circle cx="221" cy="55" r="9" fill="#F09D6B"/><path d="M160 10V100" stroke="#22243A" stroke-width="4"/></svg>
+      <div class="a">beta6 (시연 곡)</div><div class="b acc-o">별도 테이블</div><div class="c">운영 지도와 격리</div></div>
   </div>
   </div>
+  <div class="concl" data-a="fu" style="--d:4.2s">분석기 버전이 다르면 같은 곡도 멀리 찍히기 때문에, 같은 자로 잰 곡만 쓰는 원칙</div>
   <div class="pnum">4</div>
 </section>
 
-<!-- ================= S5 ================= -->
+<!-- ================= S5 : 270개 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">곡 하나 = 소리를 잰 숫자 <span class="acc">270개</span></h2>
   </div>
-  <div class="chain" data-a="fu" style="--d:.22s">
-    <span class="chip gry">2,900개</span><span class="ca">→</span><span class="chip gry">389개</span><span class="ca">→</span><span class="chip" style="background:var(--indigo);color:#fff">270개</span>
-  </div>
+  <div data-nofill>
+  <svg viewBox="0 0 1660 150" style="width:100%;height:150px;display:block"><g id="s5-strip"></g></svg>
   <div class="feat">
-    <div class="card" data-a="fu" style="--d:.3s">
+    <div class="card" data-a="fu" style="--d:1.6s;padding:26px 34px">
       <div class="fbars">
-        <div class="k">밝기</div><div class="b"><i style="width:72%"></i></div>
-        <div class="k">저음 에너지</div><div class="b"><i style="width:28%"></i></div>
-        <div class="k">템포</div><div class="b"><i style="width:60%"></i></div>
-        <div class="k">음량</div><div class="b"><i style="width:55%"></i></div>
-        <div class="k">불협화</div><div class="b"><i style="width:42%"></i></div>
-        <div class="k">무음 비율</div><div class="b"><i style="width:8%"></i></div>
-        <div class="k">음색 (13개)</div><div class="b"><i style="width:72%"></i></div>
+        <div class="k">밝기</div><div class="b"><i class="growx" style="width:72%;--d:1.9s"></i></div>
+        <div class="k">저음 에너지</div><div class="b"><i class="growx" style="width:28%;--d:1.97s"></i></div>
+        <div class="k">템포</div><div class="b"><i class="growx" style="width:60%;--d:2.04s"></i></div>
+        <div class="k">음량</div><div class="b"><i class="growx" style="width:55%;--d:2.11s"></i></div>
+        <div class="k">불협화</div><div class="b"><i class="growx" style="width:42%;--d:2.18s"></i></div>
+        <div class="k">음색 (13개)</div><div class="b"><i class="growx" style="width:72%;--d:2.25s"></i></div>
         <div class="more">… 총 270개</div>
       </div>
     </div>
-    <div class="notin" data-a="fu" style="--d:.45s">
+    <div class="noin" data-a="fu" style="--d:2.5s">
       <div class="h">들어가지 않는 것</div>
-      <div class="x"><b>✕</b>가사</div>
-      <div class="x"><b>✕</b>장르</div>
-      <div class="x"><b>✕</b>가수 이름</div>
-      <div class="x"><b>✕</b>인기 · 재생 수</div>
+      <div class="g">
+        <div class="it"><svg viewBox="0 0 84 84"><path d="M12 14h60a6 6 0 016 6v34a6 6 0 01-6 6H34l-14 12V60h-8a6 6 0 01-6-6V20a6 6 0 016-6z" fill="#ECEDF3" stroke="#8F94AA" stroke-width="3"/><path d="M22 30h40M22 44h28" stroke="#8F94AA" stroke-width="4"/></svg><span>가사</span><b class="x" data-a="stamp" style="--d:2.9s">✕</b></div>
+        <div class="it"><svg viewBox="0 0 84 84"><path d="M10 14h34l30 30-30 30L10 44z" fill="#ECEDF3" stroke="#8F94AA" stroke-width="3" stroke-linejoin="round"/><circle cx="26" cy="30" r="6" fill="#8F94AA"/></svg><span>장르</span><b class="x" data-a="stamp" style="--d:3.05s">✕</b></div>
+        <div class="it"><svg viewBox="0 0 84 84"><circle cx="42" cy="28" r="16" fill="#ECEDF3" stroke="#8F94AA" stroke-width="3"/><path d="M12 76a30 30 0 0160 0z" fill="#ECEDF3" stroke="#8F94AA" stroke-width="3"/></svg><span>가수 이름</span><b class="x" data-a="stamp" style="--d:3.2s">✕</b></div>
+        <div class="it"><svg viewBox="0 0 84 84"><path d="M42 72S10 52 10 30a16 16 0 0132-6 16 16 0 0132 6c0 22-32 42-32 42z" fill="#ECEDF3" stroke="#8F94AA" stroke-width="3"/></svg><span>인기 · 재생 수</span><b class="x" data-a="stamp" style="--d:3.35s">✕</b></div>
+      </div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.7s">그래서 "소리가 비슷한 곡"이 가까워진다</div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:3.7s">소리만 재서 넣었기 때문에, 소리가 비슷한 곡끼리 가까워지는 지도</div>
   <div class="pnum">5</div>
 </section>
 
-<!-- ================= S6 ================= -->
+<!-- ================= S6 : 6단계 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">단위가 다른 숫자를 <span class="acc">같은 자</span>로 맞추기</h2>
   </div>
-  <div class="st6" style="margin-top:10px">
-    <div class="steps">
-      <div class="step" data-a="fu" style="--d:.22s"><div class="dot-n">1</div><div class="arr"></div><div class="lbl">특징 고르기</div><div class="box">2,900 → 270</div></div>
-      <div class="step" data-a="fu" style="--d:.30s"><div class="dot-n">2</div><div class="arr"></div><div class="lbl">치우침 펴기</div><div class="box">log</div></div>
-      <div class="step" data-a="fu" style="--d:.38s"><div class="dot-n">3</div><div class="arr"></div><div class="lbl">mp3 보정</div><div class="box">wav 기준으로</div></div>
-      <div class="step" data-a="fu" style="--d:.46s"><div class="dot-n">4</div><div class="arr"></div><div class="lbl">빈칸 채우기</div><div class="box">중앙값</div></div>
-      <div class="step" data-a="fu" style="--d:.54s"><div class="dot-n">5</div><div class="arr"></div><div class="lbl">눈금 맞추기</div><div class="box">중앙값 · 사분위</div></div>
-      <div class="step" data-a="fu" style="--d:.62s"><div class="dot-n">6</div><div class="lbl">극단값 자르기</div><div class="box">±20</div></div>
+  <div data-nofill>
+  <div class="st6">
+    <div class="s" data-a="fu" style="--d:.25s"><div class="no">1</div><div class="nm">특징 고르기</div>
+      <svg viewBox="0 0 200 100"><g fill="#D4D7E2"><rect x="18" y="30" width="12" height="60" rx="3"/><rect x="38" y="30" width="12" height="60" rx="3"/><rect x="78" y="30" width="12" height="60" rx="3"/><rect x="118" y="30" width="12" height="60" rx="3"/><rect x="158" y="30" width="12" height="60" rx="3"/></g><g fill="#5B67E8" data-a="pop" style="--d:.6s"><rect x="58" y="10" width="12" height="80" rx="3"/><rect x="98" y="10" width="12" height="80" rx="3"/><rect x="138" y="10" width="12" height="80" rx="3"/><rect x="178" y="10" width="12" height="80" rx="3"/></g></svg>
+      <div class="bx">2,900 → 270</div></div>
+    <div class="s" data-a="fu" style="--d:.45s"><div class="no">2</div><div class="nm">치우침 펴기</div>
+      <svg viewBox="0 0 200 100"><path d="M10 90C20 90 26 14 40 14S80 80 190 88" stroke="#C8CBD8" stroke-width="4" fill="none"/><path d="M10 90C50 90 70 20 100 20S150 90 190 90" stroke="#5B67E8" stroke-width="5" fill="none" data-draw style="--len:260;--d:.9s"/></svg>
+      <div class="bx">log</div></div>
+    <div class="s" data-a="fu" style="--d:.65s"><div class="no">3</div><div class="nm">mp3 보정</div>
+      <svg viewBox="0 0 200 100"><path d="M10 90C50 90 80 20 120 20S170 90 190 90" stroke="#F09D6B" stroke-width="4" fill="none" stroke-dasharray="7 6"/><path d="M10 90C40 90 60 20 100 20S150 90 190 90" stroke="#5B67E8" stroke-width="5" fill="none" data-draw style="--len:260;--d:1.1s"/></svg>
+      <div class="bx">wav 기준으로</div></div>
+    <div class="s" data-a="fu" style="--d:.85s"><div class="no">4</div><div class="nm">빈칸 채우기</div>
+      <svg viewBox="0 0 200 100"><g fill="#D4D7E2"><rect x="10" y="30" width="34" height="40" rx="6"/><rect x="48" y="30" width="34" height="40" rx="6"/><rect x="124" y="30" width="34" height="40" rx="6"/><rect x="162" y="30" width="30" height="40" rx="6"/></g><rect x="86" y="30" width="34" height="40" rx="6" fill="none" stroke="#8F94AA" stroke-width="3" stroke-dasharray="5 4"/><rect x="86" y="30" width="34" height="40" rx="6" fill="#5B67E8" data-a="pop" style="--d:1.4s"/></svg>
+      <div class="bx">중앙값</div></div>
+    <div class="s" data-a="fu" style="--d:1.05s"><div class="no">5</div><div class="nm">눈금 맞추기</div>
+      <svg viewBox="0 0 200 100"><rect x="20" y="22" width="170" height="18" rx="9" fill="#D4D7E2"/><rect x="20" y="62" width="40" height="18" rx="9" fill="#D4D7E2"/><rect x="20" y="22" width="100" height="18" rx="9" fill="#5B67E8" class="growx" style="--d:1.6s"/><rect x="20" y="62" width="100" height="18" rx="9" fill="#5B67E8" class="growx" style="--d:1.6s"/></svg>
+      <div class="bx">중앙값 · 사분위</div></div>
+    <div class="s" data-a="fu" style="--d:1.25s"><div class="no">6</div><div class="nm">극단값 자르기</div>
+      <svg viewBox="0 0 200 100"><path d="M4 92C40 92 70 20 100 20S160 92 196 92" stroke="#5B67E8" stroke-width="5" fill="none"/><g data-a="fi" style="--d:1.9s"><path d="M34 10V96M166 10V96" stroke="#F09D6B" stroke-width="4"/><rect x="0" y="10" width="34" height="86" fill="#F09D6B" opacity=".18"/><rect x="166" y="10" width="34" height="86" fill="#F09D6B" opacity=".18"/></g></svg>
+      <div class="bx">±20</div></div>
+  </div>
+  <div class="why2">
+    <div class="card" data-a="fu" style="--d:2.3s">
+      <div class="t acc-o">안 맞추면 템포가 밝기를 덮는다</div>
+      <div class="sc2">
+        <div class="k">템포</div><div class="tr"><i class="growx" style="width:100%;background:#F09D6B;--d:2.6s"></i></div><div class="v">60~200</div>
+        <div class="k">밝기</div><div class="tr"><i class="growx" style="width:1.5%;background:#F09D6B;--d:2.6s"></i></div><div class="v">0~1</div>
+        <div class="sep acc" data-a="fi" style="--d:3.2s">맞추면 ↓</div>
+        <div class="k">템포</div><div class="tr"><i class="growx" style="width:55%;background:var(--indigo);--d:3.4s"></i></div><div class="v"></div>
+        <div class="k">밝기</div><div class="tr"><i class="growx" style="width:50%;background:var(--indigo);--d:3.5s"></i></div><div class="v"></div>
+      </div>
     </div>
-    <div class="why2">
-      <div class="card" data-a="fu" style="--d:.75s"><div class="t acc-o">안 하면</div><div class="s">템포(60~200)가 밝기(0~1)를 압도<br>깨진 값 하나가 지도 끝을 잡아당김</div></div>
-      <div class="card" data-a="fu" style="--d:.85s"><div class="t acc">기준값은 얼려 둠</div><div class="s">100만 곡으로 한 번 계산<br>469만 · 신곡 · 시연곡 모두 같은 값</div></div>
+    <div class="card" data-a="fu" style="--d:2.5s">
+      <div class="frz">
+        <svg viewBox="0 0 120 120" data-a="pop" style="--d:3.8s"><g stroke="#5B67E8" stroke-width="7" stroke-linecap="round"><path d="M60 8V112M15 34l90 52M15 86l90-52"/><path d="M48 16l12 12 12-12M48 104l12-12 12 12M14 52l17-4-5-16M106 68l-17 4 5 16M14 68l17 4-5 16M106 52l-17-4 5-16" fill="none"/></g></svg>
+        <div><div class="t acc">기준값은 얼려 둠</div><div style="font-size:28px;font-weight:600;color:var(--ink2)">100만 곡으로 한 번 계산</div>
+          <div class="tg"><span class="chip ind" data-a="pop" style="--d:4.1s">469만</span><span class="chip ind" data-a="pop" style="--d:4.25s">신곡</span><span class="chip ind" data-a="pop" style="--d:4.4s">시연곡</span></div></div>
+      </div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:1s">다시 계산하면 모든 곡 좌표가 흔들려서 한 번 정한 값만 적용</div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:4.8s">다시 계산하면 모든 곡 좌표가 흔들려서, 한 번 정한 값만 계속 쓰는 방식</div>
   <div class="pnum">6</div>
 </section>
 
-<!-- ================= S7 ================= -->
+<!-- ================= S7 : 16축 70% ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">270개를 16개로 줄여도 정보 <span class="acc">70%</span>가 남는다</h2>
   </div>
-  <div class="pcl">
+  <div class="pcl" data-nofill>
     <div class="card" data-a="fu" style="--d:.25s">
-      <div class="ct">축별 설명분산 (%)</div>
       <svg viewBox="0 0 1100 520"><g id="s7-bars"></g></svg>
     </div>
     <div class="pcs">
-      <div class="card stat" data-a="fu" style="--d:.4s"><div class="n">69.9%</div><div class="l">16축 합계</div></div>
-      <div class="card stat" data-a="fu" style="--d:.5s"><div class="n" style="color:var(--peri)">32%</div><div class="l">1겹 (PC1 + PC2)</div></div>
-      <div class="card stat" data-a="fu" style="--d:.6s"><div class="n k">65%</div><div class="l">미리 정한 기준 → 넘는 최소 = 16</div></div>
+      <div class="card stat" data-a="fu" style="--d:2.6s"><div class="n">69.9%</div><div class="l">16축에 남은 정보</div></div>
+      <div class="card stat" data-a="fu" style="--d:2.8s"><div class="n" style="color:var(--peri)">32%</div><div class="l">첫 화면 (축 2개)</div></div>
+      <div class="card stat" data-a="fu" style="--d:3s"><div class="n k">65%</div><div class="l">미리 정한 기준 → 넘는 최소 = 16</div></div>
     </div>
   </div>
-  <div class="note" data-a="fi" style="--d:.8s">버린 30%는 대부분 잡음 (인코딩 차이 · 측정 흔들림) · 24축 76.8%, 32축 81.9%로 늘려도 이득 완만</div>
+  <div class="concl" data-a="fu" style="--d:3.3s">16개 축으로 정보의 70%를 남기고, 버린 30%는 대부분 잡음인 결과</div>
   <div class="pnum">7</div>
 </section>
 
-<!-- ================= S8 ================= -->
+<!-- ================= S8 : 축의 뜻 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">축마다 <span class="acc">뜻</span>이 있어서 "지도"가 된다</h2>
   </div>
-  <div class="ax">
-    <svg viewBox="0 0 1000 600" data-a="fi" style="--d:.25s">
+  <div class="ax" data-nofill>
+    <svg viewBox="0 0 1000 600">
       <defs>
         <marker id="ah-i" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#5B67E8"/></marker>
         <marker id="ah-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8A5FE0"/></marker>
       </defs>
-      <line x1="60" y1="300" x2="940" y2="300" stroke="#5B67E8" stroke-width="3" marker-start="url(#ah-i)" marker-end="url(#ah-i)"/>
-      <line x1="500" y1="560" x2="500" y2="40" stroke="#8A5FE0" stroke-width="3" marker-start="url(#ah-p)" marker-end="url(#ah-p)"/>
-      <g font-weight="700" font-size="26" fill="#22243A">
-        <text x="60" y="336">어둡고 부드럽고</text><text x="60" y="366">여백 있는 소리</text>
-        <text x="940" y="336" text-anchor="end">밝고 거칠고</text><text x="940" y="366" text-anchor="end">꽉 찬 소리</text>
-        <text x="524" y="52" fill="#8A5FE0">저음이 두껍고 단순</text>
-        <text x="524" y="574" fill="#8A5FE0">가볍고 음색이 복잡</text>
+      <g id="s8-dots"></g>
+      <line x1="60" y1="300" x2="940" y2="300" stroke="#5B67E8" stroke-width="4" marker-start="url(#ah-i)" marker-end="url(#ah-i)" data-draw style="--len:880;--d:.3s"/>
+      <line x1="500" y1="560" x2="500" y2="40" stroke="#8A5FE0" stroke-width="4" marker-start="url(#ah-p)" marker-end="url(#ah-p)" data-draw style="--len:520;--d:.6s"/>
+      <g font-weight="800" font-size="29" fill="#22243A">
+        <g data-a="fi" style="--d:1s"><text x="60" y="342">어둡고 부드럽고</text><text x="60" y="376">여백 있는 소리</text></g>
+        <g data-a="fi" style="--d:1.1s"><text x="940" y="342" text-anchor="end">밝고 거칠고</text><text x="940" y="376" text-anchor="end">꽉 찬 소리</text></g>
+        <text x="524" y="54" fill="#8A5FE0" data-a="fi" style="--d:1.3s">저음이 두껍고 단순</text>
+        <text x="524" y="580" fill="#8A5FE0" data-a="fi" style="--d:1.4s">가볍고 음색이 복잡</text>
       </g>
-      <g data-a="pop" style="--d:.7s"><rect x="700" y="242" width="200" height="42" rx="21" fill="#E9ECFF"/><text x="800" y="271" text-anchor="middle" font-size="24" font-weight="700" fill="#5B67E8">PC1 · 상관 0.92</text></g>
-      <g data-a="pop" style="--d:.85s"><rect x="272" y="120" width="200" height="42" rx="21" fill="#EFE8FC"/><text x="372" y="149" text-anchor="middle" font-size="24" font-weight="700" fill="#8A5FE0">PC2 · 상관 0.64</text></g>
+      <g data-a="pop" style="--d:1.7s"><rect x="690" y="238" width="220" height="46" rx="23" fill="#E9ECFF"/><text x="800" y="270" text-anchor="middle" font-size="26" font-weight="800" fill="#5B67E8">PC1 · 상관 0.92</text></g>
+      <g data-a="pop" style="--d:1.85s"><rect x="262" y="116" width="220" height="46" rx="23" fill="#EFE8FC"/><text x="372" y="148" text-anchor="middle" font-size="26" font-weight="800" fill="#8A5FE0">PC2 · 상관 0.64</text></g>
     </svg>
-    <div class="card deep" data-a="fr" style="--d:.4s">
+    <div class="card deep" data-a="fr" style="--d:2.2s">
       <div class="h">깊은 겹의 축</div>
-      <div class="r"><span class="id">2겹 PC3</span><span class="lb">쉼 없이 빽빽 ↔ 여백 · 강약</span><span class="v">0.63</span></div>
-      <div class="r"><span class="id">2겹 PC4</span><span class="lb none">라벨 없음</span><span class="v">0.10</span></div>
-      <div class="r"><span class="id">4겹 PC8</span><span class="lb">길고 느긋 ↔ 화음 자주 바뀜</span><span class="v">0.40</span></div>
-      <div class="r"><span class="id">5겹 PC9</span><span class="lb">촘촘한 리듬 ↔ 성긴 리듬</span><span class="v">0.53</span></div>
-      <div class="r"><span class="id">6~8겹</span><span class="lb none">미세한 차이 · 일부 라벨 없음</span><span class="v" style="color:var(--ink3)">약</span></div>
+      <div class="r" data-a="fu" style="--d:2.4s"><span class="id">2겹 PC3</span><span class="lb">빽빽 ↔ 여백 · 강약</span><span class="v">0.63</span></div>
+      <div class="r" data-a="fu" style="--d:2.5s"><span class="id">2겹 PC4</span><span class="lb none">라벨 없음</span><span class="v">0.10</span></div>
+      <div class="r" data-a="fu" style="--d:2.6s"><span class="id">4겹 PC8</span><span class="lb">느긋 ↔ 화음 자주 바뀜</span><span class="v">0.40</span></div>
+      <div class="r" data-a="fu" style="--d:2.7s"><span class="id">5겹 PC9</span><span class="lb">촘촘 ↔ 성긴 리듬</span><span class="v">0.53</span></div>
+      <div class="r" data-a="fu" style="--d:2.8s"><span class="id">6~8겹</span><span class="lb none">미세한 차이</span><span class="v" style="color:var(--ink3)">약</span></div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.9s">실제 특징과의 상관으로 이름 붙임 · 0.2 미만은 일부러 라벨 없음</div>
+  <div class="concl" data-a="fu" style="--d:3.1s">실제 특징과의 상관으로 이름을 붙이고, 0.2 미만은 일부러 라벨을 비워 둔 축</div>
   <div class="pnum">8</div>
 </section>
 
-<!-- ================= S9 ================= -->
+<!-- ================= S9 : 겹 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">겹을 내려가면 <span class="acc">원 안의 곡만</span> 새 축으로 펼친다</h2>
   </div>
-  <div class="layers">
-    <div class="card" data-a="fu" style="--d:.24s"><div class="lh"><span>1겹</span><span>PC1 · PC2</span></div><svg viewBox="0 0 480 400"><g id="s9-a"></g><circle cx="240" cy="200" r="70" fill="none" stroke="#22243A" stroke-width="2" stroke-dasharray="8 7"/></svg></div>
-    <div class="la" data-a="fi" style="--d:.5s"><svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h28" stroke="#C8CCDA" stroke-width="3"/><path d="M26 5l12 7-12 7z" fill="#C8CCDA"/></svg></div>
-    <div class="card" data-a="fu" style="--d:.4s"><div class="lh"><span>2겹</span><span>PC3 · PC4</span></div><svg viewBox="0 0 480 400"><g id="s9-b"></g><circle cx="240" cy="200" r="70" fill="none" stroke="#22243A" stroke-width="2" stroke-dasharray="8 7"/></svg></div>
-    <div class="la" data-a="fi" style="--d:.65s"><svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h28" stroke="#C8CCDA" stroke-width="3"/><path d="M26 5l12 7-12 7z" fill="#C8CCDA"/></svg></div>
-    <div class="card" data-a="fu" style="--d:.55s"><div class="lh"><span>3겹 … 8겹</span><span>PC5 · PC6 …</span></div><svg viewBox="0 0 480 400"><g id="s9-c"></g></svg></div>
+  <div class="layers" data-nofill>
+    <div class="card" data-a="fu" style="--d:.24s"><div class="lh"><span>1겹</span><span>PC1 · PC2</span></div><svg viewBox="0 0 480 400"><g id="s9-a"></g><circle cx="240" cy="200" r="70" fill="none" stroke="#22243A" stroke-width="4" stroke-dasharray="10 8" data-draw style="--len:440;--d:1.1s"/></svg></div>
+    <div class="la" data-a="fl" style="--d:1.6s"><svg width="48" height="28" viewBox="0 0 48 28"><path d="M0 14h34" stroke="#5B67E8" stroke-width="4"/><path d="M32 5l14 9-14 9z" fill="#5B67E8"/></svg></div>
+    <div class="card" data-a="fu" style="--d:1.7s"><div class="lh"><span>2겹</span><span>PC3 · PC4</span></div><svg viewBox="0 0 480 400"><g id="s9-b"></g><circle cx="240" cy="200" r="70" fill="none" stroke="#22243A" stroke-width="4" stroke-dasharray="10 8" data-draw style="--len:440;--d:2.6s"/></svg></div>
+    <div class="la" data-a="fl" style="--d:3.1s"><svg width="48" height="28" viewBox="0 0 48 28"><path d="M0 14h34" stroke="#5B67E8" stroke-width="4"/><path d="M32 5l14 9-14 9z" fill="#5B67E8"/></svg></div>
+    <div class="card" data-a="fu" style="--d:3.2s"><div class="lh"><span>3겹 … 8겹</span><span>PC5 · PC6 …</span></div><svg viewBox="0 0 480 400"><g id="s9-c"></g></svg></div>
   </div>
-  <div class="lcap" data-a="fi" style="--d:.8s"><span></span><span></span><span>원 안 곡만 데려감</span><span></span><span>조건이 쌓임: 1겹 근처 AND 2겹 근처 AND …</span></div>
-  <div class="concl" data-a="fu" style="--d:.95s">좌표 16개 ÷ 화면 축 2개 = 8겹 · 확대가 아니라 필터</div>
+  <div class="lcap" data-nofill><span data-a="fi" style="--d:.8s">곡 전체</span><span></span><span data-a="fi" style="--d:2.2s">원 안 곡만 새 축으로</span><span></span><span data-a="fi" style="--d:3.6s">조건이 계속 쌓임</span></div>
+  <div class="concl" data-a="fu" style="--d:4.1s">좌표 16개를 2개씩 나눈 8겹, 확대가 아니라 원 안 곡만 남기는 필터</div>
   <div class="pnum">9</div>
 </section>
 
-<!-- ================= S10 ================= -->
+<!-- ================= S10 : 표본 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">첫 화면은 미리 뽑아 둔 <span class="acc">7,204곡</span></h2>
   </div>
-  <div class="smp">
+  <div class="smp" data-nofill>
     <div class="card" data-a="fu" style="--d:.25s">
-      <div class="ct">칸마다 (곡 수)의 세제곱근만큼 · 최대 40곡</div>
+      <div class="ct">곡이 많은 칸일수록 더 뽑음 (세제곱근 · 최대 40곡)</div>
       <div class="gmap" id="s10-map"></div>
     </div>
     <div class="smp-r">
-      <div class="smp2">
-        <div class="card stat" data-a="fu" style="--d:.4s"><div class="n o">20.9초</div><div class="l">매번 계산하면</div></div>
-        <div class="card stat" data-a="fu" style="--d:.5s"><div class="n">수 ms</div><div class="l">미리 뽑아 두면</div></div>
+      <div class="card" data-a="fu" style="--d:1.8s">
+        <div class="race">
+          <div class="k">매번 계산</div><div class="tr"><i class="growx" style="width:100%;background:#FBE0CC;--d:2.1s;--dur:2.4s"></i><b style="left:24px;color:#B5612B"><span data-a="fi" style="--d:3.8s">20.9초</span></b></div>
+          <div class="k">미리 뽑아 둠</div><div class="tr"><i class="growx" style="width:3%;background:var(--indigo);--d:2.1s;--dur:.2s"></i><b style="left:calc(3% + 18px);color:var(--indigo)"><span data-a="pop" style="--d:2.3s;display:inline-block">수 ms</span></b></div>
+        </div>
       </div>
-      <div class="card cmp2" data-a="fu" style="--d:.6s">
-        <div><div class="k">칸당 1곡 (처음)</div><div class="n acc-o">83.5%</div></div>
-        <div><div class="k">밀도 비례 (지금)</div><div class="n acc">24.7%</div></div>
-        <div class="foot">칸 중심에 몰린 비율 → 바둑판 무늬 사라짐</div>
+      <div class="card" data-a="fu" style="--d:2.6s;padding:22px 30px">
+        <div class="ct" style="margin-bottom:8px">칸 한가운데에 몰린 곡 비율</div>
+        <div class="mg2">
+          <div><svg viewBox="0 0 300 170" id="s10-g1"></svg><div class="n acc-o">83.5%</div><div class="k">칸당 1곡 · 바둑판</div></div>
+          <div><svg viewBox="0 0 300 170" id="s10-g2"></svg><div class="n acc">24.7%</div><div class="k">밀도 비례 · 자연스러움</div></div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">824칸 · 7,204곡 · 재생 불가 곡은 빼고 뽑음</div>
+  <div class="concl" data-a="fu" style="--d:4.2s">824칸에서 미리 뽑아 둔 7,204곡, 재생 못 하는 곡은 빼고 뽑은 목록</div>
   <div class="pnum">10</div>
 </section>
 
-<!-- ================= S11 ================= -->
+<!-- ================= S11 : 7단계 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">원본에서 DB까지 <span class="acc">7단계</span>를 Spark로</h2>
   </div>
-  <div class="fill" style="display:grid;min-height:560px">
+  <div data-nofill style="margin-top:50px">
+  <div class="ptrack" data-a="fi" style="--d:1s"><span class="dot" style="--d:1.2s"></span></div>
   <div class="pipe">
     <div class="pb" data-a="fu" style="--d:.22s"><div class="id">S0</div><div class="nm">원본 적재</div><div class="v">630GB</div></div>
-    <div class="pb" data-a="fu" style="--d:.28s"><div class="id">S1</div><div class="nm">대표행</div><div class="v">2,946만→740만</div></div>
-    <div class="pb" data-a="fu" style="--d:.34s"><div class="id">S1.5</div><div class="nm">특징 선택</div><div class="v">2,900→270</div></div>
-    <div class="pb hi" data-a="fu" style="--d:.40s"><div class="id">S2</div><div class="nm">전처리</div><div class="v">349초</div></div>
-    <div class="pb hi" data-a="fu" style="--d:.46s"><div class="id">S3</div><div class="nm">PCA</div><div class="v">126초</div></div>
-    <div class="pb" data-a="fu" style="--d:.52s"><div class="id">S4</div><div class="nm">동네 배정</div><div class="v">검증용</div></div>
-    <div class="pb" data-a="fu" style="--d:.58s"><div class="id">S5</div><div class="nm">제외 규칙</div><div class="v">740만→469만</div></div>
-    <div class="pb" data-a="fu" style="--d:.64s"><div class="id">S6</div><div class="nm">서빙 파일</div><div class="v">DB 적재 80초</div></div>
+    <div class="pb" data-a="fu" style="--d:.30s"><div class="id">S1</div><div class="nm">대표행</div><div class="v">2,946만<br>→ 740만</div></div>
+    <div class="pb" data-a="fu" style="--d:.38s"><div class="id">S1.5</div><div class="nm">특징 선택</div><div class="v">2,900<br>→ 270</div></div>
+    <div class="pb hi" data-a="fu" style="--d:.46s"><div class="id">S2</div><div class="nm">전처리</div><div class="v">349초</div></div>
+    <div class="pb hi" data-a="fu" style="--d:.54s"><div class="id">S3</div><div class="nm">PCA</div><div class="v">126초</div></div>
+    <div class="pb" data-a="fu" style="--d:.62s"><div class="id">S4</div><div class="nm">동네 배정</div><div class="v">검증용</div></div>
+    <div class="pb" data-a="fu" style="--d:.70s"><div class="id">S5</div><div class="nm">제외 규칙</div><div class="v">740만<br>→ 469만</div></div>
+    <div class="pb" data-a="fu" style="--d:.78s"><div class="id">S6</div><div class="nm">서빙 파일</div><div class="v">DB 적재<br>80초</div></div>
   </div>
-  <div class="pipe-con" data-a="fi" style="--d:.75s"><span>↕</span><span>↕</span><span>↕</span><span>↕</span><span>↕</span><span>↕</span><span>↕</span><span>↕</span></div>
-  <div class="hdfs" data-a="fu" style="--d:.8s">HDFS · 모든 단계의 입력과 출력 (서버 2대에 나눠 저장, 복제 2)</div>
-  <div class="pipe-note" data-a="fi" style="--d:.9s">한 단계가 실패하면 그 단계만 다시</div>
+  <div class="pipe-con" id="s11-con"></div>
+  <div class="hdfs" data-a="fu" style="--d:1.1s"><svg width="58" height="58" viewBox="0 0 58 58"><ellipse cx="29" cy="12" rx="22" ry="8" fill="none" stroke="#98A4FF" stroke-width="4"/><path d="M7 12v34c0 4.4 9.8 8 22 8s22-3.6 22-8V12M7 29c0 4.4 9.8 8 22 8s22-3.6 22-8" fill="none" stroke="#98A4FF" stroke-width="4"/></svg>HDFS · 모든 단계의 입력과 출력 (서버 2대 · 복제 2)</div>
   </div>
-  <div class="concl" data-a="fu" style="--d:1s">서비스는 Spark 없이 돈다 · Spark는 지도 만들 때만</div>
+  <div class="concl" data-a="fu" style="--d:1.5s">한 단계가 실패하면 그 단계만 다시 돌리고, Spark는 지도 만들 때만 쓰는 구조</div>
   <div class="pnum">11</div>
 </section>
 
-<!-- ================= S12 ================= -->
+<!-- ================= S12 : YARN ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">실제로 YARN에 제출해 <span class="acc">끝까지</span> 돌렸다</h2>
   </div>
-  <div class="yarn">
+  <div class="yarn" data-nofill>
     <div data-a="fl" style="--d:.25s">
       <div class="nodes">
-        <div class="node"><div class="t">master-node</div><div class="s">4 vCPU · 15GB</div><div class="it">HDFS 이름표</div><div class="it">YARN 자원 관리</div><div class="it">Spark 지휘자</div><div class="it">Jenkins · 감시</div></div>
-        <div class="node"><div class="t">app-node</div><div class="s">4 vCPU · 15GB</div><div class="it">HDFS 데이터</div><div class="it">백엔드</div><div class="it">PostgreSQL</div><div class="it">Redis</div></div>
+        <div class="node"><svg viewBox="0 0 64 64"><rect x="6" y="6" width="52" height="22" rx="5" fill="#E9ECFF" stroke="#5B67E8" stroke-width="3"/><rect x="6" y="36" width="52" height="22" rx="5" fill="#E9ECFF" stroke="#5B67E8" stroke-width="3"/><circle cx="16" cy="17" r="4" fill="#2AD3AE" class="pulse"/><circle cx="16" cy="47" r="4" fill="#2AD3AE" class="pulse" style="--d:.5s"/></svg><div class="t">master-node</div><div class="s">4 vCPU · 15GB</div><div class="it">HDFS 이름표</div><div class="it">YARN 자원 관리</div><div class="it">Spark 지휘자</div></div>
+        <div class="node"><svg viewBox="0 0 64 64"><rect x="6" y="6" width="52" height="22" rx="5" fill="#E9ECFF" stroke="#5B67E8" stroke-width="3"/><rect x="6" y="36" width="52" height="22" rx="5" fill="#E9ECFF" stroke="#5B67E8" stroke-width="3"/><circle cx="16" cy="17" r="4" fill="#2AD3AE" class="pulse" style="--d:.3s"/><circle cx="16" cy="47" r="4" fill="#2AD3AE" class="pulse" style="--d:.8s"/></svg><div class="t">app-node</div><div class="s">4 vCPU · 15GB</div><div class="it">HDFS 데이터</div><div class="it">백엔드 · DB</div><div class="it">Redis</div></div>
       </div>
       <div class="exe">실행기 2개 × 4GB × 2코어</div>
     </div>
-    <div class="card rt" data-a="fr" style="--d:.4s">
-      <div class="h">단계</div><div class="h n">행 수</div><div class="h n">시간</div><div class="h n">패리티</div>
-      <div>S2 전처리 전곡</div><div class="n">661만 행</div><div class="ind">349초</div><div class="ind">&lt; 1e-4</div>
-      <div>S3 PCA 전곡</div><div class="n">661만 행</div><div class="ind">126초</div><div class="ind">1.9e-06</div>
-      <div>S0 원본 1파트 → 좌표</div><div class="n">46만 행</div><div class="ind">2,997초</div><div class="ind">3.8e-06</div>
-      <div>S4 동네 배정 전수</div><div class="n">662만 행</div><div class="n">—</div><div class="ind">100% 일치</div>
-      <div style="border-bottom:0">S6 전수 조립</div><div class="n" style="border-bottom:0">662만 행</div><div class="ind" style="border-bottom:0">107초</div><div class="ind" style="border-bottom:0">오차 0</div>
+    <div class="card tb" data-a="fr" style="--d:.5s">
+      <div class="h">걸린 시간 · 한 대 결과와의 차이</div>
+      <div class="tr5" data-a="fu" style="--d:.8s"><div class="l">S0 원본 → 좌표<small>1파트 · 46만 행</small></div><div class="t"><i class="growx" style="width:100%;--d:1s;--dur:2.2s"></i></div><div class="s">2,997초</div><div class="p">✓ 3.8e-06</div></div>
+      <div class="tr5" data-a="fu" style="--d:.95s"><div class="l">S2 전처리<small>전곡 661만 행</small></div><div class="t"><i class="growx" style="width:11.6%;--d:1.15s"></i></div><div class="s">349초</div><div class="p">✓ &lt; 1e-4</div></div>
+      <div class="tr5" data-a="fu" style="--d:1.1s"><div class="l">S3 PCA<small>전곡 661만 행</small></div><div class="t"><i class="growx" style="width:4.2%;--d:1.3s"></i></div><div class="s">126초</div><div class="p">✓ 1.9e-06</div></div>
+      <div class="tr5" data-a="fu" style="--d:1.25s"><div class="l">S6 전수 조립<small>662만 행</small></div><div class="t"><i class="growx" style="width:3.6%;--d:1.45s"></i></div><div class="s">107초</div><div class="p">✓ 오차 0</div></div>
+      <div class="tr5" data-a="fu" style="--d:1.4s;border-bottom:1px solid var(--border)"><div class="l">S4 동네 배정<small>662만 행</small></div><div></div><div class="s"></div><div class="p">✓ 100% 일치</div></div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">30파트 전체는 하루 이상 → 1파트로 "된다"를 증명</div>
+  <div class="concl" data-a="fu" style="--d:2s">30파트 전체는 하루가 넘게 걸려서, 1파트를 끝까지 돌려 된다는 걸 증명한 결과</div>
   <div class="pnum">12</div>
 </section>
 
-<!-- ================= S13 ================= -->
+<!-- ================= S13 : 분산 = 한 대 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">분산해도 결과는 <span class="acc">한 대와 같다</span></h2>
   </div>
-  <div class="fill" style="display:grid">
-  <div class="par">
-    <div class="card" data-a="fl" style="--d:.25s">한 대 컴퓨터<small>(numpy)</small>= 정답</div>
-    <div class="ln" data-a="fi" style="--d:.45s"></div>
-    <div class="ell" data-a="pop" style="--d:.5s">비교</div>
-    <div class="ln" data-a="fi" style="--d:.45s"></div>
-    <div class="card acc" data-a="fr" style="--d:.25s">서버 2대<small>(Spark)</small>= 분산 결과</div>
+  <div data-nofill>
+  <svg viewBox="0 0 1660 330" style="width:100%;height:330px;display:block;overflow:visible">
+    <g data-a="fl" style="--d:.25s">
+      <rect x="40" y="60" width="200" height="140" rx="14" fill="#fff" stroke="#22243A" stroke-width="5"/><rect x="58" y="78" width="164" height="104" rx="6" fill="#E9ECFF"/><path d="M110 200v34M80 236h120" stroke="#22243A" stroke-width="6" stroke-linecap="round"/>
+      <text x="140" y="290" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">한 대 (numpy)</text>
+      <text x="140" y="324" font-size="26" font-weight="700" fill="#5F6480" text-anchor="middle">= 정답</text>
+    </g>
+    <g data-a="fr" style="--d:.25s">
+      <rect x="1420" y="60" width="200" height="70" rx="12" fill="#fff" stroke="#F09D6B" stroke-width="5"/><rect x="1420" y="148" width="200" height="70" rx="12" fill="#fff" stroke="#F09D6B" stroke-width="5"/>
+      <circle cx="1450" cy="95" r="8" fill="#2AD3AE" class="pulse"/><circle cx="1450" cy="183" r="8" fill="#2AD3AE" class="pulse" style="--d:.6s"/>
+      <path d="M1480 95h110M1480 183h110" stroke="#F0D5C2" stroke-width="8" stroke-linecap="round"/>
+      <text x="1520" y="290" font-size="30" font-weight="800" fill="#DD7A3B" text-anchor="middle">서버 2대 (Spark)</text>
+      <text x="1520" y="324" font-size="26" font-weight="700" fill="#5F6480" text-anchor="middle">= 분산 결과</text>
+    </g>
+    <g id="s13-l" class="mv" style="--fx:-420px;--d:1.2s;--dur:1.4s"></g>
+    <g id="s13-r" class="mv" style="--fx:420px;--d:1.2s;--dur:1.4s"></g>
+    <g data-a="pop" style="--d:2.8s"><circle cx="1010" cy="70" r="40" fill="#5B67E8"/><path d="M992 70l13 13 24-26" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <text x="830" y="290" font-size="32" font-weight="800" fill="#5B67E8" text-anchor="middle" data-a="fu" style="--d:3s">겹쳐 보면 똑같다</text>
+  </svg>
+  <div class="par3">
+    <div class="card stat" data-a="fu" style="--d:3.3s"><div class="n">0.0000038</div><div class="l">좌표 최대 오차 (기준 0.0001)</div></div>
+    <div class="card stat" data-a="fu" style="--d:3.45s"><div class="n">100%</div><div class="l">동네 배정 일치</div></div>
+    <div class="card stat" data-a="fu" style="--d:3.6s"><div class="n">동일</div><div class="l">제외 곡 집합</div></div>
   </div>
-  <div class="cards c3" style="margin-top:50px">
-    <div class="card stat" data-a="fu" style="--d:.7s"><div class="n">0.0000038</div><div class="l">좌표 최대 오차 (기준 0.0001)</div></div>
-    <div class="card stat" data-a="fu" style="--d:.8s"><div class="n">100%</div><div class="l">동네 배정 일치</div></div>
-    <div class="card stat" data-a="fu" style="--d:.9s"><div class="n">동일</div><div class="l">제외 곡 집합</div></div>
   </div>
-  </div>
+  <div class="concl" data-a="fu" style="--d:3.9s">Spark로 나눠 돌린 결과와 한 대로 계산한 정답이 똑같다는 확인</div>
   <div class="pnum">13</div>
 </section>
 
-<!-- ================= S14 ================= -->
+<!-- ================= S14 : AUC ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">정답지로 채점: 같은 플리 곡은 <span class="acc">가까워야</span> 한다</h2>
   </div>
-  <div class="auc">
+  <div class="auc" data-nofill>
     <div class="card" data-a="fu" style="--d:.25s">
-      <div class="lg"><span class="chip ind sm">정답 쌍 (같은 플리 2회+)</span><span class="chip gry sm">오답 쌍 (무작위)</span></div>
-      <div class="def">AUC = 정답 쌍이 오답 쌍보다 가까울 확률</div>
+      <div class="lg"><span class="chip ind sm">정답 쌍 · 같은 플리 2회+</span><span class="chip gry sm">오답 쌍 · 무작위</span></div>
       <svg viewBox="0 0 1000 380"><g id="s14-h"></g></svg>
-      <div class="xl">두 곡 사이 거리 →</div>
+      <div class="xl">두 곡 사이 거리 →  (가까울수록 왼쪽)</div>
     </div>
-    <div class="card auc-r" data-a="fr" style="--d:.4s">
-      <div class="k">이전 지도</div><div class="n" style="color:var(--ink3)">0.6098</div>
-      <div class="k">지금 지도</div><div class="n acc">0.6564</div>
-      <div class="ci">+0.047 · 신뢰구간 0.037~0.056</div>
-      <div class="ft">무작위 = 0.5 · 완벽 = 1.0</div>
+    <div class="card" data-a="fr" style="--d:1.4s">
+      <svg viewBox="0 0 540 470" style="overflow:visible">
+        <text x="0" y="40" font-size="29" font-weight="800" fill="#22243A">AUC</text>
+        <text x="0" y="78" font-size="25" font-weight="700" fill="#5F6480">정답 쌍이 오답 쌍보다 가까울 확률</text>
+        <line x1="20" y1="230" x2="520" y2="230" stroke="#E3E5EF" stroke-width="22" stroke-linecap="round"/>
+        <rect x="20" y="219" width="500" height="22" rx="11" fill="#5B67E8" opacity=".15" class="growx" style="--d:1.7s"/>
+        <g font-size="24" font-weight="700" fill="#8F94AA" text-anchor="middle"><text x="20" y="282">0.5</text><text x="20" y="310">무작위</text><text x="520" y="282">0.75</text></g>
+        <g data-a="pop" style="--d:2s"><line x1="214" y1="196" x2="214" y2="264" stroke="#8F94AA" stroke-width="5"/><text x="214" y="180" font-size="27" font-weight="800" fill="#8F94AA" text-anchor="middle">이전 0.6098</text></g>
+        <g class="mv" style="--fx:-82px;--d:2.6s;--dur:1.2s"><g data-a="pop" style="--d:2.4s"><circle cx="296" cy="230" r="20" fill="#5B67E8"/><text x="296" y="350" font-size="62" font-weight="800" fill="#5B67E8" text-anchor="middle">0.6564</text></g></g>
+        <g data-a="pop" style="--d:3.9s"><rect x="110" y="390" width="380" height="56" rx="14" fill="#E9ECFF"/><text x="300" y="428" font-size="28" font-weight="800" fill="#5B67E8" text-anchor="middle">+0.047 · 구간 0.037~0.056</text></g>
+      </svg>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.85s">멜론 플레이리스트 11.5만 개 · 정답 쌍 17.9만 · 한국곡도 0.656</div>
+  <div class="concl" data-a="fu" style="--d:4.3s">멜론 플레이리스트 11.5만 개로 채점하고, 한국곡만 따로 봐도 0.656이 나온 결과</div>
   <div class="pnum">14</div>
 </section>
 
-<!-- ================= S15 ================= -->
+<!-- ================= S15 : 합격선 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">합격선은 결과를 <span class="acc">보기 전에</span> 정했다</h2>
   </div>
-  <div class="gate" style="margin-top:6px">
-    <div class="g1 o" data-a="fu" style="--d:.22s">G1 원안</div><div class="g2" data-a="fu" style="--d:.22s">절대 점수</div><div class="g3" data-a="fu" style="--d:.22s">0.6458</div><div class="g4" data-a="fu" style="--d:.22s">≥ 0.654</div><div class="g5" data-a="fu" style="--d:.22s"><span class="badge fail">FAIL</span></div>
-    <div class="g1" data-a="fu" style="--d:.30s">G1p</div><div class="g2" data-a="fu" style="--d:.30s">이전 지도 대비</div><div class="g3" data-a="fu" style="--d:.30s">+0.0466</div><div class="g4" data-a="fu" style="--d:.30s">≥ −0.01</div><div class="g5" data-a="fu" style="--d:.30s"><span class="badge pass">PASS</span></div>
-    <div class="g1" data-a="fu" style="--d:.38s">G1pp</div><div class="g2" data-a="fu" style="--d:.38s">절대 바닥</div><div class="g3" data-a="fu" style="--d:.38s">0.6458</div><div class="g4" data-a="fu" style="--d:.38s">≥ 0.60</div><div class="g5" data-a="fu" style="--d:.38s"><span class="badge pass">PASS</span></div>
-    <div class="g1" data-a="fu" style="--d:.46s">G2</div><div class="g2" data-a="fu" style="--d:.46s">10곡 안 정답 ÷ 우연</div><div class="g3" data-a="fu" style="--d:.46s">21.55×</div><div class="g4" data-a="fu" style="--d:.46s">≥ 3×</div><div class="g5" data-a="fu" style="--d:.46s"><span class="badge pass">PASS</span></div>
-    <div class="g1" data-a="fu" style="--d:.54s">G3</div><div class="g2" data-a="fu" style="--d:.54s">정답 라벨 섞기</div><div class="g3" data-a="fu" style="--d:.54s">0.4965</div><div class="g4" data-a="fu" style="--d:.54s">0.48 ~ 0.52</div><div class="g5" data-a="fu" style="--d:.54s"><span class="badge pass">PASS</span></div>
-    <div class="g1" data-a="fu" style="--d:.62s">G4</div><div class="g2" data-a="fu" style="--d:.62s">같은 동네 동거율</div><div class="g3" data-a="fu" style="--d:.62s">4.44×</div><div class="g4" data-a="fu" style="--d:.62s">&gt; 1 · 단조 증가</div><div class="g5" data-a="fu" style="--d:.62s"><span class="badge pass">PASS</span></div>
+  <div data-nofill>
+  <div class="tl3">
+    <div class="ln" data-a="fi" style="--d:.6s"></div>
+    <div class="st" data-a="pop" style="--d:.3s"><svg viewBox="0 0 74 74"><circle cx="37" cy="37" r="35" fill="#5B67E8"/><rect x="22" y="34" width="30" height="22" rx="4" fill="#fff"/><path d="M28 34v-6a9 9 0 0118 0v6" stroke="#fff" stroke-width="5" fill="none"/></svg><span>① 기준 먼저 고정</span></div>
+    <div class="st" data-a="pop" style="--d:.8s"><svg viewBox="0 0 74 74"><circle cx="37" cy="37" r="35" fill="#98A4FF"/><path d="M28 18h18M31 18v16L20 56h34L43 34V18" stroke="#fff" stroke-width="5" fill="none" stroke-linejoin="round"/></svg><span>② 실험</span></div>
+    <div class="st" data-a="pop" style="--d:1.3s"><svg viewBox="0 0 74 74"><circle cx="37" cy="37" r="35" fill="#22243A"/><circle cx="33" cy="33" r="13" stroke="#fff" stroke-width="5" fill="none"/><path d="M43 43l12 12" stroke="#fff" stroke-width="6" stroke-linecap="round"/></svg><span>③ 결과 확인</span></div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.85s">원안 실패도 숨기지 않고 기록 · 더 공정한 "이전 대비" 기준으로 통과</div>
+  <div class="gate">
+    <div class="g1 o" data-a="fu" style="--d:1.7s">G1 원안</div><div class="g2" data-a="fu" style="--d:1.7s">절대 점수</div><div class="g3" data-a="fu" style="--d:1.7s">0.6458</div><div class="g4" data-a="fu" style="--d:1.7s">≥ 0.654</div><div class="g5" data-a="fu" style="--d:1.7s"><span class="badge fail" data-a="stamp" style="--d:2.2s">FAIL</span></div>
+    <div class="g1" data-a="fu" style="--d:1.8s">G1p</div><div class="g2" data-a="fu" style="--d:1.8s">이전 지도 대비</div><div class="g3" data-a="fu" style="--d:1.8s">+0.0466</div><div class="g4" data-a="fu" style="--d:1.8s">≥ −0.01</div><div class="g5" data-a="fu" style="--d:1.8s"><span class="badge pass" data-a="stamp" style="--d:2.45s">PASS</span></div>
+    <div class="g1" data-a="fu" style="--d:1.9s">G1pp</div><div class="g2" data-a="fu" style="--d:1.9s">절대 바닥</div><div class="g3" data-a="fu" style="--d:1.9s">0.6458</div><div class="g4" data-a="fu" style="--d:1.9s">≥ 0.60</div><div class="g5" data-a="fu" style="--d:1.9s"><span class="badge pass" data-a="stamp" style="--d:2.7s">PASS</span></div>
+    <div class="g1" data-a="fu" style="--d:2s">G2</div><div class="g2" data-a="fu" style="--d:2s">10곡 안 정답 ÷ 우연</div><div class="g3" data-a="fu" style="--d:2s">21.55×</div><div class="g4" data-a="fu" style="--d:2s">≥ 3×</div><div class="g5" data-a="fu" style="--d:2s"><span class="badge pass" data-a="stamp" style="--d:2.95s">PASS</span></div>
+    <div class="g1" data-a="fu" style="--d:2.1s">G3</div><div class="g2" data-a="fu" style="--d:2.1s">정답 라벨 섞기</div><div class="g3" data-a="fu" style="--d:2.1s">0.4965</div><div class="g4" data-a="fu" style="--d:2.1s">0.48 ~ 0.52</div><div class="g5" data-a="fu" style="--d:2.1s"><span class="badge pass" data-a="stamp" style="--d:3.2s">PASS</span></div>
+    <div class="g1" data-a="fu" style="--d:2.2s">G4</div><div class="g2" data-a="fu" style="--d:2.2s">같은 동네 동거율</div><div class="g3" data-a="fu" style="--d:2.2s">4.44×</div><div class="g4" data-a="fu" style="--d:2.2s">&gt; 1 · 단조 증가</div><div class="g5" data-a="fu" style="--d:2.2s"><span class="badge pass" data-a="stamp" style="--d:3.45s">PASS</span></div>
+  </div>
+  </div>
+  <div class="concl" data-a="fu" style="--d:3.8s">원안 실패도 숨기지 않고 기록하고, 더 공정한 이전 대비 기준으로 통과한 결과</div>
   <div class="pnum">15</div>
 </section>
 
-<!-- ================= S16 ================= -->
+<!-- ================= S16 : 신곡 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">신곡은 기존 지도를 건드리지 않고 <span class="acc">뒤에 붙인다</span></h2>
   </div>
-  <div class="fill" style="display:grid">
-  <div class="hflow" style="grid-template-columns:260px 60px 300px 60px 1fr 60px 420px">
+  <div data-nofill>
+  <div class="hflow" style="grid-template-columns:240px 60px 280px 60px 1fr 60px 380px">
     <div data-a="fu" style="--d:.24s"><div class="bx">음원</div><div class="sub">개인 PC</div></div>
-    <div class="ar" data-a="fi" style="--d:.3s"></div>
-    <div data-a="fu" style="--d:.34s"><div class="bx">분석기<br>(beta2)</div><div class="sub">숫자 JSON만</div></div>
     <div class="ar" data-a="fi" style="--d:.4s"></div>
-    <div data-a="fu" style="--d:.44s"><div class="bx ind">S1.5 → S2 → S3 → S5</div><div class="sub">얼린 기준 그대로</div></div>
-    <div class="ar" data-a="fi" style="--d:.5s"></div>
-    <div data-a="fu" style="--d:.54s"><div class="bx">DB 뒤에 추가</div><div class="sub">id 4,694,203부터</div></div>
+    <div data-a="fu" style="--d:.5s"><div class="bx">분석기 (beta2)</div><div class="sub">숫자 JSON만</div></div>
+    <div class="ar" data-a="fi" style="--d:.7s"></div>
+    <div data-a="fu" style="--d:.8s"><div class="bx ind">S1.5 → S2 → S3 → S5</div><div class="sub">얼린 기준 그대로</div></div>
+    <div class="ar" data-a="fi" style="--d:1s"></div>
+    <div data-a="fu" style="--d:1.1s"><div class="bx">DB 뒤에 추가</div><div class="sub">id 4,694,203부터</div></div>
   </div>
-  <div class="cards c3" style="margin-top:60px">
-    <div class="card stat" data-a="fu" style="--d:.7s"><div class="n">84곡</div><div class="l">9월 23일 운영 반영</div></div>
-    <div class="card stat" data-a="fu" style="--d:.8s"><div class="n k">그대로</div><div class="l">기존 곡 좌표 · id</div></div>
-    <div class="card stat" data-a="fu" style="--d:.9s"><div class="n">2.0e-07</div><div class="l">클러스터 vs 로컬 좌표 차</div></div>
+  <div class="card" data-a="fu" style="--d:1.4s;margin-top:40px;padding:26px 34px">
+    <div style="display:flex;justify-content:space-between;font-size:28px;font-weight:800;margin-bottom:6px"><span style="color:var(--ink2)">기존 469만 곡 · 좌표 · id 그대로 🔒</span><span class="acc" data-a="fi" style="--d:2.4s">+ 신곡 84 (9월 23일)</span></div>
+    <div class="dbs" id="s16-db"></div>
+  </div>
+  <div class="cards c2" style="margin-top:26px">
+    <div class="card stat" data-a="fu" style="--d:3.2s;padding:28px"><div class="n k">그대로</div><div class="l">기존 곡 좌표 · id</div></div>
+    <div class="card stat" data-a="fu" style="--d:3.35s;padding:28px"><div class="n">2.0e-07</div><div class="l">클러스터 vs 로컬 좌표 차</div></div>
   </div>
   </div>
+  <div class="concl" data-a="fu" style="--d:3.7s">얼려 둔 기준으로 신곡만 계산해 뒤에 붙이기 때문에, 기존 곡은 하나도 안 움직이는 구조</div>
   <div class="pnum">16</div>
 </section>
 
-<!-- ================= S17 ================= -->
+<!-- ================= S17 : 저장소 ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">저장소는 둘: <span class="acc">잃으면 안 되는 것</span> / 지금 상태</h2>
   </div>
-  <div class="cards c2 store fill" style="min-height:560px">
+  <div class="store" data-nofill>
     <div class="card pg" data-a="fl" style="--d:.25s">
-      <div class="t">PostgreSQL + pgvector</div>
-      <div class="s">디스크 · 영구 · 곡 좌표 검색까지 한 곳</div>
-      <div class="its"><div class="it">곡 469만 + 좌표</div><div class="it">첫 화면 표본</div><div class="it">사용자</div><div class="it">재생 기록</div><div class="it">만남 횟수</div><div class="it">별자리 작품</div></div>
+      <div class="hd"><svg viewBox="0 0 96 96"><ellipse cx="48" cy="20" rx="36" ry="12" fill="#E9ECFF" stroke="#5B67E8" stroke-width="5"/><path d="M12 20v56c0 6.6 16 12 36 12s36-5.4 36-12V20M12 48c0 6.6 16 12 36 12s36-5.4 36-12" fill="none" stroke="#5B67E8" stroke-width="5"/></svg>
+        <div><div class="t">PostgreSQL + pgvector</div><div class="s">디스크 · 영구 보관</div></div></div>
+      <div class="its"><div class="it" data-a="pop" style="--d:.6s">곡 469만 + 좌표</div><div class="it" data-a="pop" style="--d:.7s">첫 화면 표본</div><div class="it" data-a="pop" style="--d:.8s">사용자</div><div class="it" data-a="pop" style="--d:.9s">재생 기록</div><div class="it" data-a="pop" style="--d:1s">만남 횟수</div><div class="it" data-a="pop" style="--d:1.1s">별자리 작품</div></div>
     </div>
-    <div class="card rd" data-a="fr" style="--d:.35s">
-      <div class="t">Redis</div>
-      <div class="s">메모리 · 빠름 · 유통기한으로 자동 삭제</div>
-      <div class="its"><div class="it">누가 어느 칸</div><div class="it">칸별 사람</div><div class="it">따라가기 명단</div><div class="it">재생 위치</div><div class="it">쿨다운</div><div class="it">로그인 토큰</div></div>
+    <div class="card rd" data-a="fr" style="--d:.45s">
+      <div class="hd"><svg viewBox="0 0 96 96"><rect x="16" y="16" width="64" height="64" rx="10" fill="#EFE8FC" stroke="#8A5FE0" stroke-width="5"/><path d="M30 6v10M48 6v10M66 6v10M30 80v10M48 80v10M66 80v10M6 30h10M6 48h10M6 66h10M80 30h10M80 48h10M80 66h10" stroke="#8A5FE0" stroke-width="5" stroke-linecap="round"/><path d="M52 28L36 52h12l-4 18 16-26H48z" fill="#8A5FE0"/></svg>
+        <div><div class="t">Redis</div><div class="s">메모리 · 빠름 · 시간 지나면 자동 삭제</div></div></div>
+      <div class="its"><div class="it" data-a="pop" style="--d:1.3s;--p:4s">누가 어느 칸</div><div class="it" data-a="pop" style="--d:1.4s;--p:6s">칸별 사람</div><div class="it" data-a="pop" style="--d:1.5s;--p:5s">따라가기 명단</div><div class="it" data-a="pop" style="--d:1.6s;--p:3s">재생 위치</div><div class="it" data-a="pop" style="--d:1.7s;--p:7s">쿨다운</div><div class="it" data-a="pop" style="--d:1.8s;--p:8s">로그인 토큰</div></div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.7s">Redis가 날아가도 다시 접속하면 복구 · 곡과 기록은 PostgreSQL에</div>
+  <div class="concl" data-a="fu" style="--d:2.2s">Redis가 날아가도 다시 접속하면 복구되고, 곡과 기록은 PostgreSQL에 남는 구조</div>
   <div class="pnum">17</div>
 </section>
 
-<!-- ================= S18 ================= -->
+<!-- ================= S18 : pgvector ================= -->
 <section class="slide">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 도메인</div>
     <h2 class="title" data-a="fu" style="--d:.1s">pgvector를 고른 이유는 속도가 아니라 <span class="acc">단순함</span></h2>
   </div>
-  <div class="cmptbl" style="grid-template-columns:280px 1fr 1fr 1fr;--d:.25s" data-a="fu">
-    <div class="h"></div><div class="h">numpy 별도 서버</div><div class="h pick">pgvector (채택)</div><div class="h">Neo4j</div>
-    <div class="lb">가까운 곡 조회</div><div>1.8ms</div><div class="pick">2.24ms</div><div>2.9ms</div>
-    <div class="lb">정확도</div><div>0.912</div><div class="pick">0.9995</div><div>—</div>
-    <div class="lb">저장 용량</div><div>1.1GB</div><div class="pick">약 3.7GB</div><div>5.7~15GB</div>
-    <div class="lb">서버 추가</div><div>1대</div><div class="pick">없음</div><div>없음</div>
-    <div class="lb">사용자 데이터와 조인</div><div>불가</div><div class="pick">가능</div><div>가능</div>
+  <div class="cmptbl" style="grid-template-columns:300px 1fr 1fr 1fr" data-nofill>
+    <div class="h"></div><div class="h" data-a="fd" style="--d:.2s">numpy 별도 서버</div><div class="h pick" data-a="fd" style="--d:.2s">pgvector (채택)</div><div class="h" data-a="fd" style="--d:.2s">Neo4j</div>
+    <div class="lb" data-a="fl" style="--d:.4s">가까운 곡 조회</div><div data-a="fu" style="--d:.45s">1.8ms</div><div class="pick" data-a="fu" style="--d:.5s">2.24ms</div><div data-a="fu" style="--d:.55s">2.9ms</div>
+    <div class="lb" data-a="fl" style="--d:.7s">정확도</div><div data-a="fu" style="--d:.75s">0.912</div><div class="pick" data-a="fu" style="--d:.8s">0.9995</div><div data-a="fu" style="--d:.85s">—</div>
+    <div class="lb" data-a="fl" style="--d:1s">저장 용량</div><div data-a="fu" style="--d:1.05s">1.1GB</div><div class="pick" data-a="fu" style="--d:1.1s">약 3.7GB</div><div data-a="fu" style="--d:1.15s">5.7~15GB</div>
+    <div class="lb" data-a="fl" style="--d:1.3s">서버 추가</div><div data-a="fu" style="--d:1.35s">1대</div><div class="pick" data-a="pop" style="--d:1.4s">없음</div><div data-a="fu" style="--d:1.45s">없음</div>
+    <div class="lb" data-a="fl" style="--d:1.6s">사용자 데이터와 조인</div><div data-a="fu" style="--d:1.65s">불가</div><div class="pick" data-a="pop" style="--d:1.7s">가능</div><div data-a="fu" style="--d:1.75s">가능</div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.7s">이미 설치된 DB 하나로 끝 · 여정도 좌표 계산이라 그래프 DB 불필요</div>
+  <div class="concl" data-a="fu" style="--d:2.1s">이미 설치된 DB 하나로 끝나고, 여정도 좌표 계산이라 그래프 DB가 필요 없는 선택</div>
   <div class="pnum">18</div>
 </section>
 
@@ -628,70 +780,155 @@
 
 <script src="assets/deck.js"></script>
 <script>
-// S7 · 축별 설명분산 막대
 (function(){
-  const g=document.getElementById('s7-bars'); if(!g) return;
-  const v=[16.9,15.1,6.3,5.0,4.8,3.8,3.2,2.2,2.1,1.8,1.7,1.5,1.5,1.4,1.4,1.3];
-  const W=1100,pad=24,bw=42,gap=(W-2*pad-16*bw)/15,base=460,sc=(base-70)/17;
-  let h='';
-  v.forEach((x,i)=>{
-    const X=pad+i*(bw+gap),hh=x*sc;
-    h+='<rect x="'+X+'" y="'+(base-hh)+'" width="'+bw+'" height="'+hh+'" rx="7" fill="'+(i<2?'#5B67E8':'#98A4FF')+'" data-a="fu" style="--d:'+(0.35+i*0.04)+'s"/>';
-    h+='<text x="'+(X+bw/2)+'" y="'+(base-hh-12)+'" text-anchor="middle" font-size="21" font-weight="700" fill="#22243A">'+x+'</text>';
-    h+='<text x="'+(X+bw/2)+'" y="'+(base+32)+'" text-anchor="middle" font-size="19" font-weight="600" fill="#5F6480">PC'+(i+1)+'</text>';
-  });
-  g.innerHTML=h;
-})();
+  const $=id=>document.getElementById(id);
 
-// S9 · 겹 산점도
-(function(){
-  const cols=['#5B67E8','#F09D6B','#2AA38B','#8A5FE0'];
-  function dots(id,seed,n,opt){
-    const g=document.getElementById(id); if(!g) return;
-    const r=ODY.rng(seed); let h='';
-    for(let i=0;i<n;i++){
-      const x=30+r()*420,y=30+r()*340;
-      const inside=Math.hypot(x-240,y-200)<70;
-      let c='#C8CBD8',rad=6;
-      if(opt==='gray'){ if(inside){c=cols[Math.floor(r()*4)];rad=7;} }
-      else { c=cols[Math.floor(r()*4)]; rad=opt==='sparse'?8:7; }
-      h+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+rad+'" fill="'+c+'" opacity=".9"/>';
+  // S2 · 규칙 막대 (걸린 곡 수, 제곱근 눈금)
+  (function(){
+    const m=$('s2-rules'); if(!m) return;
+    const R=[['R1','길이 60초~6분 밖',109.6],['R5','같은 녹음',47.1],['R6','같은 버전 (표기만 다름)',39.2],['R16','제목 속 비음악 단어',7.4],['R17','가수 불명',6.2],['R10','제목 잡음 (Track 1)',3.4],['R12','낭독 · 현장 녹음',2.3],['R15','소리가 안 변함',1.6],
+             ['R7','44.1kHz 미만',1.3],['R3','제목 · 가수 없음',1.1],['R2','비음악 태그',1.0],['R13','오디오북',0.9],['R8','사실상 무음',0.7],['R9','깨진 파일',0.4],['R11','테스트 톤',0.0211],['R4','분석기 버전 밖',0]];
+    const fmt=v=>v===0?'0':v<0.1?Math.round(v*1e4)+'곡':v+'만';
+    let h=['',''];
+    R.forEach((r,i)=>{
+      const w=Math.sqrt(r[2]/109.6)*100, d=(0.3+i*0.07).toFixed(2);
+      h[i<8?0:1]+='<div class="rr'+(i<3?' hi':'')+'" data-a="fu" style="--d:'+d+'s"><span class="id">'+r[0]+'</span><span class="l">'+r[1]+'</span><span class="t"><i class="growx" style="width:'+w.toFixed(1)+'%;--d:'+(+d+0.15).toFixed(2)+'s"></i></span><span class="n">'+fmt(r[2])+'</span></div>';
+    });
+    m.innerHTML='<div>'+h[0]+'</div><div>'+h[1]+'</div>';
+  })();
+
+  // S5 · 소리 → 숫자 줄
+  (function(){
+    const g=$('s5-strip'); if(!g) return;
+    const r=ODY.rng(55); let p='M0 75';
+    for(let x=4;x<=330;x+=4){ p+='L'+x+' '+(75+Math.sin(x/9)*(14+r()*42)*(r()<.5?-1:1)).toFixed(1); }
+    let h='<path d="'+p+'" stroke="#8A5FE0" stroke-width="3.5" fill="none" data-draw style="--len:1400;--d:.25s"/>';
+    h+='<text x="165" y="146" font-size="26" font-weight="700" fill="#5F6480" text-anchor="middle" data-a="fi" style="--d:.3s">소리</text>';
+    const code=(x0,w,n,col,d,lab,big)=>{
+      let s='<g data-a="pop" style="--d:'+d+'s">';
+      for(let i=0;i<n;i++){ const hh=24+r()*76; s+='<rect x="'+(x0+i*w/n).toFixed(1)+'" y="'+(110-hh).toFixed(1)+'" width="'+Math.max(2,w/n*.55).toFixed(1)+'" height="'+hh.toFixed(1)+'" fill="'+col+'"/>'; }
+      return s+'<text x="'+(x0+w/2)+'" y="146" font-size="'+(big?30:26)+'" font-weight="800" fill="'+(big?'#5B67E8':'#5F6480')+'" text-anchor="middle">'+lab+'</text></g>';
+    };
+    const arr=(x,d)=>'<path d="M'+x+' 62h44M'+(x+34)+' 52l12 10-12 10" stroke="#C8CCDA" stroke-width="4" fill="none" data-a="fi" style="--d:'+d+'s"/>';
+    h+=arr(360,.7)+code(440,360,140,'#C8CBD8',.8,'2,900개')+arr(830,1)+code(910,300,48,'#98A4FF',1.1,'389개')+arr(1240,1.3)+code(1320,300,27,'#5B67E8',1.4,'270개',1);
+    g.innerHTML=h;
+  })();
+
+  // S7 · 축별 설명분산
+  (function(){
+    const g=$('s7-bars'); if(!g) return;
+    const v=[16.9,15.1,6.3,5.0,4.8,3.8,3.2,2.2,2.1,1.8,1.7,1.5,1.5,1.4,1.4,1.3];
+    const W=1100,pad=24,bw=44,gap=(W-2*pad-16*bw)/15,base=470,sc=(base-60)/17;
+    let h='<text x="0" y="28" font-size="26" font-weight="700" fill="#5F6480">축 하나가 담은 정보 (%)</text>';
+    v.forEach((x,i)=>{
+      const X=pad+i*(bw+gap),hh=x*sc,d=0.35+i*0.06;
+      h+='<rect x="'+X+'" y="'+(base-hh)+'" width="'+bw+'" height="'+hh+'" rx="7" fill="'+(i<2?'#5B67E8':'#98A4FF')+'" class="growy" style="--d:'+d.toFixed(2)+'s"/>';
+      h+='<text x="'+(X+bw/2)+'" y="'+(base-hh-12)+'" text-anchor="middle" font-size="23" font-weight="800" fill="#22243A" data-a="fi" style="--d:'+(d+.4).toFixed(2)+'s">'+x+'</text>';
+      h+='<text x="'+(X+bw/2)+'" y="'+(base+36)+'" text-anchor="middle" font-size="23" font-weight="700" fill="#5F6480">'+(i+1)+'</text>';
+    });
+    g.innerHTML=h;
+  })();
+
+  // S8 · 지도 위 곡 점
+  (function(){
+    const g=$('s8-dots'); if(!g) return;
+    const r=ODY.rng(88),cols=['#98A4FF','#B79BF0','#7FD6C4','#F5B98F']; let h='';
+    for(let i=0;i<70;i++){
+      const x=90+r()*820,y=70+r()*460;
+      if(Math.abs(y-300)<26||Math.abs(x-500)<20||(y>310&&y<392&&(x<330||x>670))||((y<72||y>540)&&x>480&&x<820)||(Math.abs(y-139)<30&&x>250&&x<490)||(Math.abs(y-261)<30&&x>680)) continue;
+      h+='<circle cx="'+x.toFixed(0)+'" cy="'+y.toFixed(0)+'" r="'+(5+r()*4).toFixed(1)+'" fill="'+cols[i%4]+'" opacity=".75" data-a="pop" style="--d:'+(0.9+r()*0.8).toFixed(2)+'s"/>';
     }
     g.innerHTML=h;
-  }
-  dots('s9-a',31,60,'gray');
-  dots('s9-b',32,26,'color');
-  dots('s9-c',33,10,'sparse');
-})();
+  })();
 
-// S10 · 밀도 비례 표본 격자
-(function(){
-  const m=document.getElementById('s10-map'); if(!m) return;
-  const r=ODY.rng(77); let h='';
-  for(let i=0;i<84;i++){
-    const cx=(i%12)-5.5, cy=Math.floor(i/12)-3;
-    const d=Math.exp(-(cx*cx/12+cy*cy/5))*60*(0.5+r());
-    const n=Math.min(6,Math.round(Math.cbrt(d)));
-    let dots='';
-    for(let k=0;k<n;k++) dots+='<i style="left:'+(10+r()*72).toFixed(0)+'%;top:'+(10+r()*72).toFixed(0)+'%"></i>';
-    h+='<div class="c'+(d>25?' dense':'')+'">'+dots+'</div>';
-  }
-  m.innerHTML=h;
-})();
+  // S9 · 겹 산점도
+  (function(){
+    const cols=['#5B67E8','#F09D6B','#2AA38B','#8A5FE0'];
+    function dots(id,seed,n,opt,d0){
+      const g=$(id); if(!g) return;
+      const r=ODY.rng(seed); let h='';
+      for(let i=0;i<n;i++){
+        const x=30+r()*420,y=30+r()*340;
+        const inside=Math.hypot(x-240,y-200)<70;
+        let c='#C8CBD8',rad=7,d=d0+r()*.5;
+        if(opt==='gray'){ if(inside){c=cols[Math.floor(r()*4)];rad=9;d=d0+1.1;} }
+        else { c=cols[Math.floor(r()*4)]; rad=opt==='sparse'?10:8; }
+        h+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+rad+'" fill="'+c+'" opacity=".9" data-a="pop" style="--d:'+d.toFixed(2)+'s"/>';
+      }
+      g.innerHTML=h;
+    }
+    dots('s9-a',31,60,'gray',.35);
+    dots('s9-b',32,26,'color',1.9);
+    dots('s9-c',33,10,'sparse',3.4);
+  })();
 
-// S14 · AUC 히스토그램
-(function(){
-  const g=document.getElementById('s14-h'); if(!g) return;
-  const A=[6,14,30,58,72,60,42,26,14,8,4,2];       // 정답 쌍 (가까움)
-  const B=[2,4,8,16,30,48,62,60,46,28,14,6];       // 오답 쌍
-  const W=1000,base=340,bw=32,grp=80,x0=24;
-  let h='<line x1="10" y1="'+base+'" x2="'+(W-10)+'" y2="'+base+'" stroke="#E3E5EF" stroke-width="2"/>';
-  for(let i=0;i<12;i++){
-    const X=x0+i*grp;
-    h+='<rect x="'+X+'" y="'+(base-A[i]*4)+'" width="'+bw+'" height="'+(A[i]*4)+'" rx="5" fill="#5B67E8" data-a="fu" style="--d:'+(0.4+i*0.03)+'s"/>';
-    h+='<rect x="'+(X+bw+4)+'" y="'+(base-B[i]*4)+'" width="'+bw+'" height="'+(B[i]*4)+'" rx="5" fill="#C8CBD8" data-a="fu" style="--d:'+(0.45+i*0.03)+'s"/>';
-  }
-  g.innerHTML=h;
+  // S10 · 밀도 비례 표본 격자 + 비교 미니 지도
+  (function(){
+    const m=$('s10-map'); if(!m) return;
+    const r=ODY.rng(77); let h='';
+    for(let i=0;i<84;i++){
+      const cx=(i%12)-5.5, cy=Math.floor(i/12)-3;
+      const d=Math.exp(-(cx*cx/12+cy*cy/5))*60*(0.5+r());
+      const n=Math.min(6,Math.round(Math.cbrt(d)));
+      let dots='';
+      for(let k=0;k<n;k++) dots+='<i data-a="pop" style="left:'+(10+r()*72).toFixed(0)+'%;top:'+(10+r()*72).toFixed(0)+'%;--d:'+(0.5+r()*1.1).toFixed(2)+'s"></i>';
+      h+='<div class="c'+(d>25?' dense':'')+'">'+dots+'</div>';
+    }
+    m.innerHTML=h;
+    const mini=(id,grid)=>{
+      const g=$(id); if(!g) return; let s='';
+      for(let y=0;y<4;y++)for(let x=0;x<6;x++){
+        s+='<rect x="'+(6+x*48)+'" y="'+(4+y*40)+'" width="44" height="36" rx="6" fill="#F4F5F9" stroke="#E3E5EF"/>';
+        const k=grid?1:1+Math.floor(r()*3);
+        for(let j=0;j<k;j++){ const px=grid?28:10+r()*28, py=grid?22:8+r()*24;
+          s+='<circle cx="'+(6+x*48+px).toFixed(0)+'" cy="'+(4+y*40+py).toFixed(0)+'" r="5" fill="'+(grid?'#DD7A3B':'#5B67E8')+'" data-a="pop" style="--d:'+(2.9+(y*6+x)*.03).toFixed(2)+'s"/>'; }
+      }
+      g.innerHTML=s;
+    };
+    mini('s10-g1',1); mini('s10-g2',0);
+  })();
+
+  // S11 · 단계 ↔ HDFS 화살표
+  (function(){
+    const m=$('s11-con'); if(!m) return; let h='';
+    for(let i=0;i<8;i++) h+='<svg viewBox="0 0 26 56" class="pulse" style="--d:'+(1.2+i*.12).toFixed(2)+'s"><path d="M13 4v48M5 14l8-10 8 10M5 42l8 10 8-10" stroke="#98A4FF" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>';
+    m.innerHTML=h;
+  })();
+
+  // S13 · 같은 점 배치 두 벌
+  (function(){
+    const L=$('s13-l'),Rg=$('s13-r'); if(!L) return;
+    const r=ODY.rng(131); let a='',b='';
+    for(let i=0;i<24;i++){
+      const x=720+r()*220,y=50+r()*180;
+      a+='<circle cx="'+x.toFixed(0)+'" cy="'+y.toFixed(0)+'" r="8" fill="#5B67E8"/>';
+      b+='<circle cx="'+x.toFixed(0)+'" cy="'+y.toFixed(0)+'" r="13" fill="none" stroke="#F09D6B" stroke-width="3.5"/>';
+    }
+    L.innerHTML=a; Rg.innerHTML=b;
+  })();
+
+  // S14 · AUC 히스토그램
+  (function(){
+    const g=$('s14-h'); if(!g) return;
+    const A=[6,14,30,58,72,60,42,26,14,8,4,2];
+    const B=[2,4,8,16,30,48,62,60,46,28,14,6];
+    const base=340,bw=32,grp=80,x0=24;
+    let h='<line x1="10" y1="'+base+'" x2="990" y2="'+base+'" stroke="#E3E5EF" stroke-width="2"/>';
+    for(let i=0;i<12;i++){
+      const X=x0+i*grp;
+      h+='<rect x="'+X+'" y="'+(base-A[i]*4)+'" width="'+bw+'" height="'+(A[i]*4)+'" rx="5" fill="#5B67E8" class="growy" style="--d:'+(0.4+i*0.05).toFixed(2)+'s"/>';
+      h+='<rect x="'+(X+bw+4)+'" y="'+(base-B[i]*4)+'" width="'+bw+'" height="'+(B[i]*4)+'" rx="5" fill="#C8CBD8" class="growy" style="--d:'+(0.7+i*0.05).toFixed(2)+'s"/>';
+    }
+    g.innerHTML=h;
+  })();
+
+  // S16 · DB 줄 끝에 신곡 붙이기
+  (function(){
+    const m=$('s16-db'); if(!m) return; let h='';
+    for(let i=0;i<34;i++) h+='<i data-a="fi" style="--d:'+(1.6+i*.012).toFixed(2)+'s"></i>';
+    for(let i=0;i<6;i++) h+='<i class="n" data-a="fr" style="--d:'+(2.5+i*.12).toFixed(2)+'s"></i>';
+    m.innerHTML=h;
+  })();
 })();
 
 ODY.initDeck({backHref:'index.html#domain'});

@@ -27,24 +27,26 @@
     }
   })();
 
-  /* ---------- S4 : HNSW 레이어 점 ---------- */
+  /* ---------- 주변 탐색 2 : 목차로 근처 200곡 모으기 ---------- */
   (function () {
     const g = $('s4-dots');
     if (!g) return;
-    const r = R(409);
-    const layers = [[110, 6], [250, 12], [390, 26]];
-    layers.forEach(function (L, li) {
-      const yb = L[0], n = L[1];
-      for (let i = 0; i < n; i++) {
-        const t = r();
-        const x = 90 + t * 640;
-        const y = yb - t * 46 + (r() - 0.5) * 30;
-        const c = svg('circle', {cx:x.toFixed(1), cy:y.toFixed(1), r:(4 + r() * 2.5).toFixed(1), fill:'#A8ACC0'});
-        c.setAttribute('data-a', 'fi');
-        c.style.setProperty('--d', (0.35 + li * 0.12).toFixed(2) + 's');
-        g.appendChild(c);
+    const r = R(409), cx = 280, cy = 270, RAD = 120;
+    for (let i = 0; i < 120; i++) {
+      const x = 30 + r() * 500, y = 76 + r() * 316;
+      const d = Math.hypot(x - cx, y - cy);
+      if (d < 34) continue;
+      const c = svg('circle', {cx:x.toFixed(1), cy:y.toFixed(1), r:'6', fill:'#C8CBD8'});
+      c.setAttribute('data-a', 'fi');
+      c.style.setProperty('--d', (0.5 + r() * 0.5).toFixed(2) + 's');
+      g.appendChild(c);
+      if (d < RAD - 6) {                       // 원 안: 퍼지는 원을 따라 차례로 켜짐
+        const on = svg('circle', {cx:x.toFixed(1), cy:y.toFixed(1), r:'7', fill:'#5B67E8'});
+        on.setAttribute('data-a', 'pop');
+        on.style.setProperty('--d', (1.3 + d / RAD * 1).toFixed(2) + 's');
+        g.appendChild(on);
       }
-    });
+    }
   })();
 
   /* ---------- S5 / S6 : 이웃 16곡 타일 ---------- */
@@ -94,39 +96,15 @@
   /* ---------- S4 / S5 : 흘러가는 목록 상자 ---------- */
   (function () {
     const cols = ['#5B67E8', '#B79BF0', '#2AA38B', '#4F8FE8', '#F5B971', '#98A4FF', '#7FD6C4'];
-    function scrollRows(seed, n) {
-      const r = R(seed); let html = '', i = 0, prev = null;
-      function row(k, col, w1, w2, cls, tag) {
-        return '<div class="pr' + (cls ? ' odd ' + cls : '') + '"><span class="rk">' + k + '</span><i class="dt' + (cls ? ' ' + cls : '') + '" style="--c:' + col + '"></i>' +
-          '<span class="bars"><i class="t" style="width:' + w1 + '%"></i><i class="a" style="width:' + w2 + '%"></i></span><span class="tg">' + (tag || '') + '</span></div>';
+    const b = $('sc-b');
+    if (b) {                                  // 근처 200곡: 가까운 순 그대로, 표시 없이
+      const r = R(505); let h = '';
+      for (let k = 1; k <= 40; k++) {
+        const c = cols[Math.floor(r() * cols.length)], w1 = (45 + r() * 45) | 0, w2 = (25 + r() * 35) | 0;
+        h += '<div class="pr"><span class="rk">' + k + '</span><i class="dt" style="--c:' + c + '"></i><span class="bars"><i class="t" style="width:' + w1 + '%"></i><i class="a" style="width:' + w2 + '%"></i></span></div>';
       }
-      // 고정 패턴 (24행 주기, 회색 10행) — 어느 시점에 보이는 창(≈11행)에도 세 종류가 다 들어가도록
-      const PAT = 'n d n R s n d R n s d n R s d';
-      const seq = PAT.split(' ');
-      let p = 0;
-      while (i < n) {
-        const t = seq[p++ % seq.length];
-        if (t === 'd' && prev) {                      // 같은 곡 다른 버전: 바로 위 행 복제
-          html += row(i + 1, prev.col, prev.w1, prev.w2, 'dup', '같은 녹음'); i++;
-        } else if (t === 'R') {                       // 한 가수 4연속
-          const c = cols[Math.floor(r() * cols.length)];
-          for (let k = 0; k < 4 && i < n; k++, i++) {
-            const w1 = (45 + r() * 45) | 0, w2 = (25 + r() * 35) | 0;
-            html += row(i + 1, c, w1, w2, k === 3 ? 'x' : '', k === 3 ? '같은 가수 4번째' : '');
-            prev = {col:c, w1:w1, w2:w2};
-          }
-        } else if (t === 's') {                       // 효과음
-          html += row(i + 1, '#8F94AA', 14, 10, 'sfx', '효과음'); i++;
-        } else {
-          const c = cols[Math.floor(r() * cols.length)], w1 = (45 + r() * 45) | 0, w2 = (25 + r() * 35) | 0;
-          html += row(i + 1, c, w1, w2, '', ''); prev = {col:c, w1:w1, w2:w2}; i++;
-        }
-      }
-      return html;
+      b.innerHTML = h + h;
     }
-    const a = $('sc-a'), b = $('sc-b');
-    if (a) { const h = scrollRows(505, 40); a.innerHTML = h + h; }   // 두 번 이어 붙여 무한 루프
-    if (b) { const h = scrollRows(505, 40); b.innerHTML = h + h; }
 
     /* S5 : 회색 아닌 행이 위에서부터 연보라로 켜지며 네모 10개가 찬다 */
     const sec = $('sl-filter'), box = $('sc-box'), grid = $('sq10'), cnt = $('sq-cnt');
@@ -151,7 +129,7 @@
     }
     function run() {
       reset();
-      for (let k = 0; k < 10; k++) timers.push(setTimeout(function () { pick(k); }, 700 + k * 330));
+      for (let k = 0; k < 10; k++) timers.push(setTimeout(function () { pick(k); }, 3500 + k * 330));
     }
     new MutationObserver(function () {
       if (sec.classList.contains('is-active')) run(); else reset();
@@ -291,50 +269,40 @@
     lattice($('s20-dp'), false, '#5B67E8');
   })();
 
-  /* ---------- S23 / S24 : 별자리 ---------- */
-  function constellation(g, pts, color, extra, seed) {
+  /* ---------- 여정 · 별자리 : 겹마다 다른 축(15) vs 1겹 축 고정(16) ---------- */
+  // 별 하나 → 다음 별까지 선 → 별 … 순서로 그려진다 (별자리 긋듯이). 패널마다 차례로.
+  function constellation(g, pts, color, t0, seed, x0) {
     if (!g) return;
     const r = R(seed);
-    for (let i = 0; i < 26; i++) g.appendChild(svg('circle', {cx:(g.dataset.x0*1 + r()*620).toFixed(0), cy:(40 + r()*380).toFixed(0), r:(1.6+r()*2.6).toFixed(1), fill:'#8F96C9', opacity:(.3+r()*.5).toFixed(2)}));
-    // 별 하나 → 다음 별까지 선 → 별 … 순서로 그려진다 (별자리 긋듯이)
-    // 오른쪽(+1곡 뒤)은 왼쪽이 다 그려지고 새 별이 뜬 다음에 그린다
-    const STEP = 0.15, T0 = extra ? 1.7 : 0.4;
+    for (let i = 0; i < 18; i++) g.appendChild(svg('circle', {cx:(x0 + 20 + r()*480).toFixed(0), cy:(90 + r()*340).toFixed(0), r:(1.6+r()*2.4).toFixed(1), fill:'#8F96C9', opacity:(.3+r()*.5).toFixed(2)}));
+    const STEP = 0.12;
     pts.forEach(function (q, i) {
-      const t = T0 + i * STEP;
+      const t = t0 + i * STEP, X = q[0] + x0, Y = q[1];
       const st = svg('g', {});
-      st.appendChild(svg('circle', {cx:q[0], cy:q[1], r:20, fill:color, opacity:.26}));
-      st.appendChild(svg('circle', {cx:q[0], cy:q[1], r:12, fill:color}));
+      st.appendChild(svg('circle', {cx:X, cy:Y, r:20, fill:color, opacity:.26}));
+      st.appendChild(svg('circle', {cx:X, cy:Y, r:12, fill:color}));
       st.setAttribute('data-a', 'fi'); st.style.setProperty('--d', t.toFixed(2) + 's'); st.style.animationDuration = '.12s';
       g.appendChild(st);
       if (i < pts.length - 1) {
         const n = pts[i + 1], len = Math.hypot(n[0] - q[0], n[1] - q[1]);
-        const ln = svg('line', {x1:q[0], y1:q[1], x2:n[0], y2:n[1], stroke:color, 'stroke-width':3});
+        const ln = svg('line', {x1:X, y1:Y, x2:n[0] + x0, y2:n[1], stroke:color, 'stroke-width':3});
         ln.setAttribute('data-draw', ''); ln.style.setProperty('--len', len.toFixed(0));
-        ln.style.setProperty('--d', (t + 0.05).toFixed(2) + 's'); ln.style.animationDuration = '.14s';
+        ln.style.setProperty('--d', (t + 0.05).toFixed(2) + 's'); ln.style.animationDuration = '.12s';
         g.appendChild(ln);
       }
     });
-    if (extra) {
-      const st = svg('g', {});
-      st.appendChild(svg('circle', {cx:extra[0], cy:extra[1], r:20, fill:'#fff', opacity:.2}));
-      st.appendChild(svg('circle', {cx:extra[0], cy:extra[1], r:12, fill:'#fff'}));
-      st.setAttribute('data-a', 'fi'); st.style.setProperty('--d', '1.4s');
-      g.appendChild(st);
-    }
   }
-  const SHAPE_A = [[110,300],[200,180],[300,225],[400,290],[350,370],[210,350]];
-  const SHAPE_B = [[110,300],[168,178],[228,262],[258,352],[352,205],[420,268]];
-  function shift(pts, dx) { return pts.map(function (p) { return [p[0] + dx, p[1]]; }); }
-  (function () {
-    const a = $('s23-a'), b = $('s23-b');
-    if (a) { a.dataset.x0 = 40; constellation(a, shift(SHAPE_A, 60), '#F09D6B', null, 1009); }
-    if (b) { b.dataset.x0 = 960; constellation(b, shift(SHAPE_B, 980), '#F09D6B', [1000, 352], 1013); }
-  })();
-  (function () {
-    const a = $('s24-a'), b = $('s24-b');
-    if (a) { a.dataset.x0 = 40; constellation(a, shift(SHAPE_A, 60), '#2AD3AE', null, 1009); }
-    if (b) { b.dataset.x0 = 960; constellation(b, shift(SHAPE_A, 980), '#2AD3AE', [1420, 355], 1013); }
-  })();
+  // 같은 곡 6개 — 축이 바뀌면 모양이 바뀐다 (패널 안 좌표, 가로 0~520)
+  const SHAPES = [
+    [[110,330],[190,190],[290,240],[390,300],[340,390],[200,370]],
+    [[120,250],[200,380],[300,330],[410,200],[300,150],[200,210]],
+    [[260,140],[150,260],[230,390],[330,300],[420,380],[380,190]]
+  ];
+  [0, 1, 2].forEach(function (k) {
+    const x0 = 30 + k * 553;
+    constellation($('s23-' + k), SHAPES[k], '#F09D6B', 0.5 + k * 0.9, 1009 + k, x0);
+    constellation($('s24-' + k), SHAPES[0], '#2AD3AE', 0.5 + k * 0.9, 1009 + k, x0);
+  });
 
   /* ---------- S21 / S22 : 어두운 패널 안 격자 + 화면 프레임 + 아바타 + 던지는 신호 ---------- */
   function gridScene(g, o) {

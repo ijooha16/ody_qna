@@ -164,6 +164,8 @@ body{
 .slide.is-active [data-a="ph"]{animation-name:ph;animation-duration:.85s}
 .slide.is-active [data-a="pop"]{animation-name:pop;animation-duration:.6s}
 .slide.is-active [data-draw]{stroke-dasharray:var(--len,600);stroke-dashoffset:var(--len,600);animation:draw 1s var(--ease-line) forwards;animation-delay:var(--d,0s)}
+/* 결론 바 = 발표 대본 → 장표가 뜨자마자 바로 보이게 */
+.slide.is-active .concl[data-a]{animation:none;opacity:1}
 
 /* ---------- 슬라이드 컨트롤 ---------- */
 .nav{position:fixed;bottom:0;left:0;right:0;height:96px;display:flex;align-items:center;justify-content:center;gap:26px;z-index:40;opacity:0;transition:opacity .25s}

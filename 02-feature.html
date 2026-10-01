@@ -107,36 +107,22 @@
   .pr{display:flex;align-items:center;gap:16px;height:40px;padding:0 10px;border-radius:9px;flex:none}
   .pr .rk{width:32px;font-size:16px;font-weight:700;color:var(--ink3);text-align:right;flex:none}
   .dt{position:relative;display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--c,#C8CBD8);flex:none}
-  .dt.dup::before{content:'';position:absolute;top:-4px;left:7px;width:20px;height:20px;border-radius:50%;background:var(--c);opacity:.45}
-  .dt.sfx{background:none;border-radius:0}
-  .dt.sfx::before{content:'';position:absolute;left:0;top:7px;width:20px;height:6px;background:repeating-linear-gradient(90deg,#8F94AA 0 2px,transparent 2px 4px)}
-  .dt.sfx::after{content:'';position:absolute;left:2px;top:3px;width:16px;height:14px;border-left:2px solid #8F94AA;border-right:2px solid #8F94AA;border-radius:2px}
   .pr .bars{flex:1;display:flex;flex-direction:column;gap:6px}
   .pr .bars i{display:block;height:10px;border-radius:5px;background:#D9DBE4}
   .pr .bars i.a{height:7px;opacity:.7}
-  .pr.odd{background:#FEF3EA}
-  .pr.odd .bars i{background:#F2C9AB}
-  .pr .tg{font-size:15px;font-weight:700;color:#DD7A3B;background:#FDEBDD;border-radius:999px;padding:3px 10px;white-space:nowrap;flex:none}
-  .pr .tg:empty{display:none}
-  /* S4 : 규칙별로 왼쪽 행 + 오른쪽 범례가 동시에 회색 처리 */
-  @keyframes gr{to{filter:grayscale(1);opacity:.35}}
-  #sl-list.is-active .pr.dup{animation:gr .35s var(--ease) 1.5s forwards}
-  #sl-list.is-active .pr.x{animation:gr .35s var(--ease) 2.1s forwards}
-  #sl-list.is-active .pr.sfx{animation:gr .35s var(--ease) 2.7s forwards}
-  #sl-list.is-active .lgd:nth-child(2){animation:fu .7s var(--ease) .7s forwards,gr .35s var(--ease) 1.5s forwards}
-  #sl-list.is-active .lgd:nth-child(3){animation:fu .7s var(--ease) .8s forwards,gr .35s var(--ease) 2.1s forwards}
-  #sl-list.is-active .lgd:nth-child(4){animation:fu .7s var(--ease) .9s forwards,gr .35s var(--ease) 2.7s forwards}
-  /* S5 : 이미 걸러진 행은 회색, 남은 행이 연보라로 채워짐 */
-  #sl-filter .pr.odd{filter:grayscale(1);opacity:.35}
   .pr.pick{background:#E9ECFF;transition:background .25s}
   .pr.pick .bars i{background:var(--peri-l)}
 
-  .scside{display:flex;flex-direction:column;gap:14px}
-  .scside .big-cap{margin-bottom:26px}
-  .lgd{display:flex;align-items:center;gap:22px;font-size:27px;font-weight:700;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:22px 28px}
-  .lgd .lgi{display:flex;gap:8px;align-items:center;min-width:120px}
 
-  .gate{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:0 40px}
+  .ring{transform-box:fill-box;transform-origin:center;opacity:0}
+  .slide.is-active .ring{animation:ringg 1.2s var(--ease) var(--d,0s) both}
+  @keyframes ringg{from{transform:scale(0);opacity:0}to{opacity:1}}
+  .nb3{display:grid;grid-template-columns:560px 1fr 420px 1fr 500px;align-items:center;margin-top:24px}
+  .nb3 .scroller{height:420px}
+  .nb3 .sq10{grid-template-columns:repeat(5,88px);gap:15px}
+  .nb3 .sq{width:88px;height:88px}
+  .nb-cap{font-size:27px;font-weight:800;color:var(--indigo);text-align:center;margin-bottom:12px}
+  .gate{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:0 16px}
   .gate-ar{width:100%;height:3px;background:var(--indigo);position:relative}
   .gate-ar::after{content:'';position:absolute;right:-2px;top:-7px;border-left:16px solid var(--indigo);border-top:8px solid transparent;border-bottom:8px solid transparent}
   .gate-lb{font-size:24px;font-weight:800;color:var(--indigo);background:#E9ECFF;border-radius:999px;padding:12px 26px}
@@ -228,6 +214,8 @@
   .slide.is-active .cy-mk{animation:growy .5s ease var(--d) both}
   @keyframes growy{from{transform:scaleY(0)}}
   .cy-mk span{position:absolute;top:100%;left:0;margin-top:8px;white-space:nowrap;font-size:25px;font-weight:700;color:var(--ink)}
+  @keyframes mvx{from{transform:translateX(var(--fx,0))}}
+  .slide.is-active .mv{animation:mvx var(--dur,1.2s) cubic-bezier(.5,0,.25,1) var(--d,0s) both}
   @keyframes wave{0%,100%{transform:translateY(-12px)}50%{transform:translateY(12px)}}
   .slide.is-active .wave{transform-box:fill-box;animation:wave 2.4s ease-in-out var(--w,0s) infinite}
   @keyframes mvdot{from{left:var(--x0);top:var(--y0)}to{left:var(--x1);top:var(--y1)}}
@@ -268,83 +256,36 @@
   <div class="pnum">1</div>
 </section>
 
-<section class="slide">
-  <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
-    <h2 class="title" data-a="fu" style="--d:.1s">목차를 따라 <span class="acc">근처로만</span> 내려간다</h2>
-    <p class="subtitle" data-a="fu" style="--d:.18s">HNSW — 위층은 듬성듬성한 고속도로, 아래층은 촘촘한 골목</p>
-  </div>
-  <div class="row r-7-3" style="margin-top:20px">
-    <div data-a="sc" style="position:relative;height:470px; --d:.3s">
-      <svg viewBox="0 0 880 470" style="width:100%;height:100%;overflow:visible">
-        <g opacity=".55">
-          <path d="M60 110 L700 60 L820 110 L180 160 Z" fill="#E4E6F2"/>
-          <path d="M60 250 L700 200 L820 250 L180 300 Z" fill="#E4E6F2"/>
-          <path d="M60 390 L700 340 L820 390 L180 440 Z" fill="#E1E3F6"/>
-        </g>
-        <g id="s4-dots"></g>
-        <path d="M118 118 L245 105 L375 93 L375 230 L430 247 L455 330 L455 375" stroke="#5B67E8" stroke-width="3.5" fill="none" style="--len:620;--d:.75s" data-draw/>
-        <circle cx="118" cy="118" r="10" fill="#5B67E8" data-a="pop" style="--d:.7s"/>
-        <circle cx="245" cy="105" r="8" fill="#5B67E8" data-a="pop" style="--d:.85s"/>
-        <circle cx="375" cy="93"  r="10" fill="#5B67E8" data-a="pop" style="--d:1s"/>
-        <circle cx="375" cy="230" r="9"  fill="#5B67E8" data-a="pop" style="--d:1.15s"/>
-        <circle cx="430" cy="247" r="8"  fill="#5B67E8" data-a="pop" style="--d:1.25s"/>
-        <circle cx="455" cy="378" r="14" fill="#2AA38B" data-a="pop" style="--d:1.4s"/>
-        <text x="732" y="118" font-size="24" font-weight="700" fill="#5F6480">위층</text>
-        <text x="732" y="258" font-size="24" font-weight="700" fill="#5F6480">중간층</text>
-        <text x="732" y="398" font-size="24" font-weight="700" fill="#5F6480">아래층</text>
-        <text x="455" y="430" font-size="22" font-weight="700" fill="#2AA38B" text-anchor="middle" data-a="fu" style="--d:1.55s">내 곡 근처 도착</text>
-      </svg>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:26px;justify-content:center">
-      <div class="card" data-a="fr" style="text-align:center;padding:44px 20px; --d:.5s">
-        <div class="big acc-o">95ms</div><div class="big-cap">처음부터 끝까지</div>
-      </div>
-      <div class="card accent" data-a="fr" style="text-align:center;padding:44px 20px; --d:.62s">
-        <div class="big acc">2.24ms</div><div class="big-cap">목차로 근처만</div>
-      </div>
-    </div>
-  </div>
-  <div class="concl" data-a="fu" style="--d:1.6s">수백 개만 보고 끝 · 정답 10곡 중 놓치는 비율 <b>0.05%</b></div>
-  <div class="pnum">2</div>
-</section>
-
-<section class="slide" id="sl-list">
-  <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
-    <h2 class="title" data-a="fu" style="--d:.1s">가까운 순 그대로 쓰면 <span class="acc-o">이상한 곡</span>이 섞인다</h2>
-  </div>
-  <div class="scw">
-    <div class="scroller" data-a="sc" style="--d:.25s"><div class="sc-in" id="sc-a"></div></div>
-    <div class="scside">
-      <div data-a="fu" style="--d:.4s"><div class="big acc">200곡</div><div class="big-cap">가까운 순 그대로 받은 목록</div></div>
-      <div class="lgd" data-a="fu" style="--d:.7s"><span class="lgi"><i class="dt dup" style="--c:#2C3057"></i></span><span>같은 곡 · 다른 버전</span></div>
-      <div class="lgd" data-a="fu" style="--d:.8s"><span class="lgi"><i class="dt" style="--c:#5B67E8"></i><i class="dt" style="--c:#5B67E8"></i><i class="dt" style="--c:#5B67E8"></i><i class="dt" style="--c:#5B67E8"></i></span><span>한 가수 몰림</span></div>
-      <div class="lgd" data-a="fu" style="--d:.9s"><span class="lgi"><i class="dt sfx"></i></span><span>효과음</span></div>
-    </div>
-  </div>
-  <div class="concl" data-a="fu" style="--d:1.1s">같은 곡 다른 버전 · 한 가수 몰림 · 효과음</div>
-  <div class="pnum">3</div>
-</section>
-
 <section class="slide" id="sl-filter">
   <div class="head">
     <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
-    <h2 class="title" data-a="fu" style="--d:.1s">규칙으로 걸러 <span class="acc">10곡</span>이 차면 멈춘다</h2>
+    <h2 class="title" data-a="fu" style="--d:.1s">목차로 <span class="acc">근처 200곡</span>만 보고, 10곡이 차면 멈춘다</h2>
   </div>
-  <div class="scw three">
-    <div class="scroller" id="sc-box" data-a="fi" style="--d:.2s"><div class="sc-in" id="sc-b"></div></div>
-    <div class="gate" data-a="fi" style="--d:.5s">
-      <div class="gate-ar"></div>
-      <div class="gate-lb">규칙 4개</div>
+  <div class="nb3">
+    <div data-a="sc" style="--d:.2s">
+      <svg viewBox="0 0 560 470" style="width:100%;height:470px;display:block;overflow:visible">
+        <rect x="0" y="0" width="560" height="470" rx="24" fill="#fff" stroke="#E3E5EF" stroke-width="2"/>
+        <text x="28" y="48" font-size="26" font-weight="700" fill="#5F6480">469만 곡 지도 (좌표 16개)</text>
+        <g id="s4-dots"></g>
+        <circle class="ring" cx="280" cy="270" r="120" fill="rgba(91,103,232,.08)" stroke="#5B67E8" stroke-width="4" stroke-dasharray="10 8" style="--d:1.2s"/>
+        <g data-a="pop" style="--d:.9s"><circle cx="280" cy="270" r="16" fill="#2AA38B"/><circle cx="280" cy="270" r="28" fill="none" stroke="#2AA38B" stroke-width="3" opacity=".5"/></g>
+        <g data-a="fi" style="--d:1s"><rect x="236" y="208" width="88" height="36" rx="18" fill="#fff" stroke="#2AA38B" stroke-width="2"/><text x="280" y="234" font-size="24" font-weight="800" fill="#2AA38B" text-anchor="middle">내 곡</text></g>
+        <g data-a="pop" style="--d:2.4s"><rect x="160" y="404" width="240" height="50" rx="25" fill="#5B67E8"/><text x="280" y="438" font-size="28" font-weight="800" fill="#fff" text-anchor="middle">근처 200곡</text></g>
+      </svg>
     </div>
-    <div class="sqwrap" data-a="fu" style="--d:.6s">
+    <div class="gate" data-a="fi" style="--d:2.6s"><div class="gate-ar"></div></div>
+    <div data-a="fi" style="--d:2.7s">
+      <div class="nb-cap">가까운 순</div>
+      <div class="scroller" id="sc-box"><div class="sc-in" id="sc-b"></div></div>
+    </div>
+    <div class="gate" data-a="fi" style="--d:3s"><div class="gate-ar"></div></div>
+    <div class="sqwrap" data-a="fu" style="--d:3.1s">
       <div class="sq10" id="sq10"></div>
       <div class="sq-n"><b id="sq-cnt">0</b>/ 10곡</div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.5s">자기 자신 · 같은 녹음(1.66) · 길이 30초~20분 · 같은 가수 3곡까지</div>
-  <div class="pnum">4</div>
+  <div class="concl" data-a="fu" style="--d:7s">469만 곡을 다 보지 않고 목차로 근처만 훑어도, 정답 10곡 중 놓치는 비율은 <b>0.05%</b></div>
+  <div class="pnum">2</div>
 </section>
 
 <section class="slide">
@@ -358,8 +299,8 @@
     <div class="card" data-a="fu" style="--d:.46s"><svg class="pic" viewBox="0 0 200 90"><g fill="#98A4FF"><circle cx="62" cy="30" r="6"/><circle cx="48" cy="52" r="6"/><circle cx="70" cy="66" r="6"/><circle cx="92" cy="26" r="6"/><circle cx="100" cy="60" r="6"/><circle cx="84" cy="50" r="6"/><circle cx="56" cy="40" r="6"/><circle cx="104" cy="42" r="6"/><circle cx="76" cy="20" r="6"/></g><circle cx="76" cy="45" r="9" fill="#5B67E8"/><path d="M85 45h72" stroke="#DD7A3B" stroke-width="2.5" stroke-dasharray="6 5"/><circle cx="166" cy="45" r="7" fill="#DD7A3B"/></svg><div class="n">4.9</div><div class="l">&ldquo;유사도 낮음&rdquo; 표시</div><div class="hr"></div><div class="d">10번째 이웃 거리<br>90% 지점</div></div>
     <div class="card" data-a="fu" style="--d:.56s"><svg class="pic" viewBox="0 0 200 90"><rect x="20" y="38" width="160" height="14" rx="7" fill="#D9DBE4"/><rect x="52" y="38" width="96" height="14" rx="7" fill="#5B67E8"/><path d="M52 26v38M148 26v38" stroke="#DD7A3B" stroke-width="2.5"/><rect x="20" y="66" width="18" height="6" rx="3" fill="#8F94AA"/><rect x="160" y="66" width="20" height="6" rx="3" fill="#8F94AA"/></svg><div class="n">30초~20분</div><div class="l">길이 범위</div><div class="hr"></div><div class="d">짧은 곡 · 긴 곡<br>과다 등장 방지</div></div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">2만 곡 × 이웃 50개씩 뽑아 분포로 결정 · 규칙 파일에 근거 기록</div>
-  <div class="pnum">5</div>
+  <div class="concl" data-a="fu" style="--d:.8s">2만 곡에서 이웃을 50개씩 뽑아 분포로 정하고, 근거까지 규칙 파일에 남겨 둔 숫자</div>
+  <div class="pnum">3</div>
 </section>
 
 <section class="slide">
@@ -376,8 +317,8 @@
     <div class="axl">1겹 · 축 1, 2 로 본 화면</div>
     <div class="cap" data-a="fi" style="--d:.9s">바로 옆</div>
   </div>
-  <div class="concl" style="visibility:hidden" aria-hidden="true">화면은 16개 축 중 2개만 · 주변 10곡은 16개 전부로 거리 계산</div>
-  <div class="pnum">6</div>
+  <div class="concl" style="visibility:hidden" aria-hidden="true">화면은 16개 축 중 2개만 보여 주고, 주변 10곡은 16개 전부로 거리를 재는 차이</div>
+  <div class="pnum">4</div>
 </section>
 
 <section class="slide" id="sl-far">
@@ -395,8 +336,8 @@
     <div class="axl" data-a="fi" style="--d:1.6s">2겹 · 축 3, 4 로 본 화면</div>
     <div class="cap out">바로 옆</div>
   </div>
-  <div class="concl" data-a="fu" style="--d:3.4s">화면은 16개 축 중 2개만 · 주변 10곡은 16개 전부로 거리 계산</div>
-  <div class="pnum">7</div>
+  <div class="concl" data-a="fu" style="--d:3.4s">화면은 16개 축 중 2개만 보여 주고, 주변 10곡은 16개 전부로 거리를 재는 차이</div>
+  <div class="pnum">5</div>
 </section>
 
 <section class="slide">
@@ -404,25 +345,37 @@
     <div class="eyebrow" data-a="fd">Q&amp;A · 주변 탐색</div>
     <h2 class="title" data-a="fu" style="--d:.1s">비슷한 곡이 정말 <span class="acc">가까이</span> 있다</h2>
   </div>
-  <div class="row r-7-3 fill" style="margin-top:20px;align-items:center">
-    <div>
-      <div data-a="fu" style="font-size:26px;font-weight:700;color:var(--ink2);margin-bottom:34px; --d:.24s">16차원 거리 (중앙값)</div>
-      <div class="bars">
-        <div class="bl" data-a="fl" style="--d:.3s">같은 녹음 다른 버전</div>
-        <div class="bb" data-a="fr" style="--d:.34s"><i style="width:44px;background:var(--indigo)"></i><b class="acc">1.7</b></div>
-        <div class="bl" data-a="fl" style="--d:.44s">같은 플레이리스트 곡</div>
-        <div class="bb" data-a="fr" style="--d:.48s"><i style="width:290px;background:var(--peri)"></i><b class="acc">10.7</b></div>
-        <div class="bl" data-a="fl" style="--d:.58s">무작위 두 곡</div>
-        <div class="bb" data-a="fr" style="--d:.62s"><i style="width:426px;background:#BEC2D2"></i><b style="color:var(--ink2)">15.7</b></div>
-      </div>
+  <div class="row r-7-3" style="margin-top:10px;align-items:center">
+    <div data-nofill>
+      <svg viewBox="0 0 1100 660" style="width:100%;height:auto;display:block;overflow:visible">
+        <rect x="310" y="70" width="212" height="536" rx="16" fill="#E9ECFF" opacity=".7" data-a="fi" style="--d:.2s"/>
+        <text x="416" y="590" font-size="25" font-weight="800" fill="#5B67E8" text-anchor="middle" data-a="fi" style="--d:.2s">가까움</text>
+        <text x="0" y="40" font-size="27" font-weight="700" fill="#5F6480" data-a="fi" style="--d:.2s"><tspan fill="#2AA38B">●</tspan> 내 곡에서 16차원 거리 (중앙값)</text>
+        <text x="0" y="181" font-size="30" font-weight="800" fill="#22243A" data-a="fi" style="--d:0.3s">같은 녹음 다른 버전</text>
+        <circle cx="340" cy="170" r="18" fill="#2AA38B" data-a="pop" style="--d:0.4s"/>
+        <path d="M340 170H418" stroke="#5B67E8" stroke-width="6" stroke-dasharray="3 12" stroke-linecap="round" class="growx" style="--d:0.6s;--dur:1s"/>
+        <circle class="mv" cx="418" cy="170" r="20" fill="#5B67E8" style="--fx:-78px;--d:0.6s;--dur:1s"/>
+        <text x="418" y="136" font-size="38" font-weight="800" fill="#5B67E8" text-anchor="middle" data-a="pop" style="--d:1.6s">1.7</text>
+        <g data-a="fi" style="--d:1.3s"><text x="0" y="355" font-size="30" font-weight="800" fill="#22243A">같은 분위기 플리 곡</text><text x="0" y="389" font-size="23" font-weight="700" fill="#5F6480">분위기별로 모은 플레이리스트</text></g>
+        <circle cx="340" cy="350" r="18" fill="#2AA38B" data-a="pop" style="--d:1.4s"/>
+        <path d="M340 350H828" stroke="#98A4FF" stroke-width="6" stroke-dasharray="3 12" stroke-linecap="round" class="growx" style="--d:1.6s;--dur:1s"/>
+        <circle class="mv" cx="828" cy="350" r="20" fill="#98A4FF" style="--fx:-488px;--d:1.6s;--dur:1s"/>
+        <text x="828" y="316" font-size="38" font-weight="800" fill="#5B67E8" text-anchor="middle" data-a="pop" style="--d:2.6s">10.7</text>
+        <text x="0" y="541" font-size="30" font-weight="800" fill="#22243A" data-a="fi" style="--d:2.3s">무작위 두 곡</text>
+        <circle cx="340" cy="530" r="18" fill="#2AA38B" data-a="pop" style="--d:2.4s"/>
+        <path d="M340 530H1056" stroke="#BEC2D2" stroke-width="6" stroke-dasharray="3 12" stroke-linecap="round" class="growx" style="--d:2.6s;--dur:1s"/>
+        <circle class="mv" cx="1056" cy="530" r="20" fill="#BEC2D2" style="--fx:-716px;--d:2.6s;--dur:1s"/>
+        <text x="1056" y="496" font-size="38" font-weight="800" fill="#8F94AA" text-anchor="middle" data-a="pop" style="--d:3.6s">15.7</text>
+        <path d="M340 606H1070" stroke="#C8CCDA" stroke-width="3"/><path d="M340 606v12" stroke="#C8CCDA" stroke-width="3"/><text x="340" y="650" font-size="24" font-weight="600" fill="#8F94AA" text-anchor="middle">0</text><path d="M522 606v12" stroke="#C8CCDA" stroke-width="3"/><text x="522" y="650" font-size="24" font-weight="600" fill="#8F94AA" text-anchor="middle">4</text><path d="M705 606v12" stroke="#C8CCDA" stroke-width="3"/><text x="705" y="650" font-size="24" font-weight="600" fill="#8F94AA" text-anchor="middle">8</text><path d="M888 606v12" stroke="#C8CCDA" stroke-width="3"/><text x="888" y="650" font-size="24" font-weight="600" fill="#8F94AA" text-anchor="middle">12</text><path d="M1070 606v12" stroke="#C8CCDA" stroke-width="3"/><text x="1070" y="650" font-size="24" font-weight="600" fill="#8F94AA" text-anchor="middle">16</text>
+      </svg>
     </div>
     <div style="display:flex;flex-direction:column;gap:26px">
-      <div class="card" data-a="fr" style="text-align:center;padding:40px 20px; --d:.5s"><div class="big acc">21.6×</div><div class="big-cap">10곡 안에 정답이 들 확률 ÷ 우연</div></div>
-      <div class="card" data-a="fr" style="text-align:center;padding:40px 20px; --d:.62s"><div class="big acc">200 곡</div><div class="big-cap">사람이 이웃 10곡을 직접 청취</div></div>
+      <div class="card" data-a="fr" style="text-align:center;padding:70px 20px; --d:3.8s"><div class="big acc">21.6×</div><div class="big-cap">10곡 안에 정답이 들 확률 ÷ 우연</div></div>
+      <div class="card" data-a="fr" style="text-align:center;padding:70px 20px; --d:4s"><div class="big acc">200 곡</div><div class="big-cap">사람이 이웃 10곡을 직접 청취</div></div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.9s">숫자로 한 번, 귀로 한 번 확인</div>
-  <div class="pnum">8</div>
+  <div class="concl" data-a="fu" style="--d:.9s">16차원 좌표로 가까운 곡이 실제로도 비슷하다는 걸, 숫자와 귀로 한 번씩 확인한 결과</div>
+  <div class="pnum">6</div>
 </section>
 
 <section class="slide">
@@ -449,7 +402,7 @@
       <text x="1000" y="196" font-size="24" font-weight="700" fill="#F09D6B" text-anchor="middle" data-a="fu" style="--d:1.7s">빈 곳 = 한 번에 큰 점프</text>
     </svg>
   </div>
-  <div class="pnum">9</div>
+  <div class="pnum">7</div>
 </section>
 
 <section class="slide">
@@ -478,7 +431,7 @@
       </div>
     </div>
   </div>
-  <div class="pnum">10</div>
+  <div class="pnum">8</div>
 </section>
 
 <section class="slide">
@@ -507,7 +460,7 @@
     <span class="chip ind" style="font-size:32px;padding:16px 30px">정거장 수 = ⌊ 거리 ÷ 2.5 ⌋ − 1 &nbsp;(0~18개)</span>
     <span class="chip gry" style="font-size:32px;padding:16px 30px">2.5 = 곡에서 곡으로 자연스러운 한 걸음</span>
   </div>
-  <div class="pnum">11</div>
+  <div class="pnum">9</div>
 </section>
 
 <section class="slide">
@@ -531,8 +484,8 @@
       <text x="1420" y="232" font-size="30" font-weight="800" fill="#22243A" text-anchor="middle">B</text>
     </svg>
   </div>
-  <div class="concl" data-a="fu" style="--d:2.2s">주변 탐색과 같은 목차(pgvector)로 정거장 좌표 근처를 조회</div>
-  <div class="pnum">12</div>
+  <div class="concl" data-a="fu" style="--d:2.2s">주변 탐색과 같은 pgvector 목차로 정거장 근처 곡을 찾는 방식</div>
+  <div class="pnum">10</div>
 </section>
 
 <section class="slide">
@@ -564,7 +517,7 @@
     <span class="chip org">같은 가수 ≤ 3곡</span>
     <span class="chip ind">비용 = Σ 걸음² + 2 × Σ 직선 이탈²</span>
   </div>
-  <div class="pnum">13</div>
+  <div class="pnum">11</div>
 </section>
 
 <section class="slide">
@@ -584,8 +537,8 @@
       <div style="font-size:54px;font-weight:800;color:var(--indigo);text-align:center;margin-top:14px">약 1만 번</div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:.8s">동적 계획법(Viterbi) · 점 5개 = 실제로는 정거장마다 60곡</div>
-  <div class="pnum">14</div>
+  <div class="concl" data-a="fu" style="--d:.8s">앞 정거장까지의 최선만 기억해서, 21.6만 번을 약 1만 번으로 줄이는 동적 계획법</div>
+  <div class="pnum">12</div>
 </section>
 
 <section class="slide">
@@ -618,7 +571,7 @@
     <div class="va" data-a="fu" style="--d:.76s">—</div>
     <div class="vb" data-a="fu" style="--d:.80s">직선 계열 우세</div>
   </div>
-  <div class="pnum">15</div>
+  <div class="pnum">13</div>
 </section>
 
 <section class="slide">
@@ -645,45 +598,59 @@
     <div class="card" data-a="fu" style="text-align:center;padding:40px 28px; --d:1.6s"><div class="big acc">항상 같음</div><div class="big-cap">같은 A · B를 고르면 매번 같은 여정</div></div>
     <div class="card" data-a="fu" style="text-align:center;padding:40px 28px; --d:1.7s"><div class="big acc">끊기지 않음</div><div class="big-cap">아주 멀어도 곡만 늘어남 · 거리 10.7 넘으면 &ldquo;먼 여정&rdquo; 표시</div></div>
   </div>
+  <div class="pnum">14</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">겹마다 축이 달라 <span class="acc-o">별자리 모양이 바뀌었다</span></h2>
+    <p class="subtitle" data-a="fu" style="--d:.18s">같은 곡들인데 겹을 내려갈 때마다 다른 두 축으로 그려짐</p>
+  </div>
+  <div class="sky stagebox short" data-seed="149" data-a="sc" style="--d:.2s;margin-top:20px">
+    <svg class="sky-in" viewBox="0 0 1660 470">
+      <g data-a="fi" style="--d:0.3s"><rect x="30" y="20" width="520" height="430" rx="18" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+        <text x="58" y="66" font-size="30" font-weight="800" fill="#ECEEF8">1겹</text><text x="522" y="66" font-size="25" font-weight="700" fill="#F09D6B" text-anchor="end">PC1 · PC2</text></g>
+      <g id="s23-0"></g>
+      <path d="M556 235h22" stroke="#fff" stroke-width="3" marker-end="url(#ars23)" data-a="fi" style="--d:1.1s"/>
+      <g data-a="fi" style="--d:1.2s"><rect x="583" y="20" width="520" height="430" rx="18" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+        <text x="611" y="66" font-size="30" font-weight="800" fill="#ECEEF8">2겹</text><text x="1075" y="66" font-size="25" font-weight="700" fill="#F09D6B" text-anchor="end">PC3 · PC4</text></g>
+      <g id="s23-1"></g>
+      <path d="M1109 235h22" stroke="#fff" stroke-width="3" marker-end="url(#ars23)" data-a="fi" style="--d:2.0s"/>
+      <g data-a="fi" style="--d:2.1s"><rect x="1136" y="20" width="520" height="430" rx="18" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+        <text x="1164" y="66" font-size="30" font-weight="800" fill="#ECEEF8">3겹</text><text x="1628" y="66" font-size="25" font-weight="700" fill="#F09D6B" text-anchor="end">PC5 · PC6</text></g>
+      <g id="s23-2"></g>
+      <defs><marker id="ars23" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#fff"/></marker></defs>
+    </svg>
+  </div>
+  <div class="concl" data-a="fu">두 축으로 지도처럼 보여 주다 보니, 겹을 옮길 때마다 같은 별자리가 <span class="acc-o">딴 모양이 돼서 헷갈리는 문제</span></div>
+  <div class="pnum">15</div>
+</section>
+
+<section class="slide">
+  <div class="head">
+    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
+    <h2 class="title" data-a="fu" style="--d:.1s">별자리는 <span class="acc-t">최상단 겹의 PC1 · PC2</span>로 고정</h2>
+    <p class="subtitle" data-a="fu" style="--d:.18s">모든 곡이 있는 1겹의 두 축으로만 그려서 어느 겹에서나 같은 모양</p>
+  </div>
+  <div class="sky stagebox short" data-seed="149" data-a="sc" style="--d:.2s;margin-top:20px">
+    <svg class="sky-in" viewBox="0 0 1660 470">
+      <g data-a="fi" style="--d:0.3s"><rect x="30" y="20" width="520" height="430" rx="18" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+        <text x="58" y="66" font-size="30" font-weight="800" fill="#ECEEF8">1겹</text><text x="522" y="66" font-size="25" font-weight="700" fill="#2AD3AE" text-anchor="end">PC1 · PC2</text></g>
+      <g id="s24-0"></g>
+      <path d="M556 235h22" stroke="#fff" stroke-width="3" marker-end="url(#ars24)" data-a="fi" style="--d:1.1s"/>
+      <g data-a="fi" style="--d:1.2s"><rect x="583" y="20" width="520" height="430" rx="18" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+        <text x="611" y="66" font-size="30" font-weight="800" fill="#ECEEF8">2겹</text><text x="1075" y="66" font-size="25" font-weight="700" fill="#2AD3AE" text-anchor="end">PC1 · PC2 고정</text></g>
+      <g id="s24-1"></g>
+      <path d="M1109 235h22" stroke="#fff" stroke-width="3" marker-end="url(#ars24)" data-a="fi" style="--d:2.0s"/>
+      <g data-a="fi" style="--d:2.1s"><rect x="1136" y="20" width="520" height="430" rx="18" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+        <text x="1164" y="66" font-size="30" font-weight="800" fill="#ECEEF8">3겹</text><text x="1628" y="66" font-size="25" font-weight="700" fill="#2AD3AE" text-anchor="end">PC1 · PC2 고정</text></g>
+      <g id="s24-2"></g>
+      <defs><marker id="ars24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#fff"/></marker></defs>
+    </svg>
+  </div>
+  <div class="concl" data-a="fu">그래서 모든 곡이 있는 최상단 겹의 PC1과 PC2로 고정해, 어느 겹에 가도 똑같이 보이는 별자리</div>
   <div class="pnum">16</div>
-</section>
-
-<section class="slide">
-  <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
-    <h2 class="title" data-a="fu" style="--d:.1s">처음엔 곡 하나만 더해도 <span class="acc-o">별자리가 뒤집혔다</span></h2>
-    <p class="subtitle" data-a="fu" style="--d:.18s">묶음마다 새로 축을 계산하던 방식</p>
-  </div>
-  <div class="sky stagebox short" data-seed="149" data-a="sc" style="--d:.28s;margin-top:20px">
-    <svg class="sky-in" viewBox="0 0 1660 470">
-      <g id="s23-a"></g>
-      <path d="M700 232 L890 232" stroke="#fff" stroke-width="3" marker-end="url(#ar23)"/>
-      <text x="795" y="208" font-size="26" font-weight="700" fill="#ECEEF8" text-anchor="middle">+1곡</text>
-      <g id="s23-b"></g>
-      <defs><marker id="ar23" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#fff"/></marker></defs>
-    </svg>
-  </div>
-  <div class="concl" data-a="fu" style="--d:2.7s">곡이 더해질 때마다 축을 새로 계산 → <span class="acc-o">비효율적 · 비용 큼</span></div>
-  <div class="pnum">17</div>
-</section>
-
-<section class="slide">
-  <div class="head">
-    <div class="eyebrow" data-a="fd">Q&amp;A · 여정</div>
-    <h2 class="title" data-a="fu" style="--d:.1s">지금: <span class="acc-t">고정 축</span>으로 어느 겹에서나 같은 모양</h2>
-    <p class="subtitle" data-a="fu" style="--d:.18s">PC1을 가로 · PC2를 세로로 · 평균을 가운데 · 두 축 같은 배율</p>
-  </div>
-  <div class="sky stagebox short" data-seed="149" data-a="sc" style="--d:.28s;margin-top:20px">
-    <svg class="sky-in" viewBox="0 0 1660 470">
-      <g id="s24-a"></g>
-      <path d="M700 232 L890 232" stroke="#fff" stroke-width="3" marker-end="url(#ar24)"/>
-      <text x="795" y="208" font-size="26" font-weight="700" fill="#ECEEF8" text-anchor="middle">+1곡</text>
-      <g id="s24-b"></g>
-      <defs><marker id="ar24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0l9 4.5L0 9z" fill="#fff"/></marker></defs>
-    </svg>
-  </div>
-  <div class="concl" data-a="fu" style="--d:2.7s">한 점만 늘어남 · 여정 · 플레이리스트 모두 같은 방식</div>
-  <div class="pnum">18</div>
 </section>
 
 <section class="slide">
@@ -711,8 +678,8 @@
       <div class="vb ind" data-a="fr" style="--d:.7s">지도 위 내 자리 = 그 곡</div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:1.35s">브라우저가 보낸 좌표는 믿지 않음 → <b>위치를 속일 수 없음</b></div>
-  <div class="pnum">19</div>
+  <div class="concl" data-a="fu" style="--d:1.35s">브라우저가 보낸 좌표는 믿지 않기 때문에, <b>위치를 속일 수 없는 구조</b></div>
+  <div class="pnum">17</div>
 </section>
 
 <section class="slide" id="sl-grid">
@@ -724,7 +691,7 @@
   <div class="sky" data-seed="171" data-density=".35" data-nofill data-a="sc" style="--d:.25s;height:600px;margin-top:20px">
     <svg class="sky-in gs" viewBox="0 0 1660 600" id="s21-gs"></svg>
   </div>
-  <div class="pnum">20</div>
+  <div class="pnum">18</div>
 </section>
 
 <section class="slide" id="sl-move">
@@ -736,7 +703,7 @@
   <div class="sky" data-seed="171" data-density=".35" data-nofill style="--d:.25s;height:600px;margin-top:20px">
     <svg class="sky-in gs" viewBox="0 0 1660 600" id="s22-gs"></svg>
   </div>
-  <div class="pnum">21</div>
+  <div class="pnum">19</div>
 </section>
 
 <section class="slide" id="sl-real">
@@ -748,7 +715,7 @@
   <div class="sky" data-seed="171" data-density=".35" data-nofill style="height:600px;margin-top:20px">
     <svg class="sky-in gs" viewBox="0 0 1660 600" id="s23-gs"></svg>
   </div>
-  <div class="pnum">22</div>
+  <div class="pnum">20</div>
 </section>
 
 <section class="slide">
@@ -773,8 +740,8 @@
       <div class="card-s mv-s" data-a="fu" style="--d:3.65s">화면 안 → 밖</div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:3.9s">옛 칸 · 새 칸을 보고 있던 화면에만 전달</div>
-  <div class="pnum">23</div>
+  <div class="concl" data-a="fu" style="--d:3.9s">옛 칸이나 새 칸을 보고 있던 화면에만 알려 주는 방식</div>
+  <div class="pnum">21</div>
 </section>
 
 <section class="slide">
@@ -817,8 +784,8 @@
       <div data-a="pop" style="font-size:52px;font-weight:800;color:var(--indigo);text-align:center;margin-top:20px; --d:3.9s">왕복 1번</div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:4.3s">화면 안 사람들 정보를 한 번에 가져옴</div>
-  <div class="pnum">24</div>
+  <div class="concl" data-a="fu" style="--d:4.3s">화면 안 사람들 정보를 한 번에 묶어서 가져오는 방식</div>
+  <div class="pnum">22</div>
 </section>
 
 <section class="slide">
@@ -841,8 +808,8 @@
       <div class="cellgrid" id="s34-b" style="grid-template-columns:repeat(6,1fr);gap:9px;max-width:440px;margin:0 auto"></div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:3.6s">사람이 늘어도 보내는 메시지 양이 폭증하지 않음</div>
-  <div class="pnum">25</div>
+  <div class="concl" data-a="fu" style="--d:3.6s">사람이 늘어나도 보내는 메시지 양은 폭증하지 않는 구조</div>
+  <div class="pnum">23</div>
 </section>
 
 <section class="slide">
@@ -853,8 +820,8 @@
   <div class="sky stagebox" data-seed="181" data-a="sc" style="--d:.28s;margin-top:20px">
     <svg class="sky-in" viewBox="0 0 1660 560"><g id="s35-people"></g></svg>
   </div>
-  <div class="concl" data-a="fu" style="--d:2.1s">서버가 가까운 순 12명을 잘라 줌 · 만남 횟수를 함께 표시</div>
-  <div class="pnum">26</div>
+  <div class="concl" data-a="fu" style="--d:2.1s">서버가 가까운 순으로 12명만 잘라 주고, 만남 횟수도 함께 보여 주는 방식</div>
+  <div class="pnum">24</div>
 </section>
 
 <section class="slide">
@@ -892,7 +859,7 @@
     <span class="chip org" data-a="pop" style="--d:3.76s">정원 20명</span>
     <span data-a="fl" style="font-size:24px;font-weight:600;color:var(--ink2);margin-left:10px; --d:3.95s">← 탈 때 한 번에 검사</span>
   </div>
-  <div class="pnum">27</div>
+  <div class="pnum">25</div>
 </section>
 
 <section class="slide">
@@ -948,8 +915,8 @@
       </defs>
     </svg>
   </div>
-  <div class="concl" data-a="fu" style="--d:3.3s">인솔자 한 번 → 동승자 전원 · 오른쪽 패널(주변 사람 · 랭킹)은 공유 안 함</div>
-  <div class="pnum">28</div>
+  <div class="concl" data-a="fu" style="--d:3.3s">인솔자 화면을 한 번만 만들어 동승자 전원에게 보내고, 주변 사람과 랭킹 패널은 공유하지 않는 방식</div>
+  <div class="pnum">26</div>
 </section>
 
 <section class="slide">
@@ -977,7 +944,7 @@
     </svg>
   </div>
   <div class="concl" data-a="fu" style="--d:2.8s">인솔자가 곡을 바꿔도 지도 알림은 사람 수와 상관없이 <b>1건</b></div>
-  <div class="pnum">29</div>
+  <div class="pnum">27</div>
 </section>
 
 <section class="slide">
@@ -1003,8 +970,8 @@
   <div class="card" data-a="sc" style="margin-top:44px;text-align:center;padding:38px; --d:2.6s">
     <div style="font-size:54px;font-weight:800;color:var(--indigo)">시작 지점 = 지금 − 저장 시각 + 저장 위치</div>
   </div>
-  <div class="concl" data-a="fu" style="--d:3.1s">인솔자는 재생 · 정지 · 구간 이동 때마다 위치를 저장 (따라오는 사람이 없어도)</div>
-  <div class="pnum">30</div>
+  <div class="concl" data-a="fu" style="--d:3.1s">따라오는 사람이 없어도 인솔자가 재생, 정지, 구간 이동 때마다 위치를 저장하는 구조</div>
+  <div class="pnum">28</div>
 </section>
 
 <section class="slide">
@@ -1048,8 +1015,8 @@
       <div class="card-s" data-a="fu" style="margin-top:8px; --d:3.50s">30초 주기 검사로도 발견</div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:3.9s">내린 사람은 그 자리 곡 위로 돌아옴 · 하차는 언제나 가능</div>
-  <div class="pnum">31</div>
+  <div class="concl" data-a="fu" style="--d:3.9s">내린 사람은 그 자리 곡 위로 돌아오고, 하차는 언제든 가능한 구조</div>
+  <div class="pnum">29</div>
 </section>
 
 <section class="slide">
@@ -1091,7 +1058,7 @@
       </div>
     </div>
   </div>
-  <div class="pnum">32</div>
+  <div class="pnum">30</div>
 </section>
 
 <section class="slide">
@@ -1142,8 +1109,8 @@
         <text x="1410" y="400" font-size="44" font-weight="800" fill="#5B67E8" text-anchor="middle">✓ 처리</text></g>
     </svg>
   </div>
-  <div class="concl" data-a="fu" style="--d:7.3s">크다 작다가 아니라 같은지만 비교 · 다시 붙을 때마다 새 번호로 덮어씀</div>
-  <div class="pnum">33</div>
+  <div class="concl" data-a="fu" style="--d:7.3s">크고 작음이 아니라 같은지만 비교하고, 다시 붙을 때마다 새 번호로 덮어쓰는 방식</div>
+  <div class="pnum">31</div>
 </section>
 
 <section class="slide">
@@ -1171,8 +1138,8 @@
       </div>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:3.2s">따라가는 동안 · 선단 안에서는 만남으로 세지 않음</div>
-  <div class="pnum">34</div>
+  <div class="concl" data-a="fu" style="--d:3.2s">따라가는 동안이나 선단 안에서는 만남으로 세지 않는 규칙</div>
+  <div class="pnum">32</div>
 </section>
 
 <section class="slide">
@@ -1190,7 +1157,7 @@
   <div class="card" data-a="fu" style="margin-top:64px;padding:34px 44px;font-size:31px;font-weight:700; --d:3s">
     상태는 Redis(메모리) · 여러 값을 한 번에 바꾸는 스크립트 13개로 반쪽 갱신 방지 · 만남 · 재생 기록만 DB
   </div>
-  <div class="pnum">35</div>
+  <div class="pnum">33</div>
 </section>
 
 <section class="slide">
@@ -1227,8 +1194,8 @@
       </svg>
     </div>
   </div>
-  <div class="concl" data-a="fu" style="--d:3.8s">실시간 동시 접속 부하는 아직 미측정 · 부하 테스트는 HTTP만 진행</div>
-  <div class="pnum">36</div>
+  <div class="concl" data-a="fu" style="--d:3.8s">실시간 동시 접속 부하는 아직 못 쟀고, 부하 테스트는 HTTP까지만 진행한 상태</div>
+  <div class="pnum">34</div>
 </section>
 
 </div>
@@ -1236,7 +1203,7 @@
 
 <div class="nav">
   <button data-prev aria-label="이전">←</button>
-  <span class="counter">1 / 42</span>
+  <span class="counter">1 / 34</span>
   <button data-next aria-label="다음">→</button>
 </div>
 
