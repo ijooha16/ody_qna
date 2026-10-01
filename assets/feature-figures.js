@@ -33,7 +33,7 @@
     if (!g) return;
     const r = R(409), cx = 280, cy = 270, RAD = 120;
     for (let i = 0; i < 120; i++) {
-      const x = 30 + r() * 500, y = 76 + r() * 316;
+      const x = 30 + r() * 500, y = 108 + r() * 286;
       const d = Math.hypot(x - cx, y - cy);
       if (d < 34) continue;
       const c = svg('circle', {cx:x.toFixed(1), cy:y.toFixed(1), r:'6', fill:'#C8CBD8'});
