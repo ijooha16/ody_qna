@@ -168,7 +168,7 @@ body{
 .slide.is-active .concl[data-a]{animation:none;opacity:1}
 
 /* ---------- 슬라이드 컨트롤 ---------- */
-.nav{position:fixed;bottom:0;left:0;right:0;height:96px;display:flex;align-items:center;justify-content:center;gap:26px;z-index:40;opacity:0;transition:opacity .25s}
+.nav{position:fixed;bottom:0;left:0;right:0;height:96px;display:none;align-items:center;justify-content:center;gap:26px;z-index:40;opacity:0;transition:opacity .25s}
 .nav:hover,body.show-ui .nav{opacity:1}
 .nav button{
   width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.18);
