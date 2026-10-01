@@ -88,9 +88,13 @@
     const nextB = document.querySelector('[data-next]');
     const prog = document.querySelector('.prog');
     let i = 0;
+    // 홈에서 질문을 눌러 들어오면 ?r=5-7 → 그 질문의 장표만 (범위 밖으로는 안 넘어감)
+    const rm = /^(\d+)-(\d*)$/.exec(new URLSearchParams(location.search).get('r') || '');
+    const lo = rm ? Math.max(0, +rm[1] - 1) : 0;
+    const hi = rm && rm[2] ? Math.min(total - 1, +rm[2] - 1) : total - 1;
 
     function show(n, instant) {
-      n = Math.max(0, Math.min(total - 1, n));
+      n = Math.max(lo, Math.min(hi, n));
       i = n;
       slides.forEach(function (s, k) {
         s.classList.toggle('is-active', k === n);
@@ -102,10 +106,13 @@
       cur.classList.add('is-active');
       fillSlide(cur);
 
-      if (counter) counter.textContent = (n + 1) + ' / ' + total;
-      if (prevB) prevB.disabled = n === 0;
-      if (nextB) nextB.disabled = n === total - 1;
-      if (prog) prog.style.width = ((n + 1) / total * 100) + '%';
+      if (counter) counter.textContent = (n - lo + 1) + ' / ' + (hi - lo + 1);
+      // 오른쪽 아래 장 번호도 이 질문 안에서 몇 번째인지로 (1 / 3)
+      const pn = cur.querySelector('.pnum');
+      if (pn) pn.textContent = (n - lo + 1) + ' / ' + (hi - lo + 1);
+      if (prevB) prevB.disabled = n === lo;
+      if (nextB) nextB.disabled = n === hi;
+      if (prog) prog.style.width = ((n - lo + 1) / (hi - lo + 1) * 100) + '%';
       const h = '#s' + (n + 1);
       if (location.hash !== h) history.replaceState(null, '', h);
       paintAllSkies();
@@ -117,8 +124,8 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(i + 1); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(i - 1); }
-      else if (e.key === 'Home') show(0);
-      else if (e.key === 'End') show(total - 1);
+      else if (e.key === 'Home') show(lo);
+      else if (e.key === 'End') show(hi);
       else if (e.key === 'Escape') { const b = document.querySelector('.backbtn'); if (b) b.click(); }
       else if (e.key === 'f' || e.key === 'F') {
         if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen();
@@ -134,7 +141,7 @@
     // 시작 위치: #s12 해시 우선
     function fromHash() {
       const m = /^#s(\d+)$/.exec(location.hash);
-      return m ? parseInt(m[1], 10) - 1 : 0;
+      return m ? parseInt(m[1], 10) - 1 : lo;
     }
     show(fromHash());
     window.addEventListener('hashchange', function () {

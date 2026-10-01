@@ -186,22 +186,22 @@ const DATA = {
       {n:'Q4', t:'분석기 버전이 다른 곡은 어떻게 처리했나', s:4},
       {sect:'소리 좌표'},
       {n:'Q5', t:'곡 하나는 어떤 숫자로 표현되나', s:5},
-      {n:'Q6', t:'단위가 다른 숫자를 어떻게 같은 자로 맞췄나', s:6},
-      {n:'Q7', t:'270개를 16개로 줄여도 정보가 남나', s:7},
-      {n:'Q8', t:'축마다 뜻이 있다는 게 무슨 말인가', s:8},
-      {n:'Q9', t:'겹(레이어)을 내려가면 무엇이 달라지나', s:9},
+      {n:'Q6', t:'단위가 다른 숫자를 어떻게 같은 자로 맞췄나', s:8},
+      {n:'Q7', t:'270개를 16개로 줄여도 정보가 남나', s:11},
+      {n:'Q8', t:'축마다 뜻이 있다는 게 무슨 말인가', s:15},
+      {n:'Q9', t:'겹(레이어)을 내려가면 무엇이 달라지나', s:18},
       {sect:'파이프라인'},
-      {n:'Q10', t:'첫 화면 7,204곡은 어떻게 뽑았나', s:10},
-      {n:'Q11', t:'원본에서 DB까지 파이프라인은 어떻게 구성되나', s:11},
-      {n:'Q12', t:'Spark를 실제로 끝까지 돌렸나', s:12},
-      {n:'Q13', t:'분산 결과가 한 대 결과와 같다는 근거는', s:13},
+      {n:'Q10', t:'첫 화면 7,204곡은 어떻게 뽑았나', s:20},
+      {n:'Q11', t:'원본에서 DB까지 파이프라인은 어떻게 구성되나', s:23},
+      {n:'Q12', t:'Spark를 실제로 끝까지 돌렸나', s:24},
+      {n:'Q13', t:'분산 결과가 한 대 결과와 같다는 근거는', s:25},
       {sect:'검증'},
-      {n:'Q14', t:'지도가 좋아졌다는 걸 어떻게 채점했나', s:14},
-      {n:'Q15', t:'합격선은 어떻게 정했나', s:15},
+      {n:'Q14', t:'지도가 좋아졌다는 걸 어떻게 채점했나', s:26},
+      {n:'Q15', t:'합격선은 어떻게 정했나', s:27},
       {sect:'운영'},
-      {n:'Q16', t:'신곡은 어떻게 추가하나', s:16},
-      {n:'Q17', t:'저장소를 둘로 나눈 이유는', s:17},
-      {n:'Q18', t:'pgvector를 고른 이유는', s:18}
+      {n:'Q16', t:'신곡은 어떻게 추가하나', s:28},
+      {n:'Q17', t:'저장소를 둘로 나눈 이유는', s:29},
+      {n:'Q18', t:'pgvector를 고른 이유는', s:30}
     ]
   },
   ai: {
@@ -234,6 +234,12 @@ const qsub   = document.getElementById('qsub');
 const qlist  = document.getElementById('qlist');
 var curCat = null;
 
+// 질문 하나가 차지하는 장 범위 "시작-끝" (다음 질문 바로 앞까지, 마지막 질문은 덱 끝까지)
+function rangeOf(d, it){
+  const next = d.items.filter(x => x.n && x.s > it.s).reduce((m, x) => Math.min(m, x.s), Infinity);
+  return it.s + '-' + (next === Infinity ? '' : next - 1);
+}
+
 function openCat(key){
   const d = DATA[key];
   if(!d) return;
@@ -253,7 +259,7 @@ function openCat(key){
     }
     const a = document.createElement('a');
     a.className = 'q';
-    a.href = d.file + '#s' + it.s;
+    a.href = d.file + '?r=' + rangeOf(d, it) + '#s' + it.s;
     a.innerHTML = '<span class="qn">'+it.n+'</span><span class="qt">'+it.t+'</span><span class="qp">p.'+it.s+'</span>';
     a.style.animationDelay = (idx * 0.018) + 's';
     a.classList.add('fadein');
@@ -304,7 +310,7 @@ function questionOf(file, s){
 function hitRow(d, it, s, terms, slideTitle, snip){
   const a = document.createElement('a');
   a.className = 'q';
-  a.href = d.file + '#s' + s;
+  a.href = d.file + (it ? '?r=' + rangeOf(d, it) : '') + '#s' + s;
   let body = '<span class="qc">' + esc(d.label) + '</span><span class="qt">' + hl(it ? it.t : slideTitle, terms) + '</span>';
   if(slideTitle && it && slideTitle !== it.t) body += '<span class="qst">장표 · ' + hl(slideTitle, terms) + '</span>';
   if(snip) body += '<span class="qsn">' + hl(snip, terms) + '</span>';
