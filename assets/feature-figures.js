@@ -460,9 +460,6 @@
     const g = $('s35-people');
     if (!g) return;
     const r = R(1117), cx = 830, cy = 285;
-    function helmet(cx, cy, size, k) {
-      return svg('image', {href:'assets/img/helmet-' + (k % 6 + 1) + '.png', x:(cx - size / 2).toFixed(0), y:(cy - size / 2).toFixed(0), width:size.toFixed(0), height:size.toFixed(0)});
-    }
     function person(x, y, s, col, op) {
       const gg = svg('g', {transform:'translate(' + x.toFixed(0) + ',' + y.toFixed(0) + ') scale(' + s + ')', opacity:op});
       gg.appendChild(svg('circle', {cx:14, cy:10, r:10, fill:col}));
@@ -472,9 +469,7 @@
     for (let i = 0; i < 22; i++) {
       const x = 90 + r() * 1460, y = 70 + r() * 400;
       if (Math.abs(x - cx) < 250 && Math.abs(y - cy) < 200) continue;
-      const far = helmet(x + 14, y + 20, 40 + r() * 14, i);
-      far.setAttribute('opacity', '.28');
-      g.appendChild(far);
+      g.appendChild(person(x, y, 1 + r() * .35, '#8F96C9', .5));
       g.appendChild(svg('circle', {cx:(80 + r()*1500).toFixed(0), cy:(50 + r()*460).toFixed(0), r:(2+r()*3).toFixed(1), fill:'#8F96C9', opacity:.5}));
     }
     const near = [[-250,-90],[-200,60],[-120,150],[-40,170],[40,140],[110,80],[130,-10],[90,-110],[10,-140],[-90,-150],[-170,-40],[60,40]];
@@ -486,7 +481,7 @@
       const wrap = svg('g', {});
       wrap.setAttribute('data-a', 'pop'); wrap.style.setProperty('--d', (1.05 + i * 0.07).toFixed(2) + 's');
       wrap.appendChild(svg('circle', {cx:x, cy:y, r:44, fill:'none', stroke:'#2AD3AE', 'stroke-width':2.5, opacity:.85}));
-      wrap.appendChild(helmet(x, y, 84, i));
+      wrap.appendChild(person(x - 21, y - 30, 1.5, '#98A4FF', 1));
       g.appendChild(wrap);
     });
     const meg = svg('g', {});
