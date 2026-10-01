@@ -68,8 +68,8 @@ body{
 .concl{
   position:absolute;left:130px;right:130px;bottom:96px;
   background:var(--dark);color:var(--dink);
-  border-radius:999px;padding:26px 40px;
-  font-size:30px;font-weight:700;text-align:center;letter-spacing:-.01em;
+  border-radius:999px;padding:28px 44px;
+  font-size:36px;font-weight:700;text-align:center;letter-spacing:-.01em;
 }
 .note{position:absolute;left:130px;bottom:104px;font-size:25px;font-weight:600;color:var(--ink2)}
 
@@ -82,8 +82,8 @@ body{
 .c2{grid-template-columns:1fr 1fr}
 .c3{grid-template-columns:repeat(3,1fr)}
 .c4{grid-template-columns:repeat(4,1fr)}
-.card-t{font-size:32px;font-weight:800;margin-bottom:12px}
-.card-s{font-size:25px;font-weight:500;color:var(--ink2);line-height:1.5}
+.card-t{font-size:37px;font-weight:800;margin-bottom:12px}
+.card-s{font-size:29px;font-weight:500;color:var(--ink2);line-height:1.5}
 
 /* ---------- 수치 ---------- */
 .big{font-size:83px;font-weight:800;letter-spacing:-.03em;line-height:1}
@@ -96,7 +96,7 @@ body{
 .sky-in{position:absolute;inset:0}
 
 /* ---------- 태그 / 칩 ---------- */
-.chip{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:12px 22px;font-size:24px;font-weight:700}
+.chip{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 28px;font-size:30px;font-weight:700}
 .chip.ind{background:#E9ECFF;color:var(--indigo)}
 .chip.org{background:#FDEBDD;color:#B5612B}
 .chip.gry{background:#ECEDF3;color:var(--ink2)}
@@ -224,4 +224,4 @@ body{
 .hflow .sub{font-size:24px;font-weight:600;color:var(--ink2);text-align:center;margin-top:14px;line-height:1.4}
 
 .chip.pur{background:#EFE8FC;color:var(--purple)}
-.chip.sm{font-size:21px;padding:9px 18px}
+.chip.sm{font-size:26px;padding:11px 22px}
