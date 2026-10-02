@@ -64,6 +64,11 @@
   .steps.big .box{padding:58px 10px;margin-top:36px;font-size:31px}
   .steps.big .tag{margin-top:28px;font-size:26px;padding:12px 24px}
   .fl.big .bx{min-height:126px;font-size:31px}
+  .cr3 .stat{padding:60px 30px}
+  .cr3 .stat .n{font-size:92px}
+  .cr3 .stat .l{font-size:34px;font-weight:800;color:var(--ink);margin-top:22px}
+  .cr3 .hr{height:1px;background:var(--border);margin:30px 0;align-self:stretch}
+  .cr3 .d{font-size:28px;font-weight:600;color:var(--ink2);line-height:1.5}
 </style>
 </head>
 <body>
@@ -78,32 +83,10 @@
     <div class="eyebrow" data-a="fd">Q. 음원 저작권 문제는 어떻게 해결했나요?</div>
     <h2 class="title" data-a="fu" style="--d:.1s">음원은 <span class="acc">한 곡도</span> 저장하지 않는다</h2>
   </div>
-
-  <div class="fill-lg" style="margin-top:20px;display:grid;align-content:center">
-    <div class="fl big">
-      <div class="bx" data-a="fu" style="position:relative; --d:.24s">음원 파일<span class="xmark">✕</span></div>
-      <div class="ar" data-a="fi" style="--d:.3s"></div>
-      <div class="bx ind" data-a="fu" style="--d:.34s">소리 분석 숫자<br>2,900개</div>
-      <div class="ar" data-a="fi" style="--d:.4s"></div>
-      <div class="bx ind" data-a="fu" style="--d:.44s">지도 좌표</div>
-      <div></div>
-      <div class="side" data-a="fi" style="--d:.5s">지도 만들기</div>
-    </div>
-    <div class="fl big" style="margin-bottom:12px">
-      <div class="bx" data-a="fu" style="--d:.54s">곡 이름</div>
-      <div class="ar" data-a="fi" style="--d:.6s"></div>
-      <div class="bx" data-a="fu" style="--d:.64s">YouTube 검색<br>+ 재생 가능 확인</div>
-      <div class="ar" data-a="fi" style="--d:.7s"></div>
-      <div class="bx ind" data-a="fu" style="--d:.74s">영상 ID만 저장</div>
-      <div class="ar" data-a="fi" style="--d:.8s"></div>
-      <div class="bx dk" data-a="fu" style="--d:.84s">공식<br>플레이어</div>
-    </div>
-
-    <div class="nums" style="margin-top:6px">
-      <div data-a="fu" style="--d:.95s"><div class="big acc">0곡</div><div class="big-cap">음원 파일 저장 · 오디오 자체는 서버에 없음</div></div>
-      <div data-a="fu" style="--d:1.05s"><div class="big k">2,900</div><div class="big-cap">소리 분석 숫자 · 공개 데이터의 측정값만 사용</div></div>
-      <div data-a="fu" style="--d:1.15s"><div class="big acc-t">ID</div><div class="big-cap">YouTube 영상 ID만 · 공식 플레이어로 재생</div></div>
-    </div>
+  <div class="cards c3 cr3">
+    <div class="card stat accent" data-a="fu" style="--d:.25s"><div class="n">0곡</div><div class="l">음원 파일 저장</div><div class="hr"></div><div class="d">오디오 자체는<br>서버에 없음</div></div>
+    <div class="card stat" data-a="fu" style="--d:.35s"><div class="n k">2,900</div><div class="l">소리 분석 숫자</div><div class="hr"></div><div class="d">공개 데이터의<br>측정값만 사용</div></div>
+    <div class="card stat" data-a="fu" style="--d:.45s"><div class="n" style="color:var(--teal)">ID</div><div class="l">YouTube 영상 ID만</div><div class="hr"></div><div class="d">공식 플레이어로<br>재생</div></div>
   </div>
   <div class="concl" data-a="fu">공개된 분석 숫자로 지도를 만들고, 재생은 공식 플레이어에 맡기는 구조</div>
   <div class="pnum">1</div>
