@@ -126,7 +126,11 @@
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(i - 1); }
       else if (e.key === 'Home') show(lo);
       else if (e.key === 'End') show(hi);
-      else if (e.key === 'Escape' && opts && opts.backHref) location.href = opts.backHref;
+      else if (e.key === 'Escape') {
+        // 홈에서 질문을 눌러 들어왔으면 그 카테고리 목록으로 (?c=map)
+        const c = new URLSearchParams(location.search).get('c');
+        if (c) location.href = 'index.html#' + c; else if (opts && opts.backHref) location.href = opts.backHref;
+      }
       else if (e.key === 'f' || e.key === 'F') {
         if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen();
       }

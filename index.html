@@ -93,22 +93,21 @@
         <div class="home-l">
           <div class="brand-eyebrow" data-a="fd">ODY · 최종 발표 Q&amp;A</div>
           <h1 class="brand" data-a="fu" style="--d:.1s">ODY</h1>
-          <p class="brand-def" data-a="fu" style="--d:.2s">장르가 아니라 <span style="color:var(--peri)">소리</span>로 놓은 음악 지도</p>
-          <p class="brand-tag" data-a="fu" style="--d:.28s">469만 곡 · 16차원 좌표 · 실시간 위치 공유</p>
+          <p class="brand-def" data-a="fu" style="--d:.2s">추천을 넘기지 말고, <span style="color:var(--peri)">소리의 지도</span>를 걷다</p>
+          <p class="brand-tag" data-a="fu" style="--d:.28s">2,929 → 270 → 16축 · 8개 층 · Spark 분산 · 비터비 여정</p>
 
           <nav class="cats" data-a="fu" style="--d:.38s">
-            <button class="cat" data-cat="planning"><span class="num">01</span><span class="nm">기획</span><span class="cnt">5문항</span></button>
-            <button class="cat" data-cat="feature"><span class="num">02</span><span class="nm">기능</span><span class="cnt">11문항</span></button>
-            <button class="cat" data-cat="domain"><span class="num">03</span><span class="nm">도메인</span><span class="cnt">7문항</span></button>
-            <button class="cat" data-cat="ai"><span class="num">04</span><span class="nm">AI</span><span class="cnt">3문항</span></button>
-            <button class="cat" data-cat="reserve"><span class="num">05</span><span class="nm">예비</span><span class="cnt">3문항</span></button>
+            <button class="cat" data-cat="planning"><span class="num">01</span><span class="nm">기획</span><span class="cnt">1문항</span></button>
+            <button class="cat" data-cat="data"><span class="num">02</span><span class="nm">데이터 · 임베딩</span><span class="cnt">8문항</span></button>
+            <button class="cat" data-cat="infra"><span class="num">03</span><span class="nm">분산 처리 · 인프라</span><span class="cnt">1문항</span></button>
+            <button class="cat" data-cat="map"><span class="num">04</span><span class="nm">지도 · 탐색</span><span class="cnt">5문항</span></button>
           </nav>
 
           <div class="search" data-a="fu" style="--d:.48s">
             <input id="sq" type="search" placeholder="키워드 검색  ( / )" autocomplete="off">
           </div>
 
-          <p class="home-hint" data-a="fi" style="--d:.6s">카테고리를 누르면 오른쪽에 질문 목록 · 질문을 누르면 해당 장표로 이동<br>검색: <b>/</b> 포커스 · <b>↑ ↓ Enter</b> 이동 · <b>Esc</b> 지우기<br>덱 안에서는 <b>← →</b> 로 이동, <b>Esc</b> 로 목록 복귀, <b>F</b> 전체화면</p>
+          <p class="home-hint" data-a="fi" style="--d:.6s">카테고리를 누르면 오른쪽에 질문 목록 · 질문을 누르면 해당 답변 장표로 이동<br>검색: <b>/</b> 포커스 · <b>↑ ↓ Enter</b> 이동 · <b>Esc</b> 지우기<br>덱 안에서는 <b>← →</b> 로 이동, <b>Esc</b> 로 목록 복귀, <b>F</b> 전체화면</p>
         </div>
 
         <div class="home-r">
@@ -133,72 +132,54 @@
 const DATA = {
   planning: {
     label: '01 · 기획',
-    sub: '지도의 전제, 사용자 흐름, 결정의 근거와 한계',
+    sub: '문제 정의 · 근거 · 차별점 · 저작권',
     file: '01-planning.html',
     items: [
-      {n:'Q1', t:'왜 장르가 아니라 소리로 지도를 놓았나', s:1},
-      {n:'Q2', t:'사용자 한 명이 5분 동안 무엇을 하나', s:2},
-      {n:'Q3', t:'실측으로 바꾼 결정 여섯 가지는 무엇인가', s:3},
-      {n:'Q4', t:'음원 저작권은 어떻게 피해 가나', s:4},
-      {n:'Q5', t:'알고 있는 한계와 다음 단계는', s:5}
+      {sect:'사용자 · 시장'},
+      {n:'Q1', t:'음원 저작권은 어떻게 해결했나', s:1}
     ]
   },
-  feature: {
-    label: '02 · 기능',
-    sub: '주변 탐색 · 여정 · 실시간 따라가기',
+  data: {
+    label: '02 · 데이터 · 임베딩',
+    sub: '원본 데이터 · 특징 선별 · 스케일링 · PCA · 축 이름',
+    file: '03-domain.html',
+    items: [
+      {sect:'원본 데이터'},
+      {n:'Q1', t:'데이터는 어디서 왔고, 몇 곡인가', s:1},
+      {sect:'특징 선별 · 스케일링'},
+      {n:'Q2', t:'2,900개 특징에서 270개는 어떻게 골랐나', s:2},
+      {n:'Q3', t:'단위가 다른 특징을 어떻게 같은 자로 맞췄나', s:4},
+      {sect:'PCA'},
+      {n:'Q4', t:'왜 PCA인가 — t-SNE, UMAP, 딥러닝은?', s:6},
+      {n:'Q5', t:'270개를 16개로 줄여도 정보가 남나', s:10},
+      {sect:'축 이름 · 확장'},
+      {n:'Q6', t:'축 이름(밝기, 베이스…)은 주관적이지 않나', s:14},
+      {n:'Q7', t:'신곡은 어떻게 지도에 올리나 — 지도가 바뀌지 않나', s:17},
+      {n:'Q8', t:'PCA는 언제 다시 학습하나', s:19}
+    ]
+  },
+  infra: {
+    label: '03 · 분산 처리 · 인프라',
+    sub: '630GB · Spark 파이프라인 · 성능 · DB · 배포',
+    file: '03-domain.html',
+    items: [
+      {sect:'DB · 서버'},
+      {n:'Q1', t:'왜 pgvector인가 — Neo4j, 별도 벡터 DB는', s:24}
+    ]
+  },
+  map: {
+    label: '04 · 지도 · 탐색',
+    sub: '8개 층 · 주변 탐색 · 첫 화면 · 따라가기',
     file: '02-feature.html',
     items: [
       {sect:'주변 탐색'},
-      {n:'Q1', t:'469만 곡을 전부 비교하면 느리지 않나', s:1},
-      {n:'Q2', t:'주변곡 거를 때 규칙 어떻게 정했나', s:3},
-      {n:'Q3', t:'화면에서 바로 옆인데 주변 목록에 없는 이유는', s:4},
-      {n:'Q4', t:'비슷한 곡이 정말 가까이 있다는 근거는', s:6},
-      {sect:'여정'},
-      {n:'Q5', t:'최단 경로는 왜 버렸나', s:7},
-      {n:'Q6', t:'왜 비터비 알고리즘이라고 부르나', s:15},
-      {n:'Q7', t:'겹마다 별자리 모양이 바뀌지 않나', s:20},
-      {sect:'따라가기'},
-      {n:'Q8', t:'누가 움직이면 누구에게 어떻게 알리나', s:22},
-      {n:'Q9', t:'사람이 많아져도 알림을 감당할 수 있나', s:26},
-      {n:'Q10', t:'따라가기는 어떻게 동작하고 어떻게 끝나나', s:28},
-      {n:'Q11', t:'연결이 끊기거나 탭을 두 개 열면 어떻게 되나', s:33}
-    ]
-  },
-  domain: {
-    label: '03 · 도메인',
-    sub: '소리 좌표 · 첫 화면 · 운영',
-    file: '03-domain.html',
-    items: [
-      {sect:'소리 좌표'},
-      {n:'Q1', t:'곡 하나는 어떤 숫자로 표현되나', s:1},
-      {n:'Q2', t:'단위가 다른 숫자를 어떻게 같은 자로 맞췄나', s:4},
-      {n:'Q3', t:'왜 다른 방법이 아니라 PCA를 썼나', s:7},
-      {n:'Q4', t:'270개를 16개로 줄여도 정보가 남나', s:11},
-      {n:'Q5', t:'축마다 뜻이 있다는 게 무슨 말인가', s:15},
-      {sect:'파이프라인'},
-      {n:'Q6', t:'첫 화면 7,204곡은 어떻게 뽑았나', s:18},
-      {sect:'운영'},
-      {n:'Q7', t:'pgvector를 고른 이유는', s:21}
-    ]
-  },
-  ai: {
-    label: '04 · AI',
-    sub: 'LLM의 역할과 한계',
-    file: '04-ai.html',
-    items: [
-      {n:'Q1', t:'LLM은 어디에 쓰이나', s:1},
-      {n:'Q2', t:'별자리 작품 채점은 어떻게 하나', s:2},
-      {n:'Q3', t:'취향 분석 문구는 어떻게 만드나', s:3}
-    ]
-  },
-  reserve: {
-    label: '05 · 예비',
-    sub: '인프라 · 무중단 배포 · 인증',
-    file: '05-reserve.html',
-    items: [
-      {n:'Q1', t:'서버 구성과 배포는 어떻게 되나', s:1},
-      {n:'Q2', t:'무중단 배포는 어떻게 동작하나', s:2},
-      {n:'Q3', t:'로그인 토큰은 어떻게 관리하나', s:3}
+      {n:'Q1', t:'469만 곡 중 가까운 10곡을 어떻게 빨리 찾나', s:1},
+      {n:'Q2', t:'화면에서 가까운데 주변 목록에 없는 이유는', s:3},
+      {n:'Q3', t:'가까우면 정말 비슷하다는 근거는', s:5},
+      {sect:'첫 화면'},
+      {n:'Q4', t:'469만 곡을 첫 화면에 다 그리나', s:21, f:'03-domain.html'},
+      {sect:'따라가기 · 실시간'},
+      {n:'Q5', t:'따라가기는 실시간으로 어떻게 동작하나', s:6}
     ]
   }
 };
@@ -234,10 +215,15 @@ qlist.addEventListener('scroll', markTag);
 var curCat = null;
 
 // 질문 하나가 차지하는 장 범위 "시작-끝" (다음 질문 바로 앞까지, 마지막 질문은 덱 끝까지)
+const fileOf = (d, it) => it.f || d.file;
+// 같은 파일을 쓰는 질문 전부를 보고, 다음 질문 바로 앞까지 (마지막이면 파일 끝까지)
 function rangeOf(d, it){
-  const next = d.items.filter(x => x.n && x.s > it.s).reduce((m, x) => Math.min(m, x.s), Infinity);
+  const f = fileOf(d, it);
+  let next = Infinity;
+  for(const k in DATA) DATA[k].items.forEach(x => { if(x.n && fileOf(DATA[k], x) === f && x.s > it.s) next = Math.min(next, x.s); });
   return it.s + '-' + (next === Infinity ? '' : next - 1);
 }
+const qHref = (key, d, it, s) => fileOf(d, it) + '?r=' + rangeOf(d, it) + '&c=' + key + '#s' + (s || it.s);
 
 function openCat(key){
   const d = DATA[key];
@@ -259,7 +245,7 @@ function openCat(key){
     }
     const a = document.createElement('a');
     a.className = 'q';
-    a.href = d.file + '?r=' + rangeOf(d, it) + '#s' + it.s;
+    a.href = qHref(key, d, it);
     a.innerHTML = '<span class="qn">'+it.n+'</span><span class="qt">'+it.t+'</span><span class="qp">p.'+it.s+'</span>';
     a.style.animationDelay = (idx * 0.018) + 's';
     a.classList.add('fadein');
@@ -300,19 +286,16 @@ const snippet = (body, w) => {
 };
 // 슬라이드 번호 → 그 슬라이드가 속한 질문
 function questionOf(file, s){
-  for(const key in DATA){
-    const d = DATA[key];
-    if(d.file !== file) continue;
-    let best = null;
-    d.items.forEach(it => { if(it.n && it.s <= s && (!best || it.s > best.s)) best = it; });
-    return {d, it: best};
-  }
-  return null;
+  let best = null;
+  for(const key in DATA) DATA[key].items.forEach(it => {
+    if(it.n && fileOf(DATA[key], it) === file && it.s <= s && (!best || it.s > best.it.s)) best = {key, d: DATA[key], it};
+  });
+  return best;
 }
-function hitRow(d, it, s, terms, slideTitle, snip){
+function hitRow(key, d, it, s, terms, slideTitle, snip){
   const a = document.createElement('a');
   a.className = 'q';
-  a.href = d.file + (it ? '?r=' + rangeOf(d, it) : '') + '#s' + s;
+  a.href = qHref(key, d, it, s);
   let body = '<span class="qc">' + esc(d.label) + '</span><span class="qt">' + hl(it ? it.t : slideTitle, terms) + '</span>';
   if(slideTitle && it && slideTitle !== it.t) body += '<span class="qst">장표 · ' + hl(slideTitle, terms) + '</span>';
   if(snip) body += '<span class="qsn">' + hl(snip, terms) + '</span>';
@@ -337,9 +320,9 @@ function runSearch(raw){
     const d = DATA[key];
     d.items.forEach(it => {
       if(!it.n || !has(it.t)) return;
-      seen.add(d.file + '#' + it.s);
-      const sl = SLIDES.find(x => x.file === d.file && x.s === it.s);
-      titleHits.push(hitRow(d, it, it.s, terms, sl ? sl.title : '', ''));
+      seen.add(fileOf(d, it) + '#' + it.s);
+      const sl = SLIDES.find(x => x.file === fileOf(d, it) && x.s === it.s);
+      titleHits.push(hitRow(key, d, it, it.s, terms, sl ? sl.title : '', ''));
     });
   }
   // 1순위: 장표 큰 제목 / 2순위: 장표 내용
@@ -350,10 +333,10 @@ function runSearch(raw){
     if(!q) return;
     if(has(sl.title)){
       seen.add(id);
-      titleHits.push(hitRow(q.d, q.it, sl.s, terms, sl.title, ''));
+      titleHits.push(hitRow(q.key, q.d, q.it, sl.s, terms, sl.title, ''));
     } else if(has(sl.title + ' ' + sl.body)){
       seen.add(id);
-      bodyHits.push(hitRow(q.d, q.it, sl.s, terms, sl.title, snippet(sl.body, terms.find(w => sl.body.toLowerCase().includes(w)) || terms[0])));
+      bodyHits.push(hitRow(q.key, q.d, q.it, sl.s, terms, sl.title, snippet(sl.body, terms.find(w => sl.body.toLowerCase().includes(w)) || terms[0])));
     }
   });
 

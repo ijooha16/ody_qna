@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const FILES = ['01-planning.html', '02-feature.html', '03-domain.html', '04-ai.html', '05-reserve.html'];
+const FILES = ['01-planning.html', '02-feature.html', '03-domain.html'];
 
 const clean = html => html
   .replace(/<script[\s\S]*?<\/script>/g, ' ')
